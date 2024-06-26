@@ -1,7 +1,5 @@
   <!-- Start Content-->
 
-
-
   <div class="container-fluid">
 
       <!-- start page title -->

@@ -1,5 +1,6 @@
 <?php
 
+error_reporting(E_ALL);  // Report all types of errors and warnings
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Penjadwalan extends CI_Controller
