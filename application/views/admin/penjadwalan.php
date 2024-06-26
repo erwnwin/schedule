@@ -1,9 +1,6 @@
   <!-- Start Content-->
 
-  <?php
-    ini_set('display_errors', 'Off');
-    ini_set('error_reporting', E_ALL);
-    ?>
+
 
   <div class="container-fluid">
 
