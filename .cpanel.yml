@@ -1,4 +1,5 @@
+---
 deployment:
-tasks:
-- export DEPLOYPATH=/home/hvsteofj/public_html/schedule.winartcode.my.id
-- /bin/cp -R * $DEPLOYPATH
+  tasks:
+    - export DEPLOYPATH=/home/hvsteofj/public_html/schedule.winartcode.my.id/
+    - /bin/cp -R images $DEPLOYPATH
