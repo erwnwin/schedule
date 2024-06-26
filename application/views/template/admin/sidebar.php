@@ -6,11 +6,15 @@
         <!-- LOGO -->
         <a href="<?= base_url('dashboard') ?>" class="logo text-center logo-light">
             <span class="logo-lg">
-                <h1>e-Schedule SMA</h1>
+                <span class="text-white text-center">
+                    <h4>e-Schedule SMA</h4>
+                </span>
                 <!-- <img src="<?= base_url() ?>assets/template/assets/images/logo.png" alt="" height="16"> -->
             </span>
             <span class="logo-sm">
-                <h1>e-Schedule SMA</h1>
+                <span class="text-white text-center">
+                    <h4>e-Schedule SMA</h4>
+                </span>
 
                 <!-- <img src="<?= base_url() ?>assets/template/assets/images/logo_sm.png" alt="" height="16"> -->
             </span>
@@ -19,12 +23,16 @@
         <!-- LOGO -->
         <a href="<?= base_url('dashboard') ?>" class="logo text-center logo-dark">
             <span class="logo-lg">
-                <h1>e-Schedule SMA</h1>
+                <span class="text-white text-center">
+                    <h4>e-Schedule SMA</h4>
+                </span>
 
                 <!-- <img src="<?= base_url() ?>assets/template/assets/images/logo-dark.png" alt="" height="16"> -->
             </span>
             <span class="logo-sm">
-                <h1>e-Schedule SMA</h1>
+                <span class="text-white text-center">
+                    <h4>e-Schedule SMA</h4>
+                </span>
 
                 <!-- <img src="<?= base_url() ?>assets/template/assets/images/logo_sm_dark.png" alt="" height="16"> -->
             </span>
