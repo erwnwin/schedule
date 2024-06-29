@@ -116,7 +116,7 @@
                                               <td><?= $r->hari ?></td>
                                               <td class="text-center">
                                                   <!-- <button type="button" data-toggle="modal" data-target="#modal-edit<?= $r->id_mapel ?>" class="btn btn-sm btn-flat btn-warning"> <i class="fa fa-edit"></i></button> -->
-                                                  <button type="button" data-toggle="modal" data-target="#modal-hapus<?= $r->id_request ?>" class="btn btn-sm btn-flat btn-danger"> <i class="mdi mdi-trash-can-outline"></i></button>
+                                                  <a href="<?= base_url('request-jadwal/delete/' . $r->id_request) ?>" id="btn-hapus" class="btn btn-sm btn-flat btn-danger"> <i class="mdi mdi-trash-can-outline"></i></a>
                                               </td>
                                           </tr>
                                       <?php } ?>

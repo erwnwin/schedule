@@ -66,6 +66,9 @@
   <!-- Datatable Init js -->
   <script src="<?= base_url() ?>assets/template/assets/js/pages/demo.datatable-init.js"></script>
 
+  <!-- lottie -->
+  <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+
   <script>
       window.addEventListener("load", () => {
 

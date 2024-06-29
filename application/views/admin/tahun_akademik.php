@@ -127,11 +127,11 @@
                                           <td class="text-center"><?php if ($r->status == 'Non Aktif') { ?>
                                                   <button type="button" data-toggle="modal" title="Aktifkan" data-target="#modal-Aktif<?= $r->id_ta ?>" class="btn btn-sm btn-flat btn-success"> <i class="mdi mdi-check-underline-circle"></i></button>
                                                   <button type="button" data-toggle="modal" data-target="#modal-edit<?= $r->id_ta ?>" class="btn btn-sm btn-flat btn-warning"> <i class="mdi mdi-calendar-edit"></i></button>
-                                                  <button type="button" data-toggle="modal" data-target="#modal-hapus<?= $r->id_ta ?>" class="btn btn-sm btn-flat btn-danger"> <i class="mdi mdi-trash-can-outline"></i></button>
+                                                  <a href="<?= base_url('tahun-akademik/delete/' . $r->id_ta) ?>" id="btn-hapus" class="btn btn-sm btn-flat btn-danger"> <i class="mdi mdi-trash-can-outline"></i></a>
                                               <?php } else { ?>
-                                                  <button type="button" data-toggle="modal" title="Non Aktifkan" data-target="#modal-nonAktif<?= $r->id_ta ?>" class="btn btn-sm btn-flat btn-primary"> <i class="fa fa-times"></i></button>
+                                                  <button type="button" data-toggle="modal" title="Non Aktifkan" data-target="#modal-nonAktif<?= $r->id_ta ?>" class="btn btn-sm btn-flat btn-info"> <i class="mdi mdi-close-circle"></i></button>
                                                   <button type="button" data-toggle="modal" data-target="#modal-edit<?= $r->id_ta ?>" class="btn btn-sm btn-flat btn-warning"> <i class="mdi mdi-calendar-edit"></i></button>
-                                                  <button type="button" data-toggle="modal" data-target="#modal-hapus<?= $r->id_ta ?>" class="btn btn-sm btn-flat btn-danger"> <i class="mdi mdi-trash-can-outline"></i></button>
+                                                  <a href="<?= base_url('tahun-akademik/delete/' . $r->id_ta) ?>" id="btn-hapus" class="btn btn-sm btn-flat btn-danger"> <i class="mdi mdi-trash-can-outline"></i></a>
                                               <?php } ?>
 
                                           </td>
@@ -148,6 +148,35 @@
 
   </div>
   <!-- container -->
+
+  <?php foreach ($ta as $r) { ?>
+      <div id="modal-Aktif<?= $r->id_ta ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h4 class="modal-title" id="standard-modalLabel">Aktifkan Tahun Akademik</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  </div>
+                  <div class="modal-body">
+
+
+                      <form class="form-horizontal" action="<?= base_url('tahun-akademik/act-aktif' . $r->id_ta) ?>" method="post">
+
+                          <div class="alert alert-warning" role="alert">
+                              <input type="text" class="form-control" value="<?= $r->id_ta ?>" name="id_ta" hidden>
+                              Dengan menekan tombol aktifkan. Tahun akademik akan diaktifkan!N
+                          </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="submit" class="btn btn-success btn-sm pull-left">Aktifkan</button>
+                      <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Tutup</button>
+                  </div>
+                  </form>
+              </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+      </div>
+
+  <?php } ?>
 
   </div>
   <!-- content -->

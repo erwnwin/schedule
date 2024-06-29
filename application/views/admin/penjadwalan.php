@@ -120,9 +120,9 @@
                             if (empty($penjadwalan)) {
                                 if (!empty($rangeJam)) {
                             ?>
-                                  <div class="button-list">
+                                 
                                       <a type="button" data-toggle="modal" data-target="#modal-buatJadwal" class="btn btn-success btn-flat pull-right text-white">Buat Jadwal</a>
-                                  </div>
+                                 
                                   <div id="modal-buatJadwal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
                                       <div class="modal-dialog">
                                           <div class="modal-content">

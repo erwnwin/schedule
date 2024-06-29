@@ -71,7 +71,6 @@ class Tahun_akademik extends CI_Controller
         $cek = $sql->num_rows();
         if ($cek > 0) {
             $this->session->set_flashdata('gagal', 'Silahkan menonaktifkan tahun akademik yang lampau!');
-
             redirect(base_url('tahun-akademik'));
         } else {
             $this->db->update('tahun_akademik', $data, $where);

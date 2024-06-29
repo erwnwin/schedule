@@ -17,19 +17,30 @@
       <div class="row">
 
           <?php if ($this->session->userdata('hak_akses') == '1') { ?>
+
               <div class="col-xl-12 col-lg-12">
                   <div class="alert alert-success bg-success text-white text-center" role="alert">
+                      <center>
+                          <dotlottie-player src="https://lottie.host/c2841724-2d51-46b7-9f2a-dad670a710f3/TZl97fG7Pl.json" background="transparent" speed="1" style="width: 200px; height: 200px;" loop autoplay></dotlottie-player>
+                      </center>
+
                       <h4 class="alert-heading">Selamat Datang! ADMINISTRATOR</h4>
 
                       <hr>
                       <p class="mb-0">Anda sekarang masuk sebagai ADMINISTRATOR sistem e-Schedule.</p>
                   </div>
+
               </div>
+
+
           <?php } ?>
 
           <?php if ($this->session->userdata('hak_akses') == '2') { ?>
               <div class="col-xl-12 col-lg-12">
                   <div class="alert alert-danger bg-danger text-white text-center" role="alert">
+                      <center>
+                          <dotlottie-player src="https://lottie.host/c2841724-2d51-46b7-9f2a-dad670a710f3/TZl97fG7Pl.json" background="transparent" speed="1" style="width: 200px; height: 200px;" loop autoplay></dotlottie-player>
+                      </center>
                       <h4 class="alert-heading">Selamat Datang! BAGIAN KURIKULUM</h4>
 
                       <hr>
@@ -42,6 +53,9 @@
           <?php if ($this->session->userdata('hak_akses') == '3') { ?>
               <div class="col-xl-12 col-lg-12">
                   <div class="alert alert-primary bg-primary text-white text-center" role="alert">
+                      <center>
+                          <dotlottie-player src="https://lottie.host/c2841724-2d51-46b7-9f2a-dad670a710f3/TZl97fG7Pl.json" background="transparent" speed="1" style="width: 200px; height: 200px;" loop autoplay></dotlottie-player>
+                      </center>
                       <h4 class="alert-heading">Selamat Datang! GURU MATA PELAJARAN</h4>
 
                       <hr>

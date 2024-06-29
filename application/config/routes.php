@@ -91,7 +91,7 @@ $route['request-jadwal'] = 'Request_jadwal';
 // request-jadwal
 $route['tahun-akademik'] = 'Tahun_akademik';
 $route['tahun-akademik/act-add'] = 'Tahun_akademik/add_act';
-
+$route['tahun-akademik/act-aktif/(:num)'] = 'Tahun_akademik/act_aktif/$1';
 
 // request-jadwal
 $route['request-jadwal/act-add'] = 'Request_jadwal/act_add';

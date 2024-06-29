@@ -7,9 +7,9 @@
     <title><?= $title; ?></title>
 
     <!-- Site favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url() ?>assets/depan/vendors/images/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url() ?>assets/depan/vendors/images/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url() ?>assets/depan/vendors/images/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url() ?>assets/img/logo.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url() ?>assets/img/logo.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url() ?>assets/img/logo.png" />
 
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -91,10 +91,13 @@
     <div class="login-wrap d-flex align-items-center flex-wrap justify-content-center">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-md-6 col-lg-7">
-                    <img src="<?= base_url() ?>assets/depan/vendors/images/login-page-img.png" alt="" />
+                <div class="col-md-6 col-lg-7" id="animation container">
+                    <!-- <img src="<?= base_url() ?>assets/depan/vendors/images/login-page-img.png" alt="" /> -->
                     <!-- <img src="<?= base_url() ?>assets/img/wel2.png" alt="" /> -->
+
+                    <dotlottie-player src="https://lottie.host/9567cecf-7a08-4060-b18e-6b5f4402fa1f/F7I4JgvDEh.json" background="transparent" speed="1" style="width: 100%; height: 550px;" loop autoplay></dotlottie-player>
                 </div>
+
                 <div class="col-md-6 col-lg-5">
                     <div class="login-box bg-white box-shadow border-radius-10">
                         <div class="login-title">
@@ -171,10 +174,21 @@
     <script src="<?= base_url() ?>assets/lib/js/myscript.js"></script>
     <!-- <script src="<?= base_url() ?>assets/lib/js/jquery.min.js"></script> -->
 
-
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> -->
     <!-- login -->
     <!-- <script src="<?= base_url() ?>assets/load/js/login.js"></script> -->
 
+    <!-- <script>
+        var animation = bodymovin.loadAnimation({
+            containter: document.getElementById("animation container"),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: 'assets/lottie/lottiejson_learn2.json',
+        })
+    </script> -->
 
 
 
