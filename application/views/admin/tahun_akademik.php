@@ -160,7 +160,7 @@
                   <div class="modal-body">
 
 
-                      <form class="form-horizontal" action="<?= base_url('tahun-akademik/act-aktif' . $r->id_ta) ?>" method="post">
+                      <form class="form-horizontal" action="<?= base_url('tahun-akademik/act-aktif/' . $r->id_ta) ?>" method="post">
 
                           <div class="alert alert-warning" role="alert">
                               <input type="text" class="form-control" value="<?= $r->id_ta ?>" name="id_ta" hidden>
