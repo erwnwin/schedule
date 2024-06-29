@@ -22,10 +22,25 @@
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/depan/src/plugins/sweetalert2/sweetalert2.css" />
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/depan/vendors/styles/style.css" />
 
+    <style type="text/css">
+        .animasiku {
+            display: inline;
+        }
+
+        /* Smartphone Portrait and Landscape */
+
+        @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+            .animasiku {
+                display: none;
+            }
+        }
+    </style>
 
     <link rel="stylesheet" href="<?= base_url() ?>assets/lib/js/sweetalert2.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/lib/js/sweetalert2.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/lib/js/animate.min.css">
+
+
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBZ3SGGX85"></script>
@@ -91,11 +106,13 @@
     <div class="login-wrap d-flex align-items-center flex-wrap justify-content-center">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-md-6 col-lg-7" id="animation container">
+
+                <div class="col-md-6 col-lg-7 animasiku">
                     <!-- <img src="<?= base_url() ?>assets/depan/vendors/images/login-page-img.png" alt="" /> -->
                     <!-- <img src="<?= base_url() ?>assets/img/wel2.png" alt="" /> -->
-
+                    <!-- <div class="animasiku"> -->
                     <dotlottie-player src="https://lottie.host/9567cecf-7a08-4060-b18e-6b5f4402fa1f/F7I4JgvDEh.json" background="transparent" speed="1" style="width: 100%; height: 550px;" loop autoplay></dotlottie-player>
+                    <!-- </div> -->
                 </div>
 
                 <div class="col-md-6 col-lg-5">
