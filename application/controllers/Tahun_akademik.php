@@ -56,7 +56,7 @@ class Tahun_akademik extends CI_Controller
     {
 
         $id_ta = $this->input->post('id_ta');
-        $status = 'Aktif';
+        // $status = 'Aktif';
 
         $data = array(
             'id_ta' => $id_ta,
@@ -67,7 +67,7 @@ class Tahun_akademik extends CI_Controller
             'id_ta' => $id_ta,
         );
 
-        $sql = $this->db->query("SELECT status FROM tahun_akademik where status='$status'");
+        $sql = $this->db->query("SELECT status FROM tahun_akademik where status='Aktif'");
         $cek = $sql->num_rows();
         if ($cek > 0) {
             $this->session->set_flashdata('gagal', 'Silahkan menonaktifkan tahun akademik yang lampau!');
