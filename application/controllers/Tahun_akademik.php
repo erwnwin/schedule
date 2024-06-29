@@ -75,6 +75,7 @@ class Tahun_akademik extends CI_Controller
         } else {
             $this->db->update('tahun_akademik', $data, $where);
             $this->session->set_flashdata('sukses', 'Data tahun akademik berhasil diaktifkan!');
+            redirect(base_url('tahun-akademik'));
         }
     }
 }
