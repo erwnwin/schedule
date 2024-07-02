@@ -44,10 +44,6 @@
                                             }
                                         ?>
                                           <div class="custom-control custom-checkbox">
-                                              <input class="form-check-input" name="chkHari[]" type="checkbox" id="<?= $value ?>" value="<?= $value ?>">
-                                              <label class="form-check-label" for="<?= $value ?>"><?= $value ?></label>
-                                          </div>
-                                          <div class="custom-control custom-checkbox">
                                               <input class="custom-control-input flat-red" name="chkJadwalHari[]" type="checkbox" id="<?= $value ?>" value="<?= $value ?>" <?= $checked ?>>
                                               <label class="custom-control-label" for="<?= $value ?>"><?= $value ?></label>
                                           </div>
@@ -115,12 +111,15 @@
                                           <tr>
                                               <td class="text-center"><?= $no++ ?></td>
                                               <td class="text-center"><?= $r->hari ?></td>
-                                              <td class="text-center"><?= $r->jumlah_sesi ?></td>
-                                              <td class="text-center"><?= $r->lama_sesi ?></td>
+                                              <td class="text-center"><?= $r->jumlah_sesi ?> Sesi</td>
+                                              <td class="text-center"><?= $r->lama_sesi ?> Menit</td>
                                               <td class="text-center"><?= $r->jam_mulai ?></td>
                                               <td class="text-center">
-                                                  <!-- <a href="" class="action-icon" data-toggle="modal" data-target="#modal-edit<?= $r->id_kelas ?>"> <i class="mdi mdi-pencil"></i></a> -->
-                                                  <a href="<?= base_url('jam/delete/' . $r->id_jadwal) ?>" class="action-icon" id="btn-hapus"> <i class="mdi mdi-delete"></i></a>
+                                                  <a href="" class="action-icon" data-toggle="modal" data-target="#modal-edit<?= $r->id_jadwal ?>"> <i class="mdi mdi-pencil"></i></a>
+                                                  <form action="<?= base_url('jam/delete/' . $r->id_jadwal) ?>" method="post">
+                                                      <button type="submit" class="btn btn-xs btn-sm btn-danger" id="btn-hapus-ku"> <i class="mdi mdi-delete"></i></button>
+                                                  </form>
+
                                               </td>
                                           </tr>
                                       <?php } ?>

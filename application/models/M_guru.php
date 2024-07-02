@@ -36,7 +36,24 @@ class M_guru extends CI_Model
 
     public function hapus($id)
     {
-        $this->db->delete('guru', ['id_guru' => $id]);
+
+        // Cek apakah ada komentar terkait post ini
+        $this->db->where('id_guru', $id);
+        $pengampu = $this->db->count_all_results('guru_pengampu');
+
+        if ($pengampu > 0) {
+            // Tidak diizinkan menghapus jika ada komentar terkait
+            $this->session->set_flashdata('valid', 'Data gagal dihapus');
+            return false;
+        } else {
+            // Hapus post jika tidak ada komentar terkait
+            $this->db->where('id_guru', $id);
+            $this->db->delete('guru');
+            $this->session->set_flashdata('gagal', 'Berhasil dihapus');
+            return true;
+        }
+
+        // $this->db->delete('guru', ['id_guru' => $id]);
     }
 
     public function getDataPagination($limit, $offset)

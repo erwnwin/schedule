@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
-<!-- Mirrored from coderthemes.com/hyper/saas/dashboard-analytics.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Sep 2020 03:23:13 GMT -->
+<!-- Develop by Erwin, S.Kom -->
 
 <head>
     <meta charset="utf-8" />
     <title><?= $title; ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-    <meta content="Coderthemes" name="author" />
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="<?= base_url() ?>assets/template/assets/images/favicon.ico">
+    <meta content="WinArtCode" name="Develop by Erwin, S.Kom" />
+
+    <!-- Site favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url() ?>assets/img/logo.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url() ?>assets/img/logo.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url() ?>assets/img/logo.png" />
 
     <!-- third party css -->
     <link href="<?= base_url() ?>assets/template/assets/css/vendor/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />

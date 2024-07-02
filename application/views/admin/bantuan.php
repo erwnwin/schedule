@@ -26,7 +26,7 @@
                               </div>
                               <div id="infoApp" class="collapse" aria-labelledby="headingSeven" data-parent="#custom-accordion-one">
                                   <div class="card-body">
-                                      ...
+                                      #Coming Soon
                                   </div>
                               </div>
                           </div>
@@ -41,7 +41,7 @@
 
                               <div id="manualBook" class="collapse" aria-labelledby="headingFour" data-parent="#custom-accordion-one">
                                   <div class="card-body">
-                                      ...
+                                      #Coming Soon
                                   </div>
                               </div>
                           </div>
@@ -55,7 +55,7 @@
                               </div>
                               <div id="versiApp" class="collapse" aria-labelledby="headingFive" data-parent="#custom-accordion-one">
                                   <div class="card-body">
-                                      ...
+                                      #Coming Soon
                                   </div>
                               </div>
                           </div>
@@ -69,7 +69,7 @@
                               </div>
                               <div id="infoBotWA" class="collapse" aria-labelledby="headingSix" data-parent="#custom-accordion-one">
                                   <div class="card-body">
-                                      ...
+                                      #Coming Soon
                                   </div>
                               </div>
                           </div>

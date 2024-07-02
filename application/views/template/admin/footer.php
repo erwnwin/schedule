@@ -66,12 +66,46 @@
   <!-- Datatable Init js -->
   <script src="<?= base_url() ?>assets/template/assets/js/pages/demo.datatable-init.js"></script>
 
+  <!-- third party js -->
+  <script src="<?= base_url() ?>assets/template/assets/js/vendor/Chart.bundle.min.js"></script>
+  <!-- third party js ends -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
   <!-- lottie -->
   <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
 
 
   <!-- JS -->
   <script src="<?= base_url() ?>assets/jadwal/js/jadwal.js"></script>
+
+
+  <script>
+      const xValues = ["Laki-laki", "Perempuan"];
+      const yValues = [10, 2];
+      const barColors = [
+          "#b91d47",
+          "#00aba9"
+      ];
+
+      new Chart("myChart", {
+          type: "doughnut",
+          data: {
+              labels: xValues,
+              datasets: [{
+                  backgroundColor: barColors,
+                  data: yValues
+              }]
+          },
+          options: {
+              title: {
+                  display: true,
+
+              }
+          }
+      });
+  </script>
+
+
 
   <script>
       window.addEventListener("load", () => {
@@ -132,7 +166,26 @@
           })
       })
   </script>
+  <script>
+      $(document).on('click', '#btn-hapus-ku', function(e) {
+          e.preventDefault();
+          var link = $(this).attr('action');
 
+          Swal.fire({
+              title: 'Apakah Anda yakin?',
+              text: "Data akan dihapus!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: "#539a55",
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Ya, Hapus'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location = link;
+              }
+          })
+      })
+  </script>
   <script>
       var flash = $('#flash').data('flash');
       if (flash) {

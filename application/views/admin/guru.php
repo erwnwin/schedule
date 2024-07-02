@@ -18,6 +18,7 @@
           <div id="flash-gagal" data-flash="<?= $this->session->flashdata('gagal'); ?>"></div>
           <div id="flash" data-flash="<?= $this->session->flashdata('sukses'); ?>"></div>
           <div id="flash-edit" data-flash="<?= $this->session->flashdata('edit'); ?>"></div>
+          <div id="flash-valid" data-flash="<?= $this->session->flashdata('valid'); ?>"></div>
 
           <div class="col-xl-12 col-lg-12">
               <div class="card">

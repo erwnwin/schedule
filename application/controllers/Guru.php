@@ -152,7 +152,7 @@ Pesan ini dikirim secara otomatis oleh sistem',
     public function hapus_act($id)
     {
         $this->m_guru->hapus($id);
-        $this->session->set_flashdata('gagal', 'Berhasil dihapus');
+        
         redirect(base_url('guru'));
     }
 }

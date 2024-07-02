@@ -55,30 +55,58 @@
 
 
 
-                      <h4 class="mb-0 mt-2">Dominic Keller</h4>
-                      <p class="text-muted font-14">Founder</p>
+                      <h4 class="mb-0 mt-2"><?=
+                                            $this->session->userdata('nama');
+                                            ?></h4>
+                      <p class="text-muted font-14">
+                          <?php if (
+                                $this->session->userdata('hak_akses') == '1'
+                            ) { ?>
+                              ADMINISTRATOR
+                          <?php } ?>
+
+                          <?php if (
+                                $this->session->userdata('hak_akses') == '2'
+                            ) { ?>
+                              KURIKULUM
+                          <?php } ?>
+                      </p>
 
                       <!-- <button type="button" class="btn btn-success btn-sm mb-2">Follow</button>
                       <button type="button" class="btn btn-danger btn-sm mb-2">Message</button> -->
 
                       <div class="text-left mt-3">
-                          <h4 class="font-13 text-uppercase">About Me :</h4>
-                          <p class="text-muted font-13 mb-3">
-                              Hi I'm Johnathn Deo,has been the industry's standard dummy text ever since the
-                              1500s, when an unknown printer took a galley of type.
-                          </p>
-                          <p class="text-muted mb-2 font-13"><strong>Full Name :</strong> <span class="ml-2">Geneva
-                                  D. McKnight</span></p>
+                          <h4 class="font-13 text-uppercase">Tentang Saya :</h4>
+                          <?php if (
+                                $this->session->userdata('hak_akses') == '1'
+                            ) { ?>
+                              <p class="text-muted font-13 mb-3">
+                                  Login sebagai ADMINISTRATOR sistem
+                              </p>
+                          <?php } ?>
 
-                          <p class="text-muted mb-2 font-13"><strong>Mobile :</strong><span class="ml-2">(123)
-                                  123 1234</span></p>
+                          <?php if (
+                                $this->session->userdata('hak_akses') == '2'
+                            ) { ?>
+                              <p class="text-muted font-13 mb-3">
+                                  Login sebagai BAGIAN KURIKULUM Sekolah
+                              </p>
+                          <?php } ?>
 
-                          <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span class="ml-2 ">user@email.domain</span></p>
+                          <p class="text-muted mb-2 font-13"><strong>No HP/WA :</strong><span class="ml-2"><?=
+                                                                                                            $this->session->userdata('handphone');
+                                                                                                            ?></span></p>
 
-                          <p class="text-muted mb-1 font-13"><strong>Location :</strong> <span class="ml-2">USA</span></p>
+                          <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span class="ml-2 "><?=
+                                                                                                            $this->session->userdata('email');
+                                                                                                            ?></span></p>
+
+                          <p class="text-muted mb-1 font-13"><strong>Alamat :</strong> <span class="ml-2"><?=
+                                                                                                            $this->session->userdata('alamat');
+                                                                                                            ?></span></p>
                       </div>
 
-                    
+
                   </div> <!-- end card-body -->
               </div> <!-- end card -->
 
@@ -108,7 +136,7 @@
                       <div class="tab-content">
 
 
-                       
+
 
                           <div class="tab-pane show active" id="settings">
                               <form>
@@ -116,14 +144,30 @@
                                   <div class="row">
                                       <div class="col-md-6">
                                           <div class="form-group">
-                                              <label for="firstname">First Name</label>
-                                              <input type="text" class="form-control" id="firstname" placeholder="Enter first name">
+                                              <label for="firstname">Nama Depan</label>
+                                              <input type="text" class="form-control" id="firstname" placeholder="Masukkan Nama Depan">
                                           </div>
                                       </div>
                                       <div class="col-md-6">
                                           <div class="form-group">
-                                              <label for="lastname">Last Name</label>
-                                              <input type="text" class="form-control" id="lastname" placeholder="Enter last name">
+                                              <label for="lastname">Nama Belakang (opsional)</label>
+                                              <input type="text" class="form-control" id="lastname" placeholder="Masukkan Nama Belakang (opsional)">
+                                          </div>
+                                      </div> <!-- end col -->
+                                  </div> <!-- end row -->
+
+
+                                  <div class="row">
+                                      <div class="col-md-6">
+                                          <div class="form-group">
+                                              <label for="firstname">No HP/WA</label>
+                                              <input type="text" class="form-control" id="firstname" placeholder="Masukkan No HP/WA">
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <div class="form-group">
+                                              <label for="lastname">Email</label>
+                                              <input type="text" class="form-control" id="lastname" placeholder="Masukkan Email">
                                           </div>
                                       </div> <!-- end col -->
                                   </div> <!-- end row -->
@@ -131,33 +175,32 @@
                                   <div class="row">
                                       <div class="col-12">
                                           <div class="form-group">
-                                              <label for="userbio">Bio</label>
-                                              <textarea class="form-control" id="userbio" rows="4" placeholder="Write something..."></textarea>
+                                              <label for="userbio">Alamat</label>
+                                              <textarea class="form-control" id="userbio" rows="4" placeholder="Alamat"></textarea>
                                           </div>
                                       </div> <!-- end col -->
                                   </div> <!-- end row -->
-
+                                  <div class="text-right">
+                                      <button type="submit" class="btn btn-info mt-2"><i class="mdi mdi-edit"></i> Update Profil</button>
+                                  </div>
+                              </form>
+                              <hr>
+                              <form>
                                   <div class="row">
-                                      <div class="col-md-6">
+                                      <div class="col-md-12">
                                           <div class="form-group">
-                                              <label for="useremail">Email Address</label>
-                                              <input type="email" class="form-control" id="useremail" placeholder="Enter email">
-                                              <span class="form-text text-muted"><small>If you want to change email please <a href="javascript: void(0);">click</a> here.</small></span>
-                                          </div>
-                                      </div>
-                                      <div class="col-md-6">
-                                          <div class="form-group">
-                                              <label for="userpassword">Password</label>
-                                              <input type="password" class="form-control" id="userpassword" placeholder="Enter password">
-                                              <span class="form-text text-muted"><small>If you want to change password please <a href="javascript: void(0);">click</a> here.</small></span>
+                                              <label for="userpassword">Ubah Password</label>
+                                              <input type="password" class="form-control" id="userpassword" placeholder="Masukkan password">
+                                              <span class="form-text text-muted"><small>Jika password telah diubah maka akan diarahkan kembali ke halaman login untuk masuk ke aplikasi</small></span>
                                           </div>
                                       </div> <!-- end col -->
+
                                   </div> <!-- end row -->
 
 
 
                                   <div class="text-right">
-                                      <button type="submit" class="btn btn-success mt-2"><i class="mdi mdi-content-save"></i> Save</button>
+                                      <button type="submit" class="btn btn-success mt-2"><i class="mdi mdi-content-save"></i> Update Password</button>
                                   </div>
                               </form>
                           </div>

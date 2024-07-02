@@ -132,14 +132,9 @@
 
 
                   </div>
-                  <!-- <div id="divOverlayformJadwalku" class="overlay hides">
-                      <i class="fa-solid fa-arrows-rotate"></i>
-                     
-                      <center>
-                          <dotlottie-player src="https://lottie.host/f34eb2b1-edfd-40f0-9cf2-8ad1fc119e08/ZNqmAbhZGU.json" background="transparent" speed="1" style="width: 300px; height: 300px" direction="1" playMode="normal" loop autoplay></dotlottie-player>
-                      </center>
+                  <!-- <div id="divOverlayformJadwalku" class="overlay hide">
+                      <i class="mdi mdi-spin mdi-loading mr-1"></i>
                   </div> -->
-
               </div>
           </div>
       </div>
