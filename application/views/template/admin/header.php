@@ -107,37 +107,7 @@
                     ) { ?>
                         <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
 
-                            <!-- <span class="account-user-avatar">
-                                <div class="avatar-md">
-                                    <span class="avatar-title bg-success rounded-circle">
-                                        md
-                                    </span>
-                                </div>
-                            </span> -->
                             <span class="account-user-avatar">
-
-                                <!-- <div class="avatar-md" style="width: 55px; height: 55px;">
-                                    <span class="avatar-title bg-success rounded-circle" alt="user-image">
-                                        <?php
-                                        $nama_lengkap = $this->session->userdata('nama');
-                                        $nama_parts = explode(" ", $nama_lengkap);
-                                        $nama_depan = $nama_parts[0]; // Nama depan
-                                        $nama_belakang = isset($nama_parts[1]) ? $nama_parts[1] : ''; // Nama belakang, jika ada
-
-                                        // Mengambil karakter pertama dari nama depan dan nama belakang
-                                        $inisial_depan = substr($nama_depan, 0, 1); // Karakter pertama dari nama depan
-                                        $inisial_belakang = substr($nama_belakang, 0, 1); // Karakter pertama dari nama belakang
-
-                                        ?>
-
-                                        <span id="firstName"> <?= $inisial_depan[0] ?></span>
-                                        <?php if ($inisial_belakang == null) { ?>
-                                            <span id="lastName" hidden><?= $inisial_belakang[0] ?></span>
-                                        <?php } else { ?>
-                                            <span id="lastName"><?= $inisial_belakang ?></span>
-                                        <?php } ?>
-                                    </span>
-                                </div> -->
                                 <div class="avatar-xs">
                                     <span class="avatar-title bg-success rounded-circle" style="padding: 16px;">
                                         <?php
@@ -191,14 +161,44 @@
                         </a>
 
 
-
                         <?php if (
                             $this->session->userdata('hak_akses') == '3'
                         ) { ?>
                             <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+
                                 <span class="account-user-avatar">
-                                    <img src="<?= base_url() ?>assets/template/assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
+                                    <div class="avatar-xs">
+                                        <span class="avatar-title bg-success rounded-circle" style="padding: 16px;">
+                                            <?php
+
+                                            $nama_lengkap = $this->session->userdata('nama');
+                                            $nama_parts = explode(" ", $nama_lengkap);
+                                            $nama_depan = $nama_parts[0]; // Nama depan
+                                            $nama_belakang = isset($nama_parts[1]) ? $nama_parts[1] : ''; // Nama belakang, jika ada
+
+                                            // Mengambil karakter pertama dari nama depan dan nama belakang
+                                            $inisial_depan = substr($nama_depan, 0, 1); // Karakter pertama dari nama depan
+                                            $inisial_belakang = substr($nama_belakang, 0, 1); // Karakter pertama dari nama belakang
+
+                                            ?>
+
+                                            <span id="firstName"> <?= $inisial_depan[0] ?></span>
+                                            <?php if ($inisial_belakang == null) { ?>
+                                                <span id="lastName" hidden><?= $inisial_belakang[0] ?></span>
+                                            <?php } else { ?>
+                                                <span id="lastName"><?= $inisial_belakang ?></span>
+                                            <?php } ?>
+                                        </span>
+                                    </div>
+                                    <!-- <img src="<?= base_url() ?>assets/template/assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle"> -->
                                 </span>
+                            <?php } ?>
+
+
+                            <?php if (
+                                $this->session->userdata('hak_akses') == '3'
+                            ) { ?>
+
                                 <span>
                                     <span class="account-user-name"><?= $this->session->userdata('nama'); ?></span>
                                     <span class="account-position">Guru Mata Pelajaran</span>

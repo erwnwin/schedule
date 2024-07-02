@@ -30,6 +30,9 @@
     <link rel="stylesheet" href="<?= base_url() ?>assets/lib/js/sweetalert2.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/lib/js/animate.min.css">
 
+    <!-- fontawesome -->
+    <!-- <link rel="stylesheet" href="<?= base_url() ?>assets/depan/fontawesome/css/fontawesome.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/depan/fontawesome/css/fontawesome.min.css"> -->
 
     <!-- Datatables css -->
     <link href="<?= base_url() ?>assets/template/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" />

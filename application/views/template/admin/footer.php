@@ -3,13 +3,13 @@
       <div class="container-fluid">
           <div class="row">
               <div class="col-md-6">
-                  Made with <i class="uil-heart-sign"></i> by <b>EngMars Corp.</b>
+                  Made with <i class="uil-heart-sign"></i> by <b> <a href="https://winartcode.my.id" target="_blank">WinArt&Code</a></b>
               </div>
               <div class="col-md-6">
                   <div class="text-md-right footer-links d-none d-md-block">
                       <!-- <a href="javascript: void(0);">About</a>
                       <a href="javascript: void(0);">Support</a> -->
-                      <a href="#versi1.1" class="text-black">Versi 1.2</a>
+                      <a href="#versi1.1" class="text-black">Versi 1.3</a>
                   </div>
               </div>
           </div>
@@ -68,6 +68,10 @@
 
   <!-- lottie -->
   <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+
+
+  <!-- JS -->
+  <script src="<?= base_url() ?>assets/jadwal/js/jadwal.js"></script>
 
   <script>
       window.addEventListener("load", () => {

@@ -82,19 +82,32 @@
             ) { ?>
                 <center>
                     <div class="avatar-md mt-2 mb-3">
-                        <span class="avatar-title bg-success-lighten text-black font-20 rounded-circle">
-                            <?php
-                            $nama = $this->session->userdata('nama');
-                            $nama = explode(" ", $nama);
-                            $nama_sisa = implode(" ", array_slice($nama, 1));
-                            ?>
-                            <span id="firstName"><?= $nama[0] ?></span>
-                            <?php if ($nama_sisa == null) { ?>
-                                <span id="lastName" hidden><?= $nama[0] ?></span>
-                            <?php } else { ?>
-                                <span id="lastName"><?= $nama_sisa ?></span>
-                            <?php } ?>
+                        <span class="avatar-title bg-success text-black font-20 rounded-circle">
+                            <!-- <?php
+                                    $nama = $this->session->userdata('nama');
+                                    $nama = explode(" ", $nama);
+                                    $nama_sisa = implode(" ", array_slice($nama, 1));
+                                    ?> -->
 
+
+                            <?php
+                            $nama_lengkap = $this->session->userdata('nama');
+                            $nama_parts = explode(" ", $nama_lengkap);
+                            $nama_depan = $nama_parts[0]; // Nama depan
+                            $nama_belakang = isset($nama_parts[1]) ? $nama_parts[1] : ''; // Nama belakang, jika ada
+
+                            // Mengambil karakter pertama dari nama depan dan nama belakang
+                            $inisial_depan = substr($nama_depan, 0, 1); // Karakter pertama dari nama depan
+                            $inisial_belakang = substr($nama_belakang, 0, 1); // Karakter pertama dari nama belakang
+
+                            ?>
+
+                            <span id="firstName"> <?= $inisial_depan[0] ?></span>
+                            <?php if ($inisial_belakang == null) { ?>
+                                <span id="lastName" hidden><?= $inisial_belakang[0] ?></span>
+                            <?php } else { ?>
+                                <span id="lastName"><?= $inisial_belakang ?></span>
+                            <?php } ?>
                         </span>
                     </div>
                 </center>
@@ -271,6 +284,20 @@
 
                 <?php if ($this->session->userdata('hak_akses') == '3') { ?>
                     <li class="side-nav-title side-nav-item">GURU MAPEL</li>
+
+                    <li class="side-nav-item">
+                        <a href="<?= base_url('jadwalku') ?>" class="side-nav-link">
+                            <i class="uil-schedule"></i>
+                            <span> Jadwal Saya</span>
+                        </a>
+                    </li>
+
+                    <li class="side-nav-item">
+                        <a href="<?= base_url('mapelku') ?>" class="side-nav-link">
+                            <i class="uil-file-alt"></i>
+                            <span> Mapel Saya</span>
+                        </a>
+                    </li>
                 <?php } ?>
             </ul>
 
