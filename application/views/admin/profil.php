@@ -53,6 +53,42 @@
                           </center>
                       <?php } ?>
 
+                      <?php if (
+                            $this->session->userdata('hak_akses') == '3'
+                        ) { ?>
+                          <center>
+                              <div class="avatar-md  mt-2 mb-3">
+                                  <span class="avatar-title bg-success text-black font-20 rounded-circle">
+                                      <!-- <?php
+                                            $nama = $this->session->userdata('nama');
+                                            $nama = explode(" ", $nama);
+                                            $nama_sisa = implode(" ", array_slice($nama, 1));
+                                            ?> -->
+
+
+                                      <?php
+                                        $nama_lengkap = $this->session->userdata('nama');
+                                        $nama_parts = explode(" ", $nama_lengkap);
+                                        $nama_depan = $nama_parts[0]; // Nama depan
+                                        $nama_belakang = isset($nama_parts[1]) ? $nama_parts[1] : ''; // Nama belakang, jika ada
+
+                                        // Mengambil karakter pertama dari nama depan dan nama belakang
+                                        $inisial_depan = substr($nama_depan, 0, 1); // Karakter pertama dari nama depan
+                                        $inisial_belakang = substr($nama_belakang, 0, 1); // Karakter pertama dari nama belakang
+
+                                        ?>
+
+                                      <span id="firstName"> <?= $inisial_depan[0] ?></span>
+                                      <?php if ($inisial_belakang == null) { ?>
+                                          <span id="lastName" hidden><?= $inisial_belakang[0] ?></span>
+                                      <?php } else { ?>
+                                          <span id="lastName"><?= $inisial_belakang ?></span>
+                                      <?php } ?>
+                                  </span>
+                              </div>
+                          </center>
+                      <?php } ?>
+
 
 
                       <h4 class="mb-0 mt-2"><?=
@@ -83,6 +119,19 @@
                               <p class="text-muted font-13 mb-3">
                                   Login sebagai ADMINISTRATOR sistem
                               </p>
+
+
+                              <p class="text-muted mb-2 font-13"><strong>No HP/WA :</strong><span class="ml-2"><?=
+                                                                                                                $this->session->userdata('handphone');
+                                                                                                                ?></span></p>
+
+                              <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span class="ml-2 "><?=
+                                                                                                                $this->session->userdata('email');
+                                                                                                                ?></span></p>
+
+                              <p class="text-muted mb-1 font-13"><strong>Alamat :</strong> <span class="ml-2"><?=
+                                                                                                                $this->session->userdata('alamat');
+                                                                                                                ?></span></p>
                           <?php } ?>
 
                           <?php if (
@@ -91,19 +140,45 @@
                               <p class="text-muted font-13 mb-3">
                                   Login sebagai BAGIAN KURIKULUM Sekolah
                               </p>
+
+
+                              <p class="text-muted mb-2 font-13"><strong>No HP/WA :</strong><span class="ml-2"><?=
+                                                                                                                $this->session->userdata('handphone');
+                                                                                                                ?></span></p>
+
+                              <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span class="ml-2 "><?=
+                                                                                                                $this->session->userdata('email');
+                                                                                                                ?></span></p>
+
+                              <p class="text-muted mb-1 font-13"><strong>Alamat :</strong> <span class="ml-2"><?=
+                                                                                                                $this->session->userdata('alamat');
+                                                                                                                ?></span></p>
                           <?php } ?>
 
-                          <p class="text-muted mb-2 font-13"><strong>No HP/WA :</strong><span class="ml-2"><?=
-                                                                                                            $this->session->userdata('handphone');
-                                                                                                            ?></span></p>
 
-                          <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span class="ml-2 "><?=
-                                                                                                            $this->session->userdata('email');
-                                                                                                            ?></span></p>
 
-                          <p class="text-muted mb-1 font-13"><strong>Alamat :</strong> <span class="ml-2"><?=
-                                                                                                            $this->session->userdata('alamat');
-                                                                                                            ?></span></p>
+                          <?php if (
+                                $this->session->userdata('hak_akses') == '3'
+                            ) { ?>
+                              <p class="text-muted font-13 mb-3">
+                                  Login sebagai Guru SMA Makassar
+                              </p>
+
+
+                              <p class="text-muted mb-2 font-13"><strong>No HP/WA :</strong><span class="ml-2"><?=
+                                                                                                                $this->session->userdata('telp_wa');
+                                                                                                                ?></span></p>
+
+                              <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span class="ml-2 "><?=
+                                                                                                                $this->session->userdata('alamat_email');
+                                                                                                                ?></span></p>
+
+                              <p class="text-muted mb-1 font-13"><strong>Alamat :</strong> <span class="ml-2"><?=
+                                                                                                                $this->session->userdata('alamat');
+                                                                                                                ?></span></p>
+                          <?php } ?>
+
+
                       </div>
 
 
