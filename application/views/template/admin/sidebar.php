@@ -213,7 +213,7 @@
                         </a>
                     </li>
 
-                    <li class="side-nav-title side-nav-item">Setting Sistem</li>
+                    <!-- <li class="side-nav-title side-nav-item">Setting Sistem</li>
 
                     <li class="side-nav-item">
                         <a href="<?= base_url('pesan') ?>" class="side-nav-link">
@@ -227,7 +227,7 @@
                             <i class="uil-users-alt"></i>
                             <span> Users Sistem </span>
                         </a>
-                    </li>
+                    </li> -->
 
                 <?php } ?>
 
