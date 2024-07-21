@@ -3,7 +3,7 @@
       <div class="container-fluid">
           <div class="row">
               <div class="col-md-6">
-                  Made with <i class="uil-heart-sign"></i> by <b> <a href="https://winartcode.my.id" target="_blank">WinArt&Code</a></b>
+                  Made with <i class="uil-heart-sign"></i> by <b> <a href="#" target="_blank">Titik Balik Teknologi</a></b>
               </div>
               <div class="col-md-6">
                   <div class="text-md-right footer-links d-none d-md-block">

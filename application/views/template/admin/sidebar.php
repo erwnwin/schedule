@@ -169,12 +169,12 @@
                         </ul>
                     </li>
 
-                    <li class="side-nav-item">
+                    <!-- <li class="side-nav-item">
                         <a href="<?= base_url('ruangan') ?>" class="side-nav-link">
                             <i class="uil-building"></i>
                             <span> Ruangan </span>
                         </a>
-                    </li>
+                    </li> -->
 
                     <li class="side-nav-item">
                         <a href="<?= base_url('kelas') ?>" class="side-nav-link">

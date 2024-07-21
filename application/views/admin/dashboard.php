@@ -8,7 +8,7 @@
                   <div class="page-title-right">
 
                   </div>
-                  <h4 class="page-title">Dashboard</h4>
+                  <h4 class="page-title" style="color: black;">Dashboard</h4>
               </div>
           </div>
       </div>
@@ -33,54 +33,6 @@
               </div>
 
 
-              <div class="col-xl-12 col-lg-12">
-                  <div class="card widget-inline">
-                      <div class="card-body p-0">
-                          <div class="row no-gutters">
-                              <div class="col-sm-6 col-xl-3">
-                                  <div class="card shadow-none m-0">
-                                      <div class="card-body text-center">
-                                          <i class="dripicons-briefcase text-muted" style="font-size: 24px;"></i>
-                                          <h3><span>29</span></h3>
-                                          <p class="text-muted font-15 mb-0">Total Guru</p>
-                                      </div>
-                                  </div>
-                              </div>
-
-                              <div class="col-sm-6 col-xl-3">
-                                  <div class="card shadow-none m-0 border-left">
-                                      <div class="card-body text-center">
-                                          <i class="dripicons-checklist text-muted" style="font-size: 24px;"></i>
-                                          <h3><span>715</span></h3>
-                                          <p class="text-muted font-15 mb-0">Total Siswa</p>
-                                      </div>
-                                  </div>
-                              </div>
-
-                              <div class="col-sm-6 col-xl-3">
-                                  <div class="card shadow-none m-0 border-left">
-                                      <div class="card-body text-center">
-                                          <i class="dripicons-user-group text-muted" style="font-size: 24px;"></i>
-                                          <h3><span>31</span></h3>
-                                          <p class="text-muted font-15 mb-0">Total Kelas</p>
-                                      </div>
-                                  </div>
-                              </div>
-
-                              <div class="col-sm-6 col-xl-3">
-                                  <div class="card shadow-none m-0 border-left">
-                                      <div class="card-body text-center">
-                                          <i class="dripicons-user-group text-muted" style="font-size: 24px;"></i>
-                                          <h3><span>31</span></h3>
-                                          <p class="text-muted font-15 mb-0">Total Ruangan</p>
-                                      </div>
-                                  </div>
-                              </div>
-
-                          </div> <!-- end row -->
-                      </div>
-                  </div> <!-- end card-box-->
-              </div> <!-- end col-->
 
 
 

@@ -5,7 +5,7 @@
       <div class="row">
           <div class="col-12">
               <div class="page-title-box">
-                  <h4 class="page-title">Profil</h4>
+                  <h4 class="page-title" style="color: black;">Profil</h4>
               </div>
           </div>
       </div>

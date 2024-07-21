@@ -5,19 +5,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_guru extends CI_Model
 {
 
-
-
-
     public function tampil_guru()
     {
         return $this->db->get('guru')->result();
     }
-
-    // function tampil_guru($limit, $start)
-    // {
-    //     $query = $this->db->get('guru', $limit, $start);
-    //     return $query;
-    // }
 
     public function getAll()
     {

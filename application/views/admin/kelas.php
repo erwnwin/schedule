@@ -38,7 +38,7 @@
 
                                       <form class="form-horizontal" method="post" action="<?= base_url('kelas/act-add') ?>">
 
-                                          <div class="form-group row mb-3">
+                                          <!-- <div class="form-group row mb-3">
                                               <label class="col-3 col-form-label">Ruangan</label>
                                               <div class="col-9">
                                                   <select name="id_ruang" class="form-control select2" data-toggle="select2" style="width: 100%;" required>
@@ -48,7 +48,7 @@
                                                       <?php } ?>
                                                   </select>
                                               </div>
-                                          </div>
+                                          </div> -->
                                           <div class="form-group row mb-3">
                                               <label class="col-3 col-form-label">Kelas</label>
                                               <div class="col-9">
@@ -96,7 +96,7 @@
                                   <tr>
                                       <th style="width: 10px" class="bg-primary text-white text-center">#</th>
                                       <th class="bg-primary text-white text-center">Nama Kelas</th>
-                                      <th class="bg-primary text-white text-center">Ruangan</th>
+                                      <!-- <th class="bg-primary text-white text-center">Urutan Kelas</th> -->
                                       <th style="width: 90px" class="bg-primary text-white text-center">Action</th>
                                   </tr>
                               </thead>
@@ -114,7 +114,7 @@
                                           <tr>
                                               <td class="text-center"><?= $no++ ?></td>
                                               <td class="text-center">Kelas <?= $r->kelas ?> <?= $r->urutan_kelas ?></td>
-                                              <td class="text-center"><?= $r->nama_ruangan ?></td>
+                                              <!-- <td class="text-center"><?= $r->nama_ruangan ?></td> -->
                                               <td class="text-center">
                                                   <a href="" class="action-icon" data-toggle="modal" data-target="#modal-edit<?= $r->id_kelas ?>"> <i class="mdi mdi-pencil"></i></a>
                                                   <a href="<?= base_url('kelas/delete/' . $r->id_kelas) ?>" class="action-icon" id="btn-hapus"> <i class="mdi mdi-delete"></i></a>

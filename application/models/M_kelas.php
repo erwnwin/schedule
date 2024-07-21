@@ -8,7 +8,6 @@ class M_kelas extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('kelasku');
-        $this->db->join('ruang', 'kelasku.id_ruang = ruang.id', 'left');
         $query = $this->db->get();
         return $query->result();
     }
