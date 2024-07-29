@@ -122,28 +122,28 @@
                 <li class="side-nav-item">
 
 
-                    <a href="<?= base_url('dashboard') ?>" class="side-nav-link">
+                    <a href="<?= base_url('dashboard') ?>" class="side-nav-link" style="color: #ffa07a;">
                         <i class="uil-home-alt"></i>
                         <span> Dashboard </span>
                     </a>
                 </li>
 
                 <li class="side-nav-item">
-                    <a href="<?= base_url('profil') ?>" class="side-nav-link">
+                    <a href="<?= base_url('profil') ?>" class="side-nav-link" style="color: #ffa07a;">
                         <i class="uil-user-circle"></i>
                         <span> Profil </span>
                     </a>
                 </li>
 
                 <li class="side-nav-item">
-                    <a href="<?= base_url('bantuan') ?>" class="side-nav-link">
+                    <a href="<?= base_url('bantuan') ?>" class="side-nav-link" style="color: #ffa07a;">
                         <i class="uil-info-circle"></i>
                         <span> Bantuan </span>
                     </a>
                 </li>
 
                 <li class="side-nav-item">
-                    <a href="<?= base_url('logout') ?>" class="side-nav-link">
+                    <a href="<?= base_url('logout') ?>" class="side-nav-link" style="color: #ffa07a;">
                         <i class="uil-sign-out-alt"></i>
                         <span> Logout </span>
                     </a>
@@ -154,7 +154,7 @@
                 <?php if ($this->session->userdata('hak_akses') == '1') { ?>
                     <li class="side-nav-title side-nav-item">ADMINISTRATOR</li>
                     <li class="side-nav-item">
-                        <a href="#" class="side-nav-link">
+                        <a href="#" class="side-nav-link" style="color: #ffa07a;">
                             <i class="uil-users-alt"></i>
                             <span> Guru </span>
                             <span class="menu-arrow"></span>
@@ -170,28 +170,28 @@
                     </li>
 
                     <!-- <li class="side-nav-item">
-                        <a href="<?= base_url('ruangan') ?>" class="side-nav-link">
+                        <a href="<?= base_url('ruangan') ?>" class="side-nav-link" style="color: #ffa07a;">
                             <i class="uil-building"></i>
                             <span> Ruangan </span>
                         </a>
                     </li> -->
 
                     <li class="side-nav-item">
-                        <a href="<?= base_url('kelas') ?>" class="side-nav-link">
+                        <a href="<?= base_url('kelas') ?>" class="side-nav-link" style="color: #ffa07a;">
                             <i class="uil-home"></i>
                             <span> Kelas </span>
                         </a>
                     </li>
 
                     <li class="side-nav-item">
-                        <a href="<?= base_url('mata-pelajaran') ?>" class="side-nav-link">
+                        <a href="<?= base_url('mata-pelajaran') ?>" class="side-nav-link" style="color: #ffa07a;">
                             <i class="uil-clipboard-alt"></i>
                             <span> Mata Pelajaran </span>
                         </a>
                     </li>
 
                     <li class="side-nav-item">
-                        <a href="#" class="side-nav-link">
+                        <a href="#" class="side-nav-link" style="color: #ffa07a;">
                             <i class="uil-clock"></i>
                             <span> Waktu </span>
                             <span class="menu-arrow"></span>
@@ -207,7 +207,7 @@
                     </li>
 
                     <li class="side-nav-item">
-                        <a href="<?= base_url('jadwal-khusus') ?>" class="side-nav-link">
+                        <a href="<?= base_url('jadwal-khusus') ?>" class="side-nav-link" style="color: #ffa07a;">
                             <i class="uil-edit"></i>
                             <span> Jadwal Khusus </span>
                         </a>
@@ -216,14 +216,14 @@
                     <!-- <li class="side-nav-title side-nav-item">Setting Sistem</li>
 
                     <li class="side-nav-item">
-                        <a href="<?= base_url('pesan') ?>" class="side-nav-link">
+                        <a href="<?= base_url('pesan') ?>" class="side-nav-link" style="color: #ffa07a;">
                             <i class="uil-comments-alt"></i>
                             <span> Pesan </span>
                         </a>
                     </li>
 
                     <li class="side-nav-item">
-                        <a href="<?= base_url('users') ?>" class="side-nav-link">
+                        <a href="<?= base_url('users') ?>" class="side-nav-link" style="color: #ffa07a;">
                             <i class="uil-users-alt"></i>
                             <span> Users Sistem </span>
                         </a>
@@ -235,7 +235,7 @@
                     <li class="side-nav-title side-nav-item">KURIKULUM</li>
 
                     <li class="side-nav-item">
-                        <a href="#" class="side-nav-link">
+                        <a href="#" class="side-nav-link" style="color: #ffa07a;">
                             <i class="uil-edit"></i>
                             <span> Update Data </span>
                             <span class="menu-arrow"></span>
@@ -253,28 +253,28 @@
                         </ul>
                     </li>
                     <li class="side-nav-item">
-                        <a href="<?= base_url('guru-pengampu') ?>" class="side-nav-link">
+                        <a href="<?= base_url('guru-pengampu') ?>" class="side-nav-link" style="color: #ffa07a;">
                             <i class="uil-users-alt"></i>
                             <span> Guru Pengampu</span>
                         </a>
                     </li>
 
                     <li class="side-nav-item">
-                        <a href="<?= base_url('request-jadwal') ?>" class="side-nav-link">
+                        <a href="<?= base_url('request-jadwal') ?>" class="side-nav-link" style="color: #ffa07a;">
                             <i class="uil-table"></i>
                             <span>Request Jadwal</span>
                         </a>
                     </li>
 
                     <li class="side-nav-item">
-                        <a href="<?= base_url('tahun-akademik') ?>" class="side-nav-link">
+                        <a href="<?= base_url('tahun-akademik') ?>" class="side-nav-link" style="color: #ffa07a;">
                             <i class="uil-schedule"></i>
                             <span> Tahun Akademik</span>
                         </a>
                     </li>
 
                     <li class="side-nav-item">
-                        <a href="<?= base_url('penjadwalan') ?>" class="side-nav-link">
+                        <a href="<?= base_url('penjadwalan') ?>" class="side-nav-link" style="color: #ffa07a;">
                             <i class="uil-file-alt"></i>
                             <span> Penjadwalan</span>
                         </a>
@@ -286,14 +286,14 @@
                     <li class="side-nav-title side-nav-item">GURU MAPEL</li>
 
                     <li class="side-nav-item">
-                        <a href="<?= base_url('jadwalku') ?>" class="side-nav-link">
+                        <a href="<?= base_url('jadwalku') ?>" class="side-nav-link" style="color: #ffa07a;">
                             <i class="uil-schedule"></i>
                             <span> Jadwal Saya</span>
                         </a>
                     </li>
 
                     <li class="side-nav-item">
-                        <a href="<?= base_url('mapelku') ?>" class="side-nav-link">
+                        <a href="<?= base_url('mapelku') ?>" class="side-nav-link" style="color: #ffa07a;">
                             <i class="uil-file-alt"></i>
                             <span> Mapel Saya</span>
                         </a>
