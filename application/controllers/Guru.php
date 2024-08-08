@@ -43,7 +43,6 @@ class Guru extends CI_Controller
         $this->load->view('template/admin/footer', $data);
     }
 
-
     public function add_act()
     {
         $nama = $this->input->post('nama');
@@ -64,17 +63,12 @@ class Guru extends CI_Controller
             'alamat_email' => $alamat_email,
             'password' => $password,
             'warna_guru' => $warna_guru,
-
         );
 
         $this->db->insert('guru', $data);
 
         $token = "R1bqBzS9scy-5+uYzRHq";
         $target = '62' . $telp_wa;
-
-        // $token = "R1bqBzS9scy-5+uYzRHq";
-        // $target = "6282194460105";
-
 
         $curl = curl_init();
 
@@ -89,32 +83,108 @@ class Guru extends CI_Controller
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => array(
                 'target' => $target,
-                'message' => '*Hai, Bapak/Ibu ' . $this->input->post('nama') . '*
-                
+                'message' => '*Hai, Bapak/Ibu ' . $nama . '*
+
 *Salam Sejahtera, Bapak/Ibu Guru SMA Kristen*
 
 Data anda berhasil ditambahkan ke database sistem. Bapak/Ibu Guru dapat login ke aplikasi e-Schedule menggunakan user login di bawah ini:
 
-*Username/alamat email :* ' . $this->input->post('alamat_email') . '
-*Password :* ' . $this->input->post('password') . '
+*Username/alamat email :* ' . $alamat_email . '
+*Password :* ' . $password . '
 
 Data akun login anda dapat anda update melalui menu profil ketika Bapak/Ibu login nantinya. Terima kasih.
-                
+
 Pesan ini dikirim secara otomatis oleh sistem',
             ),
             CURLOPT_HTTPHEADER => array(
-                "Authorization: $token" //change TOKEN to your actual token
+                "Authorization: $token"
             ),
         ));
 
         $response = curl_exec($curl);
 
         curl_close($curl);
-        echo $response;
 
+        // Avoid echoing the response as it may cause header modification issues
+        // echo $response;
+
+        // Set flash data and redirect without any additional output
         $this->session->set_flashdata('sukses', 'Berhasil ditambahkan');
         redirect(base_url('guru'));
     }
+
+
+    //     public function add_act()
+    //     {
+    //         $nama = $this->input->post('nama');
+    //         $nip_nik = $this->input->post('nip_nik');
+    //         $alamat = $this->input->post('alamat');
+    //         $jenis_kelamin = $this->input->post('jenis_kelamin');
+    //         $telp_wa = $this->input->post('telp_wa');
+    //         $alamat_email = $this->input->post('alamat_email');
+    //         $password = $this->input->post('password');
+    //         $warna_guru = $this->input->post('warna_guru');
+
+    //         $data = array(
+    //             'nama' => $nama,
+    //             'nip_nik' => $nip_nik,
+    //             'alamat' => $alamat,
+    //             'jenis_kelamin' => $jenis_kelamin,
+    //             'telp_wa' => '62' . $telp_wa,
+    //             'alamat_email' => $alamat_email,
+    //             'password' => $password,
+    //             'warna_guru' => $warna_guru,
+
+    //         );
+
+    //         $this->db->insert('guru', $data);
+
+    //         $token = "R1bqBzS9scy-5+uYzRHq";
+    //         $target = '62' . $telp_wa;
+
+    //         // $token = "R1bqBzS9scy-5+uYzRHq";
+    //         // $target = "6282194460105";
+
+
+    //         $curl = curl_init();
+
+    //         curl_setopt_array($curl, array(
+    //             CURLOPT_URL => 'https://api.fonnte.com/send',
+    //             CURLOPT_RETURNTRANSFER => true,
+    //             CURLOPT_ENCODING => '',
+    //             CURLOPT_MAXREDIRS => 10,
+    //             CURLOPT_TIMEOUT => 0,
+    //             CURLOPT_FOLLOWLOCATION => true,
+    //             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    //             CURLOPT_CUSTOMREQUEST => 'POST',
+    //             CURLOPT_POSTFIELDS => array(
+    //                 'target' => $target,
+    //                 'message' => '*Hai, Bapak/Ibu ' . $this->input->post('nama') . '*
+
+    // *Salam Sejahtera, Bapak/Ibu Guru SMA Kristen*
+
+    // Data anda berhasil ditambahkan ke database sistem. Bapak/Ibu Guru dapat login ke aplikasi e-Schedule menggunakan user login di bawah ini:
+
+    // *Username/alamat email :* ' . $this->input->post('alamat_email') . '
+    // *Password :* ' . $this->input->post('password') . '
+
+    // Data akun login anda dapat anda update melalui menu profil ketika Bapak/Ibu login nantinya. Terima kasih.
+
+    // Pesan ini dikirim secara otomatis oleh sistem',
+    //             ),
+    //             CURLOPT_HTTPHEADER => array(
+    //                 "Authorization: $token" //change TOKEN to your actual token
+    //             ),
+    //         ));
+
+    //         $response = curl_exec($curl);
+
+    //         curl_close($curl);
+    //         echo $response;
+
+    //         $this->session->set_flashdata('sukses', 'Berhasil ditambahkan');
+    //         redirect(base_url('guru'));
+    //     }
 
     public function edit_act()
     {
