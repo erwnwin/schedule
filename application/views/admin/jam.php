@@ -20,14 +20,14 @@
           <div id="flash" data-flash="<?= $this->session->flashdata('sukses'); ?>"></div>
           <div id="flash-edit" data-flash="<?= $this->session->flashdata('edit'); ?>"></div>
 
-          <div class="col-xl-12 col-lg-12">
+          <!-- <div class="col-xl-12 col-lg-12">
 
               <div class="card">
                   <div class="card-body">
                       <div class="card-widgets">
-                          <!-- <a href="javascript:;" data-toggle="reload"><i class="mdi mdi-refresh"></i></a> -->
+                        
                           <a data-toggle="collapse" href="#cardCollpase1" role="button" aria-expanded="false" aria-controls="cardCollpase1"><i class="mdi mdi-plus"></i> </a>
-                          <!-- <a href="#" data-toggle="remove"><i class="mdi mdi-close"></i></a> -->
+                        
                       </div>
                       <h5 class="card-title mb-0">Create Range Jam</h5>
                       <div id="cardCollpase1" class="collapse pt-3 ">
@@ -70,13 +70,13 @@
                               </div>
                               <div class="modal-footer">
                                   <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
-                                  <!-- <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Tutup</button> -->
+                                 
                               </div>
                           </form>
                       </div>
                   </div>
-              </div> <!-- end card-->
-          </div>
+              </div> 
+          </div> -->
 
           <div class="col-xl-12 col-lg-12">
 
@@ -116,9 +116,9 @@
                                               <td class="text-center"><?= $r->jam_mulai ?></td>
                                               <td class="text-center">
                                                   <a href="" class="action-icon" data-toggle="modal" data-target="#modal-edit<?= $r->id_jadwal ?>"> <i class="mdi mdi-pencil"></i></a>
-                                                  <form action="<?= base_url('jam/delete/' . $r->id_jadwal) ?>" method="post">
+                                                  <!-- <form action="<?= base_url('jam/delete/' . $r->id_jadwal) ?>" method="post">
                                                       <button type="submit" class="btn btn-xs btn-sm btn-danger" id="btn-hapus-ku"> <i class="mdi mdi-delete"></i></button>
-                                                  </form>
+                                                  </form> -->
 
                                               </td>
                                           </tr>

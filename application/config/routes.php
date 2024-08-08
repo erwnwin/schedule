@@ -59,6 +59,7 @@ $route['guru/delete/(:num)'] = 'Guru/hapus_act/$1';
 // mapel
 $route['mata-pelajaran'] = 'Mata_pelajaran';
 $route['mata-pelajaran/act-add2'] = 'Mata_pelajaran/validation_form';
+$route['mata-pelajaran/act-edit'] = 'Mata_pelajaran/act_edit';
 
 // ruangan
 $route['ruangan/act'] = 'Ruangan/add_act';

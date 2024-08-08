@@ -26,7 +26,7 @@
                           <div class="modal-dialog">
                               <div class="modal-content">
                                   <div class="modal-header">
-                                      <h4 class="modal-title" id="standard-modalLabel">Input Data Guru / Akun Guru</h4>
+                                      <h4 class="modal-title" id="standard-modalLabel">Input Data Mata Pelajaran</h4>
                                       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                   </div>
                                   <div class="modal-body">
@@ -59,7 +59,7 @@
                                               </div>
                                           </div>
                                           <div class="form-group row mb-3">
-                                              <label class="col-3 col-form-label">Kelas</label>
+                                              <label class="col-3 col-form-label">Semester</label>
                                               <div class="col-9">
                                                   <select name="kelompok_mapel" class="form-control" required>
                                                       <option value="">Pilih Semester</option>
@@ -72,6 +72,7 @@
                                               <label class="col-3 col-form-label">Beban Jam</label>
                                               <div class="col-9">
                                                   <input type="text" name="beban_jam" class="form-control" maxlength="2" required="required" value="" placeholder="Beban Jam" autocomplete="off" />
+                                                  <span class="text-danger text-small" style="font-size: 10px;">Input angka 1-10 (sesuaikan berapa beban jam bukan menit)</span>
                                               </div>
                                           </div>
                                   </div>
@@ -131,6 +132,74 @@
           </div>
 
       </div>
+
+      <!-- Modal Edit -->
+      <?php foreach ($mapel as $r) { ?>
+          <div id="modal-edit<?= $r->id_mapel ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="edit-modalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h4 class="modal-title" id="edit-modalLabel">Edit Data Mata Pelajaran</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                      </div>
+                      <div class="modal-body">
+                          <form class="form-horizontal" method="post" action="<?= base_url('mata-pelajaran/act-edit') ?>">
+                              <input type="hidden" name="id_mapel" value="<?= $r->id_mapel ?>">
+                              <div class="form-group row mb-3">
+                                  <label class="col-3 col-form-label">Kode Mata Pelajaran</label>
+                                  <div class="col-9">
+                                      <input type="text" name="kode_mapel" class="form-control" required="required" value="<?= $r->kode_mapel ?>" placeholder="Kode Mata Pelajaran" autocomplete="off" />
+                                      <input type="hidden" name="jenis" class="form-control" required="required" value="TEORI" placeholder="Nama/Kode Ruangan" />
+                                  </div>
+                              </div>
+                              <div class="form-group row mb-3">
+                                  <label class="col-3 col-form-label">Nama Mata Pelajaran</label>
+                                  <div class="col-9">
+                                      <input type="text" name="nama_mapel" class="form-control" required="required" value="<?= $r->nama_mapel ?>" placeholder="Mata Pelajaran" autocomplete="off" />
+                                  </div>
+                              </div>
+                              <div class="form-group row mb-3">
+                                  <label class="col-3 col-form-label">Kelas</label>
+                                  <div class="col-9">
+                                      <?php
+                                        $kls = $this->db->query("SELECT * FROM kelasku")->result();
+                                        foreach ($kls as $k) {
+                                            $checked = in_array($k->id_kelas, explode(',', $r->id_kelas)) ? 'checked' : '';
+                                        ?>
+                                          <div class="custom-control custom-checkbox">
+                                              <input class="custom-control-input" name="chkKelas[]" type="checkbox" id="<?= $k->id_kelas ?>" value="<?= $k->id_kelas ?>" <?= $checked ?>>
+                                              <label class="custom-control-label" for="<?= $k->id_kelas ?>"> Kelas <?= $k->kelas ?> <?= $k->urutan_kelas ?></label>
+                                          </div>
+                                      <?php } ?>
+                                  </div>
+                              </div>
+                              <div class="form-group row mb-3">
+                                  <label class="col-3 col-form-label">Semester</label>
+                                  <div class="col-9">
+                                      <select name="kelompok_mapel" class="form-control" required>
+                                          <option value="A" <?= $r->kelompok_mapel == 'A' ? 'selected' : '' ?>>Ganjil</option>
+                                          <option value="B" <?= $r->kelompok_mapel == 'B' ? 'selected' : '' ?>>Genap</option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="form-group row mb-3">
+                                  <label class="col-3 col-form-label">Beban Jam</label>
+                                  <div class="col-9">
+                                      <input type="text" name="beban_jam" class="form-control" maxlength="2" required="required" value="<?= $r->beban_jam ?>" placeholder="Beban Jam" autocomplete="off" />
+                                      <span class="text-danger text-small" style="font-size: 10px;">Input angka 1-10 (sesuaikan berapa beban jam bukan menit)</span>
+                                  </div>
+                              </div>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
+                          <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Tutup</button>
+                      </div>
+                      </form>
+                  </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+          </div><!-- /.modal -->
+      <?php } ?>
+
 
 
 

@@ -70,6 +70,13 @@ class M_mapel extends CI_Model
     {
         return $this->db->get_where('mapelku', ['kode_mapel' => $kodeMapel])->row('nama_mapel');
     }
+
+    public function update_mapel($id_mapel, $data)
+    {
+        // Update data di tabel mata_pelajaran berdasarkan id_mapel
+        $this->db->where('id_mapel', $id_mapel);
+        return $this->db->update('mapelku', $data);
+    }
 }
 
 /* End of file M_mapel.php */

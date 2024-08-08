@@ -259,12 +259,12 @@
                         </a>
                     </li>
 
-                    <li class="side-nav-item">
+                    <!-- <li class="side-nav-item">
                         <a href="<?= base_url('request-jadwal') ?>" class="side-nav-link" style="color: #ffa07a;">
                             <i class="uil-table"></i>
                             <span>Request Jadwal</span>
                         </a>
-                    </li>
+                    </li> -->
 
                     <li class="side-nav-item">
                         <a href="<?= base_url('tahun-akademik') ?>" class="side-nav-link" style="color: #ffa07a;">

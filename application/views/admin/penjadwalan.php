@@ -12,8 +12,6 @@
       </div>
       <!-- end page title -->
 
-
-
       <div class="row">
 
           <div id="flash-gagal" data-flash="<?= $this->session->flashdata('gagal'); ?>"></div>
@@ -120,9 +118,9 @@
                             if (empty($penjadwalan)) {
                                 if (!empty($rangeJam)) {
                             ?>
-                                 
-                                      <a type="button" data-toggle="modal" data-target="#modal-buatJadwal" class="btn btn-success btn-flat pull-right text-white">Buat Jadwal</a>
-                                 
+
+                                  <a type="button" data-toggle="modal" data-target="#modal-buatJadwal" class="btn btn-success btn-flat pull-right text-white">Buat Jadwal</a>
+
                                   <div id="modal-buatJadwal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
                                       <div class="modal-dialog">
                                           <div class="modal-content">
@@ -176,84 +174,102 @@
                   <div class="row">
                       <?php
                         $hari = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum`at', 'Sabtu'];
-                        function filter_jadwal($penjadwalan, $hari, $kelas, $sesi)
+                        $jamMulaiArray = array_unique(array_column($penjadwalan, 'jam_mulai'));
+
+                        function format_jam($jam)
                         {
-                            $data = [];
-                            foreach ($penjadwalan as $value) {
-                                if ($value->hari == $hari && $value->sesi == $sesi && $value->id_kelas == $kelas) {
-                                    $data[] = $value;
-                                }
-                            }
-                            return $data;
+                            return date('H:i', strtotime($jam));
                         }
-                        function getkodeMapel($mapel, $idMapel)
-                        {
-                            $key = array_search($idMapel, array_column($mapel, 'id_mapel'));
-                            return $mapel[$key]->kode_mapel;
-                        }
+
                         foreach ($hari as $valueHari) :
                             $keyJadwal = array_search($valueHari, array_column($jadwal, 'hari'));
-                            $jumlahSesi = $jadwal[$keyJadwal]->jumlah_sesi;
+                            $jumlahJam = count($jamMulaiArray);
                         ?>
                           <div class="col-sm-12">
                               <div class="accordion custom-accordion mb-2" id="custom-accordion-one">
                                   <div class="card mb-0">
                                       <div class="card-header bg-info" id="headingSeven">
                                           <h5 class="m-0">
-                                              <a class="custom-accordion-title collapsed d-block py-1 text-white" data-toggle="collapse" href="#hariJadwal" aria-expanded="false" aria-controls="hariJadwal">
+                                              <a class="custom-accordion-title collapsed d-block py-1 text-white" data-toggle="collapse" href="#hariJadwal<?= $valueHari ?>" aria-expanded="false" aria-controls="hariJadwal<?= $valueHari ?>">
                                                   <?= $valueHari ?> <i class="mdi mdi-chevron-down accordion-arrow"></i>
                                               </a>
                                           </h5>
                                       </div>
 
-                                      <div id="hariJadwal" class="collapse" aria-labelledby="headingSeven" data-parent="#custom-accordion-one">
+                                      <div id="hariJadwal<?= $valueHari ?>" class="collapse" aria-labelledby="headingSeven" data-parent="#custom-accordion-one">
                                           <div class="card-body">
                                               <div class="table-responsive">
-                                                  <table class="table table-bordered ">
-                                                      <tr>
-                                                          <th class="warning text-center" style="width: 5%;">#</th>
-                                                          <?php foreach ($kelas as $valueKelas) : ?>
-                                                              <th class="warning text-center"><?= $valueKelas->id_kelas ?></th>
-                                                          <?php endforeach; ?>
-                                                      </tr>
-                                                      <?php
-                                                        // print_r($penjadwalan);
-                                                        for ($i = 0; $i < $jumlahSesi; $i++) { ?>
+                                                  <table class="table table-bordered">
+                                                      <thead>
                                                           <tr>
-                                                              <td class="text-center"><?= $i ?></td>
-                                                              <?php
-                                                                foreach ($kelas as $valueKelas) :
-                                                                    $dataJadwalKelas = filter_jadwal($penjadwalan, $valueHari, $valueKelas->id_kelas, $i);
-                                                                    if ($dataJadwalKelas[0]->id_guru !== null) { ?>
-                                                                      <td id="<?= $dataJadwalKelas[0]->id_penjadwalan ?>" class='penjadwalan first' data-kelas='<?= $valueKelas->id_kelas ?>' data-hari='<?= $valueHari ?>' data-jadwal='<?= json_encode($dataJadwalKelas[0]) ?>' data-request='<?= $dataJadwalKelas[0]->request ?>' style="padding: 10px; background-color: <?= $dataJadwalKelas[0]->warna_guru ?> ;">
-                                                                          <div>
-                                                                              <?= '' . $dataJadwalKelas[0]->nama . ' ~ ' .  getkodeMapel($mapel, $dataJadwalKelas[0]->id_mapel) ?>
-                                                                          </div>
-                                                                      </td>
-                                                              <?php
-                                                                    } else {
-                                                                        $color = 'blue';
-                                                                        if ($dataJadwalKelas[0]->keterangan == 'kosong') {
-                                                                            $color = 'red';
-                                                                        }
-                                                                        echo "<td style='color: $color ;' data-request='-' data-guru='" . $dataJadwalKelas[0]->id_guru . "' data-kelas='$valueKelas->id_kelas' data-hari='$valueHari' class='penjadwalan first' data-jadwal='" . json_encode($dataJadwalKelas[0]) . "'>" . $dataJadwalKelas[0]->keterangan . "</td>";
-                                                                    }
-                                                                endforeach; ?>
+                                                              <th class="warning text-center">Jam</th>
+                                                              <?php foreach ($kelas as $valueKelas) : ?>
+                                                                  <th class="warning text-center"><?= $valueKelas->id_kelas ?></th>
+                                                              <?php endforeach; ?>
                                                           </tr>
-                                                      <?php } ?>
+                                                      </thead>
+                                                      <tbody>
+                                                          <?php
+                                                            foreach ($jamMulaiArray as $jamMulai) {
+                                                                $jamSelesai = '';
+                                                                $formattedJamMulai = format_jam($jamMulai);
+
+                                                                // Mengambil jam selesai berdasarkan jam mulai dari data penjadwalan
+                                                                $dataJadwal = array_filter($penjadwalan, function ($item) use ($jamMulai, $valueHari) {
+                                                                    return $item->jam_mulai == $jamMulai && $item->hari == $valueHari;
+                                                                });
+                                                                if (!empty($dataJadwal)) {
+                                                                    $jamSelesai = format_jam(reset($dataJadwal)->jam_selesai);
+                                                                }
+                                                            ?>
+                                                              <tr>
+                                                                  <td class="text-center">
+                                                                      <?= $formattedJamMulai ?> s.d <?= $jamSelesai ?> WITA
+                                                                  </td>
+                                                                  <?php
+                                                                    foreach ($kelas as $valueKelas) :
+                                                                        $dataJadwalKelas = filter_jadwal($penjadwalan, $valueHari, $valueKelas->id_kelas, $jamMulai);
+                                                                        if (!empty($dataJadwalKelas)) {
+                                                                            $jadwalKelas = $dataJadwalKelas[0];
+                                                                            $keterangan = $jadwalKelas->keterangan;
+                                                                            if ($jadwalKelas->id_guru !== null) {
+                                                                                $displayText = $jadwalKelas->nama . ' ~ ' . getkodeMapel($mapel, $jadwalKelas->id_mapel);
+                                                                                $backgroundColor = $jadwalKelas->warna_guru;
+                                                                            } else {
+                                                                                $displayText = $keterangan;
+                                                                                $backgroundColor = 'transparent'; // No special color for empty slots
+                                                                            }
+                                                                    ?>
+                                                                          <td id="<?= $jadwalKelas->id_penjadwalan ?>" class='penjadwalan first' data-kelas='<?= $valueKelas->id_kelas ?>' data-hari='<?= $valueHari ?>' data-jadwal='<?= json_encode($jadwalKelas) ?>' data-request='<?= $jadwalKelas->request ?>' style="padding: 10px; background-color: <?= $backgroundColor ?> ;">
+                                                                              <div>
+                                                                                  <?= $displayText ?>
+                                                                              </div>
+                                                                          </td>
+                                                                  <?php
+                                                                        } else {
+                                                                            // For empty slots, set the cell with a default color (red) and white text
+                                                                            echo "<td style='color: white; background-color: red;' data-request='-' data-kelas='$valueKelas->id_kelas' data-hari='$valueHari' class='penjadwalan first' data-jadwal='{}'>Kosong</td>";
+                                                                        }
+                                                                    endforeach; ?>
+                                                              </tr>
+                                                          <?php } ?>
+                                                      </tbody>
                                                   </table>
                                               </div>
                                           </div>
                                       </div>
                                   </div>
                               </div>
-
                           </div>
-                          <!-- /.col -->
-                      <?php
-                        endforeach; ?>
+                      <?php endforeach; ?>
                   </div>
               <?php endif; ?>
+
+
+
+
+
+
 
 
           </div>

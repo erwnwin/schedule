@@ -1,24 +1,11 @@
 <?php
 
-// Turn off error reporting
-error_reporting(0);
-
-// Report runtime errors
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
-
-// Report all errors
-error_reporting(E_ALL);
-
-// Same as error_reporting(E_ALL);
-ini_set("error_reporting", E_ALL);
-
-// Report all errors except E_NOTICE
-error_reporting(E_ALL & ~E_NOTICE);
-
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class M_jadwal extends CI_Model
 {
+
+
     function all()
     {
         $this->db->select('*');
@@ -262,12 +249,40 @@ class M_jadwal extends CI_Model
     }
 
 
+    // public function resetPenjadwalan()
+    // {
+    //     $this->db->query('UPDATE penjadwalan 
+    //     SET 
+    //         id_guru = NULL, 
+    //         id_mapel = NULL, 
+    //         kode_jadwal = "-", 
+    //         keterangan = "kosong" 
+    //     WHERE 
+    //         id_guru IS NOT NULL AND id_guru != "" 
+    //         AND id_mapel IS NOT NULL AND id_mapel != ""
+    //     ');
+    //     $this->db->query('UPDATE guru_pengampu SET status = "0" WHERE status="1"');
+    //     $this->db->query('UPDATE guru_pengampu SET sisa_jam = beban_jam');
+    // }
+
     public function resetPenjadwalan()
     {
-        $this->db->query('UPDATE penjadwalan SET id_guru = null, id_mapel = null, kode_jadwal = "-", keterangan = "kosong" WHERE id_guru != ""');
+        $this->db->query(
+            'UPDATE penjadwalan 
+        SET 
+            id_guru = NULL, 
+            id_mapel = NULL, 
+            kode_jadwal = "-", 
+            keterangan = "kosong" 
+        WHERE 
+            id_guru IS NOT NULL 
+            AND id_mapel IS NOT NULL'
+        );
+
         $this->db->query('UPDATE guru_pengampu SET status = "0" WHERE status="1"');
         $this->db->query('UPDATE guru_pengampu SET sisa_jam = beban_jam');
     }
+
 
     public function resetJadwal()
     {
