@@ -109,7 +109,7 @@ $route['penjadwalan/reset-penjadwalan'] = 'Penjadwalan/reset_penjadwalan';
 $route['penjadwalan/reset-rumusan'] = 'Penjadwalan/reset_rumusan';
 $route['penjadwalan/ploting-jadwal'] = 'Penjadwalan/ploting_jadwal';
 
-$route['webhookku'] = 'TelegramBot/webhook';
+$route['webhook'] = 'TelegramBot/webhook';
 
 $route['404_override'] = 'Error_page';
 $route['translate_uri_dashes'] = FALSE;
