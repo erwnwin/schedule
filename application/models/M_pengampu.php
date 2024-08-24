@@ -34,7 +34,7 @@ class M_pengampu extends CI_Model
 
     public function tambah_data()
     {
-        // $jumlah = $this->input->post('jml_data');
+        $jumlah = $this->input->post('jml_data');
         echo $jumlah = count($this->input->post('guru'));
         $id_kelas = $this->input->post('id_kelas');
         $id_mapel = $this->input->post('id_mapel');
