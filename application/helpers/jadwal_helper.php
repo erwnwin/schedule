@@ -14,10 +14,22 @@ if (!function_exists('filter_jadwal')) {
     }
 }
 
+// if (!function_exists('getkodeMapel')) {
+//     function getkodeMapel($mapel, $idMapel)
+//     {
+//         $key = array_search($idMapel, array_column($mapel, 'id_mapel'));
+//         return $mapel[$key]->kode_mapel ?? 'Kode tidak ditemukan';
+//     }
+// }
 if (!function_exists('getkodeMapel')) {
     function getkodeMapel($mapel, $idMapel)
     {
         $key = array_search($idMapel, array_column($mapel, 'id_mapel'));
-        return $mapel[$key]->kode_mapel ?? 'Kode tidak ditemukan';
+        // Cek apakah $key tidak false dan tidak null
+        if ($key !== false && isset($mapel[$key])) {
+            return $mapel[$key]->kode_mapel;
+        } else {
+            return 'Kode tidak ditemukan';
+        }
     }
 }
