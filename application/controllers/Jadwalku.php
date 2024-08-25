@@ -23,11 +23,11 @@ class Jadwalku extends CI_Controller
 
         $data['hari'] = $this->m_hari->tampil_hari();
 
-        $this->load->view('template/admin/head', $data);
-        $this->load->view('template/admin/sidebar', $data);
-        $this->load->view('template/admin/header', $data);
-        $this->load->view('admin/jadwalku', $data);
-        $this->load->view('template/admin/footer', $data);
+        $this->load->view('layouts/head', $data);
+        $this->load->view('layouts/header', $data);
+        $this->load->view('layouts/sidebar', $data);
+        $this->load->view('admin/jadwalku_new', $data);
+        $this->load->view('layouts/footer', $data);
     }
 }
 

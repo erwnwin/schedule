@@ -18,6 +18,23 @@ class M_guru extends CI_Model
         return $this->db->get();
     }
 
+    public function get_guru($limit, $start)
+    {
+        $this->db->select('*');
+        $this->db->from('guru');
+        // $this->db->join('kelasku', 'mapelku.id_kelas = kelasku.id_kelas', 'left');
+        $this->db->limit($limit, $start);
+        return $this->db->get()->result();
+    }
+
+
+    public function count_mapel()
+    {
+        $this->db->from('guru');
+        return $this->db->count_all_results();
+        // $query = $this->db->get('mapelku');
+        // return $query->num_rows();
+    }
 
     // public function hapus($id)
     // {
@@ -34,13 +51,13 @@ class M_guru extends CI_Model
 
         if ($pengampu > 0) {
             // Tidak diizinkan menghapus jika ada komentar terkait
-            $this->session->set_flashdata('valid', 'Data gagal dihapus');
+            $this->session->set_flashdata('valid', 'Opps!! Data gagal dihapus<br>Data Guru ini terdaftar pada GURU PENGAMPU');
             return false;
         } else {
             // Hapus post jika tidak ada komentar terkait
             $this->db->where('id_guru', $id);
             $this->db->delete('guru');
-            $this->session->set_flashdata('gagal', 'Berhasil dihapus');
+            $this->session->set_flashdata('gagal', 'Nice!!<br>Berhasil dihapus');
             return true;
         }
 
@@ -57,11 +74,6 @@ class M_guru extends CI_Model
         return $this->db->get();
     }
 
-    // public function hapus($id)
-    // {
-    //     $this->db->where('id_guru', $id);
-    //     return $this->db->delete('guru');
-    // }
 
     public function getDataGuruJoinRequest()
     {

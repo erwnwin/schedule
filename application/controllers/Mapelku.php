@@ -26,12 +26,11 @@ class Mapelku extends CI_Controller
         JOIN kelasku on guru_pengampu.id_kelas=kelasku.id_kelas
         WHERE guru_pengampu.id_guru='$id_guru' ")->result();
 
-
-        $this->load->view('template/admin/head', $data);
-        $this->load->view('template/admin/sidebar', $data);
-        $this->load->view('template/admin/header', $data);
-        $this->load->view('admin/mapelku', $data);
-        $this->load->view('template/admin/footer', $data);
+        $this->load->view('layouts/head', $data);
+        $this->load->view('layouts/header', $data);
+        $this->load->view('layouts/sidebar', $data);
+        $this->load->view('admin/mapelku_new', $data);
+        $this->load->view('layouts/footer', $data);
     }
 }
 

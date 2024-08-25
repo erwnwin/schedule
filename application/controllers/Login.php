@@ -18,21 +18,24 @@ class Login extends CI_Controller
         $data['title'] = "Login : e-Schedule";
 
         // $this->load->view('template/login/head', $data);
-        $this->load->view('login', $data);
+        $this->load->view('auth/login', $data);
         // $this->load->view('template/login/footer', $data);
     }
 
     public function proses_login()
     {
+        // Get the input data
         $username = $this->input->post('username');
-        // $alamat_email = $this->input->post('username');
         $password = $this->input->post('password');
 
+        // Attempt to authenticate user
         $cek_user = $this->m_login->auth_user($username, $password);
+
         if ($cek_user->num_rows() > 0) {
             $data = $cek_user->row_array();
+            $this->session->set_userdata('masuk', TRUE);
+
             if ($data['hak_akses'] == '1') {
-                $this->session->set_userdata('masuk', TRUE);
                 $this->session->set_userdata('hak_akses', '1');
                 $this->session->set_userdata('username', $data['username']);
                 $this->session->set_userdata('email', $data['email']);
@@ -44,10 +47,13 @@ class Login extends CI_Controller
                 $this->session->set_userdata('foto_pengguna', $data['foto_pengguna']);
                 $this->session->set_userdata('foto_profil', $data['foto_profil']);
                 $this->session->set_userdata('id_user', $data['id_user']);
-                redirect(base_url('dashboard'));
+                // Other user data
+                $response = array(
+                    'status' => 'success',
+                    'message' => 'Good!!<br>Login successful!',
+                    'redirect' => base_url('dashboard')
+                );
             } elseif ($data['hak_akses'] == '2') {
-                $data = $cek_user->row_array();
-                $this->session->set_userdata('masuk', TRUE);
                 $this->session->set_userdata('hak_akses', '2');
                 $this->session->set_userdata('username', $data['username']);
                 $this->session->set_userdata('email', $data['email']);
@@ -59,10 +65,17 @@ class Login extends CI_Controller
                 $this->session->set_userdata('foto_pengguna', $data['foto_pengguna']);
                 $this->session->set_userdata('foto_profil', $data['foto_profil']);
                 $this->session->set_userdata('id_user', $data['id_user']);
-                redirect(base_url('dashboard'));
+                // Other user data
+                $response = array(
+                    'status' => 'success',
+                    'message' => 'Good!!<br>Login successful!',
+                    'redirect' => base_url('dashboard')
+                );
             }
         } else {
+            // Attempt to authenticate as teacher
             $cek_user = $this->m_login->auth_guru($username, $password);
+
             if ($cek_user->num_rows() > 0) {
                 $data = $cek_user->row_array();
                 $this->session->set_userdata('masuk', TRUE);
@@ -73,15 +86,24 @@ class Login extends CI_Controller
                 $this->session->set_userdata('nama', $data['nama']);
                 $this->session->set_userdata('alamat', $data['alamat']);
                 $this->session->set_userdata('jenis_kelamin', $data['jenis_kelamin']);
-                $this->session->set_userdata('gambar', $data['gambar']);
                 $this->session->set_userdata('telp_wa', $data['telp_wa']);
-                redirect(base_url('dashboard'));
+                // Other teacher data
+                $response = array(
+                    'status' => 'success',
+                    'message' => 'Good!!<br>Login successful!',
+                    'redirect' => base_url('dashboard')
+                );
+            } else {
+                // Authentication failed
+                $response = array(
+                    'status' => 'error',
+                    'message' => 'Opps!Sorry<br>Username or password incorrect.'
+                );
             }
-            $this->session->set_flashdata('gagal', 'Username atau password tidak sesuai.');
-            redirect(base_url('login'));
         }
-        $this->session->set_flashdata('gagal', 'Username atau password tidak sesuai.');
-        redirect(base_url('login'));
+
+        // Output response as JSON
+        echo json_encode($response);
     }
 }
 

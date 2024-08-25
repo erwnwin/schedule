@@ -9,12 +9,8 @@ class Error_page extends CI_Controller
     {
 
         $data['title'] = "Upsss! Sorry";
-
-        $this->load->view('template/admin/head', $data);
-        $this->load->view('template/admin/sidebar', $data);
-        $this->load->view('template/admin/header', $data);
         $this->load->view('404_page', $data);
-        $this->load->view('template/admin/footer', $data);
+        
     }
 }
 

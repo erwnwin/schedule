@@ -19,8 +19,9 @@ class Penjadwalan extends CI_Controller
         $this->load->model('m_rumusan');
         $this->load->model('m_pengampu');
         $this->load->model('m_khusus');
+        $this->load->model('m_drag');
         $this->load->helper('jadwal_helper');
-        
+
         if ($this->session->userdata('masuk') != TRUE) {
             // $this->session->set_flashdata('gagal', 'Anda harus login terlebih dahulu');
             redirect(base_url('login'));
@@ -42,11 +43,34 @@ class Penjadwalan extends CI_Controller
             'rangeJam' => $this->m_jam->getAllData()
         ];
 
-        $this->load->view('template/admin/head', $data);
-        $this->load->view('template/admin/sidebar', $data);
-        $this->load->view('template/admin/header', $data);
-        $this->load->view('admin/penjadwalan', $data);
-        $this->load->view('template/admin/footer', $data);
+        $this->load->view('layouts/head', $data);
+        $this->load->view('layouts/header', $data);
+        $this->load->view('layouts/sidebar', $data);
+        $this->load->view('admin/penjadwalan_new', $data);
+        $this->load->view('layouts/footer', $data);
+    }
+
+
+    public function results()
+    {
+        $data = [
+            'title' => "Hasil Ploting Penjadwalan : e-Schedule",
+            'ta' => $this->m_ta->tampil_ta(),
+            'rumusan' => $this->m_rumusan->getDataRumusan(),
+            'belumterplot' => $this->m_pengampu->tugasGuruBelumterplot(),
+            'kelas' => $this->m_kelas->getAllData(),
+            'penjadwalan' => $this->m_jadwal->getAllDataPenjadwalan(),
+            'jadwal' => $this->m_jadwal->getAllData(),
+            'kelas' => $this->m_kelas->getAllData(),
+            'mapel' => $this->m_mapel->getAllData(),
+            'rangeJam' => $this->m_jam->getAllData()
+        ];
+
+        $this->load->view('layouts/head', $data);
+        $this->load->view('layouts/header', $data);
+        $this->load->view('layouts/sidebar', $data);
+        $this->load->view('admin/hasil_ploting_penjadwalan', $data);
+        $this->load->view('layouts/footer', $data);
     }
 
     private function filter_jadwal($penjadwalan, $hari, $kelas, $jamMulai)
@@ -221,12 +245,14 @@ class Penjadwalan extends CI_Controller
         $this->m_rumusan->createData($result);
 
         // Redirect ke halaman penjadwalan setelah data disimpan
+        $this->session->set_flashdata('sukses', 'Nice!!<br>Berhasil buat rumusan jadwal');
         redirect(base_url('penjadwalan'));
     }
 
     public function reset_penjadwalan()
     {
         $this->m_jadwal->resetPenjadwalan();
+        $this->session->set_flashdata('sukses', 'Nice!!<br>Berhasil reset penjadwalan');
         redirect(base_url('penjadwalan'));
     }
 
@@ -234,12 +260,14 @@ class Penjadwalan extends CI_Controller
     {
         $this->m_rumusan->resetRumusan();
         $this->reset_Penjadwalan();
+        $this->session->set_flashdata('sukses', 'Nice!!<br>Berhasil reset rumusan');
         redirect(base_url('penjadwalan'));
     }
 
     public function reset_jadwal()
     {
         $this->m_jadwal->resetJadwal();
+        $this->session->set_flashdata('sukses', 'Nice!!<br>Berhasil reset jadwal');
         redirect(base_url('penjadwalan'));
     }
 
@@ -298,6 +326,7 @@ class Penjadwalan extends CI_Controller
         ob_end_clean(); // Bersihkan dan matikan buffering output
 
         // Redirect setelah semua pemrosesan selesai
+        $this->session->set_flashdata('sukses', 'Nice!!<br>Jadwal berhasil diploting');
         redirect(base_url('penjadwalan'));
     }
 
@@ -620,64 +649,64 @@ class Penjadwalan extends CI_Controller
 	* pindah jadwal
 	*/
 
-    public function pindahJadwal($status = null)
-    {
-        if ($status == null) {
-            $dataFirst = $this->input->post('dataFirst');
-            $dataSecond = $this->input->post('dataSecond');
+    // public function pindahJadwal($status = null)
+    // {
+    //     if ($status == null) {
+    //         $dataFirst = $this->input->post('dataFirst');
+    //         $dataSecond = $this->input->post('dataSecond');
 
-            if ($dataFirst['id_kelas'] == $dataSecond['id_kelas']) {
-                // if ($dataFirst['id_guru'] != null) {
-                // 	echo 'dataFirst null';
-                // }
+    //         if ($dataFirst['id_kelas'] == $dataSecond['id_kelas']) {
+    //             // if ($dataFirst['id_guru'] != null) {
+    //             // 	echo 'dataFirst null';
+    //             // }
 
-                // if ($dataSecond['id_guru'] != null) {
-                // 	echo 'dataSecond null';
-                // }
-                $cekJadwal1 = $this->m_jadwal->checkingJadwalTabrakan($dataFirst['hari'], $dataFirst['sesi'], $dataSecond['id_guru']);
-                $cekJadwal2 = $this->m_jadwal->checkingJadwalTabrakan($dataSecond['hari'], $dataSecond['sesi'], $dataFirst['id_guru']);
-                if (count($cekJadwal1) == 0 && count($cekJadwal2) == 0) {
-                    $this->m_jadwal->pindahJadwal_1_2($dataFirst, $dataSecond);
-                    $this->m_jadwal->pindahJadwal_2_1($dataFirst, $dataSecond);
-                    $data['status'] = 'success';
-                } else {
-                    $data['keterangan'] = 'Jadwal Tabrakan';
-                    $data['status'] = 'error';
-                }
-            } else {
-                $data['keterangan'] = 'tukar jadwal harus berbeda kelas';
-                $data['status'] = 'error';
-            }
-            echo json_encode($data);
-        } else {
-            $tugasGuru = $this->input->post('tugasGuru');
-            $dataFirst = $this->PenugasanGuru_Model->detail_data($tugasGuru);
-            $dataSecond = $this->input->post('dataSecond');
-            $cekJadwal = $this->m_jadwal->checkingJadwalTabrakan($dataSecond['hari'], $dataSecond['sesi'], $dataFirst['id_guru']);
-            if (count($cekJadwal) == 0) {
-                // echo "this is data first : ";
-                // print_r($dataFirst);
-                // echo "<br>";
-                // echo "this is data second : ";
-                // print_r($dataSecond);
-                // echo "<br>";
-                $this->m_jadwal->pindahJadwal($dataFirst, $dataSecond);
-                if ($dataSecond['id_guru'] != null) {
-                    // echo $dataSecond['kode_jadwal'] . "+,";
-                    $this->m_jadwal->updateSisaJam($dataSecond['kode_jadwal'], 1,  '+');
-                    $data['status'] = 'success';
-                } else {
-                    $data['status'] = 'success';
-                }
-                // echo $tugasGuru . "-";
-                $this->m_jadwal->updateSisaJam($tugasGuru, 1,  '-');
-            } else {
-                $data['keterangan'] = 'Jadwal Tabrakan';
-                $data['status'] = 'error';
-            }
-            echo json_encode($data);
-        }
-    }
+    //             // if ($dataSecond['id_guru'] != null) {
+    //             // 	echo 'dataSecond null';
+    //             // }
+    //             $cekJadwal1 = $this->m_jadwal->checkingJadwalTabrakan($dataFirst['hari'], $dataFirst['sesi'], $dataSecond['id_guru']);
+    //             $cekJadwal2 = $this->m_jadwal->checkingJadwalTabrakan($dataSecond['hari'], $dataSecond['sesi'], $dataFirst['id_guru']);
+    //             if (count($cekJadwal1) == 0 && count($cekJadwal2) == 0) {
+    //                 $this->m_jadwal->pindahJadwal_1_2($dataFirst, $dataSecond);
+    //                 $this->m_jadwal->pindahJadwal_2_1($dataFirst, $dataSecond);
+    //                 $data['status'] = 'success';
+    //             } else {
+    //                 $data['keterangan'] = 'Jadwal Tabrakan';
+    //                 $data['status'] = 'error';
+    //             }
+    //         } else {
+    //             $data['keterangan'] = 'tukar jadwal harus berbeda kelas';
+    //             $data['status'] = 'error';
+    //         }
+    //         echo json_encode($data);
+    //     } else {
+    //         $tugasGuru = $this->input->post('tugasGuru');
+    //         $dataFirst = $this->PenugasanGuru_Model->detail_data($tugasGuru);
+    //         $dataSecond = $this->input->post('dataSecond');
+    //         $cekJadwal = $this->m_jadwal->checkingJadwalTabrakan($dataSecond['hari'], $dataSecond['sesi'], $dataFirst['id_guru']);
+    //         if (count($cekJadwal) == 0) {
+    //             // echo "this is data first : ";
+    //             // print_r($dataFirst);
+    //             // echo "<br>";
+    //             // echo "this is data second : ";
+    //             // print_r($dataSecond);
+    //             // echo "<br>";
+    //             $this->m_jadwal->pindahJadwal($dataFirst, $dataSecond);
+    //             if ($dataSecond['id_guru'] != null) {
+    //                 // echo $dataSecond['kode_jadwal'] . "+,";
+    //                 $this->m_jadwal->updateSisaJam($dataSecond['kode_jadwal'], 1,  '+');
+    //                 $data['status'] = 'success';
+    //             } else {
+    //                 $data['status'] = 'success';
+    //             }
+    //             // echo $tugasGuru . "-";
+    //             $this->m_jadwal->updateSisaJam($tugasGuru, 1,  '-');
+    //         } else {
+    //             $data['keterangan'] = 'Jadwal Tabrakan';
+    //             $data['status'] = 'error';
+    //         }
+    //         echo json_encode($data);
+    //     }
+    // }
 
     /* 
 	* ambil hari yang kosong 
@@ -803,6 +832,109 @@ class Penjadwalan extends CI_Controller
         // $this->pdfgenerator->generate($html, 'tes');
         $this->load->view('file/export_excel', $data);
     }
+
+
+    public function pindahJadwal($status = null)
+    {
+        if ($status == null) {
+            $dataFirst = $this->input->post('dataFirst');
+            $dataSecond = $this->input->post('dataSecond');
+
+            if ($dataFirst['id_kelas'] == $dataSecond['id_kelas']) {
+                // if ($dataFirst['id_guru'] != null) {
+                // 	echo 'dataFirst null';
+                // }
+
+                // if ($dataSecond['id_guru'] != null) {
+                // 	echo 'dataSecond null';
+                // }
+                $cekJadwal1 = $this->m_drag->checkingJadwalTabrakan($dataFirst['hari'], $dataFirst['sesi'], $dataSecond['id_guru']);
+                $cekJadwal2 = $this->m_drag->checkingJadwalTabrakan($dataSecond['hari'], $dataSecond['sesi'], $dataFirst['id_guru']);
+                if (count($cekJadwal1) == 0 && count($cekJadwal2) == 0) {
+                    $this->m_drag->pindahJadwal_1_2($dataFirst, $dataSecond);
+                    $this->m_drag->pindahJadwal_2_1($dataFirst, $dataSecond);
+                    $data['status'] = 'success';
+                } else {
+                    $data['keterangan'] = 'Opss!! Sorry<br>Jadwal Tabrakan';
+                    $data['status'] = 'error';
+                }
+            } else {
+                $data['keterangan'] = 'Opss!! Sorry<br>Tukar jadwal harus berbeda kelas';
+                $data['status'] = 'error';
+            }
+            echo json_encode($data);
+        } else {
+            $tugasGuru = $this->input->post('tugasGuru');
+            $dataFirst = $this->m_drag->detail_data($tugasGuru);
+            $dataSecond = $this->input->post('dataSecond');
+            $cekJadwal = $this->m_drag->checkingJadwalTabrakan($dataSecond['hari'], $dataSecond['sesi'], $dataFirst['id_guru']);
+            if (count($cekJadwal) == 0) {
+                // echo "this is data first : ";
+                // print_r($dataFirst);
+                // echo "<br>";
+                // echo "this is data second : ";
+                // print_r($dataSecond);
+                // echo "<br>";
+                $this->m_drag->pindahJadwal($dataFirst, $dataSecond);
+                if ($dataSecond['id_guru'] != null) {
+                    // echo $dataSecond['kode_jadwal'] . "+,";
+                    $this->m_drag->updateSisaJam($dataSecond['kode_jadwal'], 1,  '+');
+                    $data['status'] = 'success';
+                } else {
+                    $data['status'] = 'success';
+                }
+                // echo $tugasGuru . "-";
+                $this->m_drag->updateSisaJam($tugasGuru, 1,  '-');
+            } else {
+                $data['keterangan'] = 'Opss!! Sorry<br>Jadwal Tabrakan';
+                $data['status'] = 'error';
+            }
+            echo json_encode($data);
+        }
+    }
+
+
+
+
+
+    // public function update()
+    // {
+    //     // Cek apakah permintaan ini adalah AJAX
+    //     if ($this->input->is_ajax_request()) {
+    //         $original_id = $this->input->post('original_id');
+    //         $target_id = $this->input->post('target_id');
+    //         $original_data = json_decode($this->input->post('original_data'), true);
+    //         $target_data = json_decode($this->input->post('target_data'), true);
+
+    //         // Update database
+
+    //         $this->m_drag->update_schedule($original_id, [
+    //             'id_kelas' => $target_data['id_kelas'],
+    //             'id_guru' => $target_data['id_guru'],
+    //             'id_mapel' => $target_data['id_mapel'],
+    //             'hari' => $target_data['hari'],
+    //             'jam_mulai' => $target_data['jam_mulai'],
+    //             'jam_selesai' => $target_data['jam_selesai'],
+    //             'kode_mapel' => $target_data['kode_mapel'],
+    //             'keterangan' => $target_data['keterangan']
+    //         ]);
+
+    //         $this->m_drag->update_schedule($target_id, [
+    //             'id_kelas' => $original_data['id_kelas'],
+    //             'id_guru' => $original_data['id_guru'],
+    //             'id_mapel' => $original_data['id_mapel'],
+    //             'hari' => $original_data['hari'],
+    //             'jam_mulai' => $original_data['jam_mulai'],
+    //             'jam_selesai' => $original_data['jam_selesai'],
+    //             'kode_mapel' => $original_data['kode_mapel'],
+    //             'keterangan' => $original_data['keterangan']
+    //         ]);
+
+    //         echo json_encode(['success' => true]);
+    //     } else {
+    //         show_404();
+    //     }
+    // }
 }
 
 /* End of file Penjadwalan.php */

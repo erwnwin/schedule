@@ -27,12 +27,11 @@ class Jam extends CI_Controller
 
         $data['range_jam'] = $this->m_jam->getAllData();
 
-
-        $this->load->view('template/admin/head', $data);
-        $this->load->view('template/admin/sidebar', $data);
-        $this->load->view('template/admin/header', $data);
-        $this->load->view('admin/jam', $data);
-        $this->load->view('template/admin/footer', $data);
+        $this->load->view('layouts/head', $data);
+        $this->load->view('layouts/header', $data);
+        $this->load->view('layouts/sidebar', $data);
+        $this->load->view('admin/jam_new', $data);
+        $this->load->view('layouts/footer', $data);
     }
 
 

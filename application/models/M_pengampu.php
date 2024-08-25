@@ -41,8 +41,8 @@ class M_pengampu extends CI_Model
         $kode_mapel = $this->input->post('kode_mapel');
         $beban_jam = $this->input->post('beban_jam');
         $id_guru = $this->input->post('guru');
-        print_r($id_guru);
-        echo '<br>';
+        // print_r($id_guru);
+        // echo '<br>';
         for ($i = 0; $i < $jumlah; $i++) {
             if ($id_guru[$i] != 'Pilih Guru') {
                 $data = array(
@@ -54,12 +54,16 @@ class M_pengampu extends CI_Model
                     'sisa_jam' => $beban_jam[$i],
                     'beban_jam' => $beban_jam[$i]
                 );
-                print_r($data);
-                echo '<br>';
+                // print_r($data);
+                // echo '<br>';
                 $this->db->insert('guru_pengampu', $data);
             }
         }
     }
+
+
+
+
 
     public function getDatatugasByidGuru($id_guru, $id_kelas)
     {

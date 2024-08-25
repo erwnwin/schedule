@@ -52,14 +52,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $route['default_controller'] = 'login';
 
 // guru
+$route['guru'] = 'Guru/index';
 $route['guru/act'] = 'Guru/add_act';
+$route['guru/(:num)'] = 'Guru/index/$1';
 $route['guru/act-edit'] = 'Guru/edit_act';
 $route['guru/delete/(:num)'] = 'Guru/hapus_act/$1';
 
 // mapel
-$route['mata-pelajaran'] = 'Mata_pelajaran';
+$route['mata-pelajaran'] = 'Mata_pelajaran/index';
+$route['mata-pelajaran/(:num)'] = 'mata_pelajaran/index/$1';
 $route['mata-pelajaran/act-add2'] = 'Mata_pelajaran/validation_form';
 $route['mata-pelajaran/act-edit'] = 'Mata_pelajaran/act_edit';
+$route['mata-pelajaran/get-filter'] = 'Mata_pelajaran/get_filter';
+$route['mata-pelajaran/get-filter2'] = 'Mata_pelajaran/filter_data';
 
 // ruangan
 $route['ruangan/act'] = 'Ruangan/add_act';
@@ -108,8 +113,12 @@ $route['penjadwalan/reset-jadwal'] = 'Penjadwalan/reset_jadwal';
 $route['penjadwalan/reset-penjadwalan'] = 'Penjadwalan/reset_penjadwalan';
 $route['penjadwalan/reset-rumusan'] = 'Penjadwalan/reset_rumusan';
 $route['penjadwalan/ploting-jadwal'] = 'Penjadwalan/ploting_jadwal';
+$route['penjadwalan/results'] = 'Penjadwalan/results';
+$route['penjadwalan/update'] = 'Penjadwalan/update';
 
 $route['webhook'] = 'TelegramBot/webhook';
+
+$route['jadwal-fix'] = 'Jadwal_fix';
 
 $route['404_override'] = 'Error_page';
 $route['translate_uri_dashes'] = FALSE;

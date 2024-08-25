@@ -14,6 +14,8 @@ class Guru extends CI_Controller
         }
         $this->load->model('m_guru');
         $this->load->library('secure');
+        $this->load->library('pagination');
+
         // $this->load->library('encrypt');
     }
 
@@ -22,14 +24,56 @@ class Guru extends CI_Controller
     {
         $data['title'] = "Guru : e-Schedule";
 
-        $data['guru'] = $this->m_guru->getAll()->result();
+        // $data['guru'] = $this->m_guru->getAll()->result();
+
+        $jumlah = $this->m_guru->count_mapel();
+
+        // Konfigurasi pagination
+        $config = array(
+            'base_url' => base_url('guru'),
+            'total_rows' => $jumlah,
+            'per_page' => 7,
+            'uri_segment' => 2, // Posisi nomor halaman dalam URL
+            'full_tag_open' => '<ul class="pagination pagination-sm m-0">',
+            'full_tag_close' => '</ul>',
+            'num_tag_open' => '<li class="page-item">',
+            'num_tag_close' => '</li>',
+            'next_tag_open' => '<li class="page-item">',
+            'next_tag_close' => '</li>',
+            'prev_tag_open' => '<li class="page-item">',
+            'prev_tag_close' => '</li>',
+            'first_tag_open' => '<li class="page-item">',
+            'first_tag_close' => '</li>',
+            'last_tag_open' => '<li class="page-item">',
+            'last_tag_close' => '</li>',
+            'cur_tag_open' => '<li class="page-item ">',
+            'cur_tag_close' => '</li>',
+            'next_link' => '&raquo;',
+            'prev_link' => '&laquo;',
+            'first_link' => 'First',
+            'last_link' => 'Last',
+            'num_links' => 2 // Jumlah link halaman yang ditampilkan di sekitar halaman aktif
+        );
+
+        // Inisialisasi pagination
+        $this->pagination->initialize($config);
+
+        // Mendapatkan nomor halaman saat ini
+        $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+
+        // Ambil data dengan limit dan offset
+        $data['guru'] = $this->m_guru->get_guru($config['per_page'], $page);
+
+        // Membuat link pagination
+        $data['pagination'] = $this->pagination->create_links();
+        $data['title'] = "Mata Pelajaran : e-Schedule";
 
 
-        $this->load->view('template/admin/head', $data);
-        $this->load->view('template/admin/sidebar', $data);
-        $this->load->view('template/admin/header', $data);
-        $this->load->view('admin/guru', $data);
-        $this->load->view('template/admin/footer', $data);
+        $this->load->view('layouts/head', $data);
+        $this->load->view('layouts/header', $data);
+        $this->load->view('layouts/sidebar', $data);
+        $this->load->view('admin/guru_new', $data);
+        $this->load->view('layouts/footer', $data);
     }
 
     public function create()
@@ -109,7 +153,7 @@ Pesan ini dikirim secara otomatis oleh sistem',
         // echo $response;
 
         // Set flash data and redirect without any additional output
-        $this->session->set_flashdata('sukses', 'Berhasil ditambahkan');
+        $this->session->set_flashdata('sukses', 'Nice!!<br>Berhasil ditambahkan');
         redirect(base_url('guru'));
     }
 
@@ -215,14 +259,13 @@ Pesan ini dikirim secara otomatis oleh sistem',
         );
 
         $this->db->update('guru', $data, $where);
-        $this->session->set_flashdata('edit', 'Berhasil diupdate');
+        $this->session->set_flashdata('edit', 'Nice!!<br>Berhasil diupdate');
         redirect(base_url('guru'));
     }
 
     public function hapus_act($id)
     {
         $this->m_guru->hapus($id);
-
         redirect(base_url('guru'));
     }
 }

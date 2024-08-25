@@ -78,11 +78,11 @@ class Dashboard extends CI_Controller
             JOIN kelasku on penjadwalan.id_kelas=kelasku.id_kelas
             WHERE penjadwalan.id_guru='$id_guru' AND penjadwalan.hari='$hari' ")->result();
 
-            $this->load->view('template/admin/head', $data);
-            $this->load->view('template/admin/sidebar', $data);
-            $this->load->view('template/admin/header', $data);
-            $this->load->view('admin/dashboard', $data);
-            $this->load->view('template/admin/footer', $data);
+            $this->load->view('layouts/head', $data);
+            $this->load->view('layouts/header', $data);
+            $this->load->view('layouts/sidebar', $data);
+            $this->load->view('admin/dashboard_new', $data);
+            $this->load->view('layouts/footer', $data);
         }
 
         if (
@@ -100,11 +100,11 @@ class Dashboard extends CI_Controller
 
             $data['title'] = "Dashboard : e-Schedule";
 
-            $this->load->view('template/admin/head', $data);
-            $this->load->view('template/admin/sidebar', $data);
-            $this->load->view('template/admin/header', $data);
-            $this->load->view('admin/dashboard', $data);
-            $this->load->view('template/admin/footer', $data);
+            $this->load->view('layouts/head', $data);
+            $this->load->view('layouts/header', $data);
+            $this->load->view('layouts/sidebar', $data);
+            $this->load->view('admin/dashboard_new', $data);
+            $this->load->view('layouts/footer', $data);
         }
     }
 }

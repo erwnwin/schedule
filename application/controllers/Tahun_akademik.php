@@ -23,11 +23,11 @@ class Tahun_akademik extends CI_Controller
 
         $data['ta'] = $this->m_ta->tampil_ta();
 
-        $this->load->view('template/admin/head', $data);
-        $this->load->view('template/admin/sidebar', $data);
-        $this->load->view('template/admin/header', $data);
-        $this->load->view('admin/tahun_akademik', $data);
-        $this->load->view('template/admin/footer', $data);
+        $this->load->view('layouts/head', $data);
+        $this->load->view('layouts/header', $data);
+        $this->load->view('layouts/sidebar', $data);
+        $this->load->view('admin/tahun_akademik_new', $data);
+        $this->load->view('layouts/footer', $data);
     }
 
 

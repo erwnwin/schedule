@@ -29,6 +29,25 @@ class M_mapel extends CI_Model
     }
 
 
+    // Model function to get paginated data
+    public function get_mapel($limit, $start)
+    {
+        $this->db->select('*');
+        $this->db->from('mapelku');
+        $this->db->join('kelasku', 'mapelku.id_kelas = kelasku.id_kelas', 'left');
+        $this->db->limit($limit, $start);
+        return $this->db->get()->result();
+    }
+
+    public function count_mapel()
+    {
+        $this->db->from('mapelku');
+        return $this->db->count_all_results();
+        // $query = $this->db->get('mapelku');
+        // return $query->num_rows();
+    }
+
+
     public function tambah_data()
     {
         foreach ($this->input->post('chkKelas') as $valueKls) {
@@ -77,6 +96,43 @@ class M_mapel extends CI_Model
         $this->db->where('id_mapel', $id_mapel);
         return $this->db->update('mapelku', $data);
     }
+
+
+    // Ambil data mapel berdasarkan ID
+    public function get_mapel_by_id($id_mapel)
+    {
+        $this->db->from('mapelku');
+        $this->db->where('id_mapel', $id_mapel);
+        return $this->db->get()->row();
+    }
+
+    // Update semua record berdasarkan kode_mapel lama
+    public function update_mapel_by_code($kode_mapel_lama, $data)
+    {
+        $this->db->where('kode_mapel', $kode_mapel_lama);
+        return $this->db->update('mapelku', $data);
+    }
+
+    // Update semua record berdasarkan nama_mapel lama
+    public function update_mapel_by_name($nama_mapel_lama, $data)
+    {
+        $this->db->where('nama_mapel', $nama_mapel_lama);
+        return $this->db->update('mapelku', $data);
+    }
+
+    public function update_mapel_by_jam($beban_jam_lama, $data)
+    {
+        $this->db->where('beban_jam', $beban_jam_lama);
+        return $this->db->update('mapelku', $data);
+    }
+
+
+    // Update record berdasarkan ID
+    // public function update_mapel($id_mapel, $data)
+    // {
+    //     $this->db->where('id_mapel', $id_mapel);
+    //     return $this->db->update('nama_tabel_mapel', $data);
+    // }
 }
 
 /* End of file M_mapel.php */

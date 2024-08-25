@@ -29,12 +29,11 @@ class Guru_pengampu extends CI_Controller
 
         $data['tugas_guru'] = $this->m_pengampu->getAllData();
 
-
-        $this->load->view('template/admin/head', $data);
-        $this->load->view('template/admin/sidebar', $data);
-        $this->load->view('template/admin/header', $data);
-        $this->load->view('admin/guru_pengampu', $data);
-        $this->load->view('template/admin/footer', $data);
+        $this->load->view('layouts/head', $data);
+        $this->load->view('layouts/header', $data);
+        $this->load->view('layouts/sidebar', $data);
+        $this->load->view('admin/guru_pengampu_new', $data);
+        $this->load->view('layouts/footer', $data);
     }
 
 
@@ -47,17 +46,19 @@ class Guru_pengampu extends CI_Controller
         $data['guru'] = $this->m_guru->getAll()->result();
         $data['nama_mapel'] = $this->m_mapel->getMapelbyKodeMapel($kode_mapel);
 
-        $this->load->view('template/admin/head', $data);
-        $this->load->view('template/admin/sidebar', $data);
-        $this->load->view('template/admin/header', $data);
-        $this->load->view('admin/create_guru_pengampu', $data);
-        $this->load->view('template/admin/footer', $data);
+
+        $this->load->view('layouts/head', $data);
+        $this->load->view('layouts/header', $data);
+        $this->load->view('layouts/sidebar', $data);
+        $this->load->view('admin/create_guru_pengampu_new', $data);
+        $this->load->view('layouts/footer', $data);
     }
 
     public function act_add()
     {
         $this->m_pengampu->tambah_data();
-        $this->session->set_flashdata('sukses', 'Guru Pengampu Berhasil Dipilih');
+        $this->session->set_flashdata('sukses', 'Nicee!<br>Guru Pengampu Berhasil Dipilih');
+
         redirect(base_url('guru-pengampu'));
     }
 

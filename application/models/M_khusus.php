@@ -22,6 +22,24 @@ class M_khusus extends CI_Model
         return $this->db->get()->result_array();
     }
 
+    // public function getAllData($limit, $offset)
+    // {
+    //     $this->db->select('id_jadwal_khusus, kelas, hari, keterangan, sesi, durasi');
+    //     $this->db->from('jadwal_khusus');
+
+    //     // Jika ada limit dan offset, tambahkan ke query
+    //     if ($limit !== null) {
+    //         $this->db->limit($limit, $offset);
+    //     }
+
+    //     return $this->db->get()->result_array();
+    // }
+
+
+    public function countAllData()
+    {
+        return $this->db->count_all('jadwal_khusus');
+    }
 
     public function get_projects($limit, $start)
     {
