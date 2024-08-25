@@ -12,24 +12,13 @@ class Guru_pengampu extends CI_Controller
             // $this->session->set_flashdata('gagal', 'Anda harus login terlebih dahulu');
             redirect(base_url('login'));
         }
-        set_error_handler(array($this, 'handle_errors'));
         $this->load->model('m_guru');
         $this->load->model('m_mapel');
         $this->load->model('m_kelas');
         $this->load->model('m_pengampu');
     }
 
-    public function handle_errors($severity, $message, $filepath, $line)
-    {
-        // Tangani kesalahan di sini
-        if (!(error_reporting() & $severity)) {
-            // Tidak ada pelaporan kesalahan ini
-            return;
-        }
 
-        // Log kesalahan atau tampilkan pesan
-        log_message('error', "Error: [$severity] $message - $filepath:$line");
-    }
 
     public function index()
     {
