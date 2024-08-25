@@ -51,6 +51,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 */
 $route['default_controller'] = 'Error_page';
 
+$route['login'] = 'Error_page';
+
 // guru
 $route['guru'] = 'Guru/index';
 $route['guru/act'] = 'Guru/add_act';
