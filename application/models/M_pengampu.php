@@ -63,24 +63,15 @@ class M_pengampu extends CI_Model
 
     public function tambah_data()
     {
-        $jumlah = $this->input->post('jml_data');
+        $jumlah = count($this->input->post('guru'));
         $id_kelas = $this->input->post('id_kelas');
         $id_mapel = $this->input->post('id_mapel');
         $kode_mapel = $this->input->post('kode_mapel');
         $beban_jam = $this->input->post('beban_jam');
-
-        // Pastikan 'guru' adalah array, jika tidak maka inisialisasi sebagai array kosong
         $id_guru = $this->input->post('guru');
-        if (!is_array($id_guru)) {
-            $id_guru = [];
-        }
-
-        // Hitung jumlah data
-        $jumlah = count($id_guru);
-        echo $jumlah;
 
         for ($i = 0; $i < $jumlah; $i++) {
-            if (isset($id_guru[$i]) && $id_guru[$i] != 'Pilih Guru') {
+            if ($id_guru[$i] != 'Pilih Guru') {
                 $data = array(
                     'id_tugas' => $id_guru[$i] . '-' . $id_mapel[$i] . '-' . $id_kelas[$i],
                     'id_guru' => $id_guru[$i],
@@ -90,7 +81,6 @@ class M_pengampu extends CI_Model
                     'sisa_jam' => $beban_jam[$i],
                     'beban_jam' => $beban_jam[$i]
                 );
-                // Insert data ke database
                 $this->db->insert('guru_pengampu', $data);
             }
         }
