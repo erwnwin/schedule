@@ -340,10 +340,10 @@
     });
 </script>
 <script>
-    var baseUrl = "<?= base_url('notifikasi') ?>";
+    // var baseUrl = "<?= base_url('notifikasi') ?>";
 
     function checkForNotifications() {
-        fetch(baseUrl)
+        fetch('https://schedule.winartcode.my.id/notifikasi')
             .then(response => response.json())
             .then(data => {
                 console.log('Notifikasi:', data);
