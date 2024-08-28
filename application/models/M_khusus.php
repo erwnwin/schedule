@@ -36,7 +36,7 @@ class M_khusus extends CI_Model
         $this->db->from('jadwal_khusus');
         $this->db->group_by('keterangan, hari, sesi, durasi');
         $this->db->order_by('sesi', 'ACS');
-        $this->db->order_by("FIELD(hari, 'Minggu', 'Sabtu', 'Jum`at', 'Kamis', 'Rabu', 'Selasa', 'Senin') DESC",);
+        $this->db->order_by("FIELD(hari, 'Minggu', 'Sabtu', 'Jum`at', 'Kamis', 'Rabu', 'Selasa', 'Senin') DESC");
 
         $this->db->limit($limit, $start); // Menambahkan limit dan offset
         return $this->db->get()->result_array();
