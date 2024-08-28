@@ -1,8 +1,8 @@
 <?php
+require_once(APPPATH . 'helpers/jadwal_helper.php');
+
 $fileName = "Penjadwalan Mata Pelajaran Makassar";
-if ($guru != null) {
-    $fileName = "(" . $guru['id_guru'] . ")Penjadwalan " . $guru['nama_guru'];
-}
+
 header("Content-type: application/vnd-ms-excel");
 header("Content-Disposition: attachment; filename=$fileName.xls");
 ?>
@@ -10,21 +10,7 @@ header("Content-Disposition: attachment; filename=$fileName.xls");
 <html lang="en">
 <?php
 $hari = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum`at', 'Sabtu'];
-function filter_jadwal($penjadwalan, $hari, $kelas, $sesi)
-{
-    $data = [];
-    foreach ($penjadwalan as $value) {
-        if ($value->hari == $hari && $value->sesi == $sesi && $value->id_kelas == $kelas) {
-            $data[] = $value;
-        }
-    }
-    return $data;
-}
-function getkodeMapel($mapel, $idMapel)
-{
-    $key = array_search($idMapel, array_column($mapel, 'id_mapel'));
-    return $mapel[$key]->kode_mapel;
-}
+
 ?>
 
 <head>

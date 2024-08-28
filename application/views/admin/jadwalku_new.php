@@ -16,6 +16,9 @@
                  <div class="container-fluid">
 
                      <div class="card card-default">
+                         <div id="divOverlayformJadwalku" class="overlay hidden">
+                             <i class="fas fa-2x fa-sync fa-spin"></i>
+                         </div>
                          <div class="card-header">
                              <h3 class="card-title">Daftar Jadwal Mengajar</h3>
 

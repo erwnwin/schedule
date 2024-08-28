@@ -152,7 +152,7 @@
 
                              <i class="nav-icon fas fa-clock"></i>
                              <p>
-                                 Sesi / Waktu
+                                 Aturan Sesi / Waktu
                              </p>
                          </a>
                      </li>

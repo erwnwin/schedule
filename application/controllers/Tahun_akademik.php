@@ -48,7 +48,7 @@ class Tahun_akademik extends CI_Controller
         );
 
         $this->db->insert('tahun_akademik', $data);
-        $this->session->set_flashdata('sukses', 'Tahun Akademik berhasil ditambahkan');
+        $this->session->set_flashdata('sukses', 'Good!!<br>Tahun Akademik berhasil ditambahkan');
         redirect(base_url('tahun-akademik'));
     }
 
@@ -70,11 +70,11 @@ class Tahun_akademik extends CI_Controller
         $sql = $this->db->query("SELECT status FROM tahun_akademik where status='Aktif'");
         $cek = $sql->num_rows();
         if ($cek > 0) {
-            $this->session->set_flashdata('gagal', 'Silahkan menonaktifkan tahun akademik yang lampau!');
+            $this->session->set_flashdata('error', 'Opss!!<br>Silahkan menonaktifkan tahun akademik yang lampau!');
             redirect(base_url('tahun-akademik'));
         } else {
             $this->db->update('tahun_akademik', $data, $where);
-            $this->session->set_flashdata('sukses', 'Data tahun akademik berhasil diaktifkan!');
+            $this->session->set_flashdata('sukses', 'Nice!!<br>Data tahun akademik berhasil diaktifkan!');
             redirect(base_url('tahun-akademik'));
         }
     }

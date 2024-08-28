@@ -19,6 +19,9 @@
                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                          <h5><i class="icon far fa-question-circle"></i>Mohon Diperhatikan!</h5>
                          Jadwal khusus disesuaikan dengan Jadwal seperti <b><u>UPACARA, IBADAH dan ISTIRAHAT</u></b>
+                         <hr>
+                         <b><u>For Info :</u></b>
+                         Sistem mendeteksi angka awal dimulai dari angka NOL, maka seperti jadwal Upacara dapat diinputkan angka NOL (sebagai sesi pertama)
                      </div>
 
                      <div class="card card-default">
@@ -44,42 +47,56 @@
                                          </tr>
                                      </thead>
                                      <tbody>
-                                         <?php
-
-                                            $no = 1;
-                                            foreach ($jadwal_khusus as $row) {
-
-                                            ?>
-
+                                         <?php if ($jadwal_khusus == null) { ?>
                                              <tr>
-                                                 <td><?= $no; ?></td>
-                                                 <td class="text-center"><?= $row['hari'] ?></td>
-                                                 <td class="text-center"><?= $row['kelas'] ?></td>
-                                                 <td><?= $row['keterangan'] ?></td>
-                                                 <td class="text-center"><?= $row['sesi'] ?></td>
-                                                 <td class="text-center"><?= $row['durasi'] ?></td>
-                                                 <td class="text-center">
-                                                     <div class="btn-group">
-                                                         <!-- <a href="<?= base_url() ?>DataJadwalKhusus/hapus/<?= $row['id_jadwal_khusus']  ?>" class="btn btn-danger btn-sm btn-flat" onclick="return confirm('yakin ?')"><i class="fa fa-trash"></i></a> -->
-                                                         <a href="<?= base_url() ?>DataJadwalKhusus/ubah/<?= $row['id_jadwal_khusus']  ?>" class="btn btn-outline-warning btn-sm btn-rounded">Update</a>
-                                                         <a href="<?= base_url() ?>DataJadwalKhusus/ubah/<?= $row['id_jadwal_khusus']  ?>" class="btn btn-outline-danger btn-sm btn-rounded">Delete</a>
-                                                     </div>
+                                                 <td colspan="7">
+                                                     <center>Tidak ada data</center>
+                                                     <!-- <center>
+                                                         <img src="<?= base_url() ?>assets/img/no-data.svg" alt="" width="30%">
+                                                         <p class="mt-3">Tidak ada data</p>
+                                                     </center> -->
                                                  </td>
                                              </tr>
+                                         <?php } else { ?>
+                                             <?php
+                                                $no = 1;
+                                                foreach ($jadwal_khusus as $row) {
 
-                                         <?php
-                                                $no++;
-                                            }
-                                            ?>
+                                                ?>
+
+                                                 <tr>
+                                                     <td><?= $no; ?></td>
+                                                     <td class="text-center"><?= $row['hari'] ?></td>
+                                                     <td class="text-center">Kelas <?= $row['kelas'] ?></td>
+                                                     <td><?= $row['keterangan'] ?></td>
+                                                     <td class="text-center"><?= $row['sesi'] ?></td>
+                                                     <td class="text-center"><?= $row['durasi'] ?></td>
+                                                     <td class="text-center">
+                                                         <div class="btn-group">
+                                                             <a type="button" data-toggle="modal"
+                                                                 data-target="#modal-edit"
+                                                                 data-hari="<?= $row['hari'] ?>"
+                                                                 data-keterangan="<?= $row['keterangan'] ?>"
+                                                                 class="btn btn-warningku btn-sm btn-rounded">Edit</a>
+                                                             <a type="button" class="btn btn-dangerku btn-sm btn-rounded">Delete</a>
+                                                         </div>
+                                                     </td>
+                                                 </tr>
+
+                                             <?php
+                                                    $no++;
+                                                }
+                                                ?>
+                                         <?php } ?>
                                      </tbody>
                                  </table>
                              </div>
                          </div>
-                         <!-- <div class="card-footer clearfix">
+                         <div class="card-footer clearfix">
                              <div id="pagination">
-                                 <?php echo $pagination_links; ?>
+                                 <?php echo $pagination; ?>
                              </div>
-                         </div> -->
+                         </div>
                      </div>
 
 
@@ -172,7 +189,7 @@
                                                                          <?php foreach ($dataKelas as $valueKelas) : ?>
                                                                              <td class="text-center">
                                                                                  <?php
-                                                                                    $result =  keteranganSesi($jadwal_khusus, $valueHari, $valueKelas->kelas, $i);
+                                                                                    $result =  keteranganSesi($jadwal_khususku, $valueHari, $valueKelas->kelas, $i);
                                                                                     echo $result;
                                                                                     ?>
                                                                              </td>
@@ -203,6 +220,47 @@
              </section>
 
 
+             <!-- Modal Edit -->
+             <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modal-edit-label" aria-hidden="true">
+                 <div class="modal-dialog" role="document">
+                     <div class="modal-content">
+                         <div class="modal-header">
+                             <h5 class="modal-title" id="modal-edit-label">Edit Jadwal</h5>
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                             </button>
+                         </div>
+                         <form action="<?= base_url('your_controller/update') ?>" method="post">
+                             <div class="modal-body">
+                                 <input type="text" class="form-control" name="hari" id="modal-edit-hari">
+                                 <input type="text" class="form-control" name="keterangan" id="modal-edit-keterangan">
+
+                                 <div class="form-group">
+                                     <label for="kelas">Kelas</label>
+                                     <?php
+                                        $kelas_list = ['X', 'XI', 'XII']; // Daftar kelas
+                                        ?>
+                                     <?php foreach ($kelas_list as $value): ?>
+                                         <div class="custom-control custom-checkbox">
+                                             <input class="custom-control-input" name="kelas[]" type="checkbox" id="kelas_<?= $value ?>" value="<?= $value ?>">
+                                             <label class="custom-control-label" for="kelas_<?= $value ?>">Kelas <?= $value ?></label>
+                                         </div>
+                                     <?php endforeach; ?>
+                                 </div>
+                             </div>
+                             <div class="modal-footer">
+                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                 <button type="submit" class="btn btn-primary">Save changes</button>
+                             </div>
+                         </form>
+                     </div>
+                 </div>
+             </div>
+
+
+
+
+
              <!-- modal add guru -->
              <div class="modal fade" id="modal-tambah">
                  <div class="modal-dialog modal-lg">
@@ -225,9 +283,13 @@
                                             $hari = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum`at', 'Sabtu'];
                                             foreach ($hari as $value) { ?>
                                              <div class="custom-control custom-checkbox">
+                                                 <input class="custom-control-input" name="hari[]" type="checkbox" id="<?= $value ?>" value="<?= $value ?>">
+                                                 <label class="custom-control-label" for="<?= $value ?>"><?= $value ?></label>
+                                             </div>
+                                             <!-- <div class="custom-control custom-checkbox">
                                                  <input class="form-control-input" name="hari[]" type="checkbox" id="<?= $value ?>" value="<?= $value ?>">
                                                  <label class="form-control-label" for="<?= $value ?>"><?= $value ?></label>
-                                             </div>
+                                             </div> -->
                                          <?php } ?>
                                      </div>
                                  </div>
@@ -241,8 +303,8 @@
                                             $kelas = ['X', 'XI', 'XII'];
                                             foreach ($kelas as $value) { ?>
                                              <div class="custom-control custom-checkbox">
-                                                 <input class="form-control-input" name="kelas[]" type="checkbox" id="<?= $value ?>" value="<?= $value ?>">
-                                                 <label class="form-control-label" for="<?= $value ?>">Kelas <?= $value ?></label>
+                                                 <input class="custom-control-input" name="kelas[]" type="checkbox" id="<?= $value ?>" value="<?= $value ?>">
+                                                 <label class="custom-control-label" for="<?= $value ?>">Kelas <?= $value ?></label>
                                              </div>
                                          <?php } ?>
 
@@ -272,7 +334,7 @@
 
                          </div>
                          <div class="modal-footer justify-content-between">
-                             <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">Close</button>
+                             <button type="button" class="btn btn-dangerku btn-sm" data-dismiss="modal">Close</button>
                              <button type="submit" class="btn btn-primaryku btn-sm">Simpan</button>
                          </div>
                          </form>

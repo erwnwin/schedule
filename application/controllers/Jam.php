@@ -37,28 +37,41 @@ class Jam extends CI_Controller
 
     public function edit_act()
     {
-        $id = $this->input->post('id');
-        $range_jam = $this->input->post('range_jam');
-        $waktu_shalat = $this->input->post('waktu_shalat');
+        $id_jadwal = $this->input->post('id_jadwal');
+        $jumlah_sesi = $this->input->post('jumlah_sesi');
+        $lama_sesi = $this->input->post('lama_sesi');
+        $jam_mulai = $this->input->post('jam_mulai');
 
-        $data = array(
-            'id' => $id,
-            'range_jam' => $range_jam,
-            'waktu_shalat' => $waktu_shalat,
+        // Ambil data yang ada di database
+        $this->db->where('id_jadwal', $id_jadwal);
+        $existing_data = $this->db->get('jadwal')->row_array();
 
-        );
+        // Cek apakah data yang akan diupdate sama dengan data yang ada
+        if (
+            $existing_data['jumlah_sesi'] == $jumlah_sesi &&
+            $existing_data['lama_sesi'] == $lama_sesi &&
+            $existing_data['jam_mulai'] == $jam_mulai
+        ) {
 
-        $where = array(
-            'id' => $id,
-        );
+            $this->session->set_flashdata('info', 'Info!!<br>Tidak ada data yang diperbarui!');
+            redirect(base_url('jam')); // Redirect setelah menampilkan pesan
+            return; // Hentikan eksekusi lebih lanjut
+        } else {
+            // Update data jika ada perubahan
+            $data = array(
+                'jumlah_sesi' => $jumlah_sesi,
+                'lama_sesi' => $lama_sesi,
+                'jam_mulai' => $jam_mulai
+            );
 
-        $this->db->update('jam', $data, $where);
-        $this->session->set_flashdata('pesan', '<div class="alert alert-info alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <h4><i class="icon fa fa-check"></i> Update</h4>
-        Data jam berhasil terupdate!
-        </div>');
-        redirect(base_url('jam'));
+            $where = array(
+                'id_jadwal' => $id_jadwal,
+            );
+
+            $this->db->update('jadwal', $data, $where);
+            $this->session->set_flashdata('sukses', 'Good!!<br>Berhasil diupdate');
+            redirect(base_url('jam')); // Redirect setelah update data
+        }
     }
 
     public function validation_form()

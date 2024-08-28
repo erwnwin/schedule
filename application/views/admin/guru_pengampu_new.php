@@ -41,20 +41,33 @@
                                                  </tr>
                                              </thead>
                                              <tbody>
-                                                 <?php
-                                                    $no = 1;
-                                                    foreach ($mapel as $ValueListMapel) : ?>
+                                                 <?php if ($mapel == null) { ?>
                                                      <tr>
-                                                         <td class="text-center"><?= $no ?></td>
-                                                         <td class="text-center"><?= $ValueListMapel->nama_mapel ?></td>
-                                                         <td class="text-center">
-                                                             <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#TugasGuru" data-kodemapel="<?= $ValueListMapel->kode_mapel ?>" data-mapel="<?= $ValueListMapel->nama_mapel ?>">Tambah Guru Pengajar</button> -->
-                                                             <a href="<?= base_url('guru-pengampu/create-pengampu/' . $ValueListMapel->kode_mapel) ?>"><button class="btn btn-sm <?= ($ValueListMapel->jumlah_kosong == 0) ? 'btn-primaryku' : 'btn-dangerku'; ?>">Lihat Guru Pengajar</button></a>
+                                                         <td colspan="3">
+                                                             <center>Tidak ada data</center>
+                                                             <!-- <center>
+                                                         <img src="<?= base_url() ?>assets/img/no-data.svg" alt="" width="30%">
+                                                         <p class="mt-3">Tidak ada data</p>
+                                                     </center> -->
                                                          </td>
                                                      </tr>
-                                                 <?php
-                                                        $no++;
-                                                    endforeach; ?>
+                                                 <?php } else { ?>
+                                                     <?php
+                                                        $no = 1;
+                                                        foreach ($mapel as $ValueListMapel) : ?>
+                                                         <tr>
+                                                             <td class="text-center"><?= $no ?></td>
+                                                             <td class="text-center"><?= $ValueListMapel->nama_mapel ?></td>
+                                                             <td class="text-center">
+                                                                 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#TugasGuru" data-kodemapel="<?= $ValueListMapel->kode_mapel ?>" data-mapel="<?= $ValueListMapel->nama_mapel ?>">Tambah Guru Pengajar</button> -->
+                                                                 <a href="<?= base_url('guru-pengampu/create-pengampu/' . $ValueListMapel->kode_mapel) ?>"><button class="btn btn-sm <?= ($ValueListMapel->jumlah_kosong == 0) ? 'btn-primaryku' : 'btn-dangerku'; ?>">Lihat Guru Pengajar</button></a>
+                                                             </td>
+                                                         </tr>
+                                                     <?php
+                                                            $no++;
+                                                        endforeach; ?>
+
+                                                 <?php } ?>
                                              </tbody>
                                          </table>
                                      </div>

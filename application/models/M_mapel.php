@@ -19,6 +19,15 @@ class M_mapel extends CI_Model
     }
 
 
+    public function get_classes_by_mapel($kode_mapel)
+    {
+        $this->db->select('kelasku.id_kelas, kelasku.kelas, kelasku.urutan_kelas');
+        $this->db->from('kelasku');
+        $this->db->join('mapelku', 'kelasku.id_kelas = mapelku.id_kelas');
+        $this->db->where('mapelku.kode_mapel', $kode_mapel);
+        return $this->db->get()->result();
+    }
+
 
     public function mapel()
     {
@@ -28,16 +37,32 @@ class M_mapel extends CI_Model
         return $this->db->get()->result();
     }
 
-
-    // Model function to get paginated data
     public function get_mapel($limit, $start)
     {
-        $this->db->select('*');
+        $this->db->select('mapelku.kode_mapel, mapelku.nama_mapel, GROUP_CONCAT(kelasku.id_kelas SEPARATOR ", ") as kelas, mapelku.beban_jam');
         $this->db->from('mapelku');
         $this->db->join('kelasku', 'mapelku.id_kelas = kelasku.id_kelas', 'left');
+        $this->db->group_by('mapelku.kode_mapel, mapelku.nama_mapel, mapelku.beban_jam');
         $this->db->limit($limit, $start);
+
         return $this->db->get()->result();
     }
+
+    // // Model function to get paginated data
+    // public function get_mapel($limit, $start)
+    // {
+    //     $this->db->select('*');
+    //     $this->db->from('mapelku');
+    //     $this->db->join('kelasku', 'mapelku.id_kelas = kelasku.id_kelas', 'left');
+    //     $this->db->group_by('mapelku.kode_mapel'); // Mengelompokkan berdasarkan kode_mapel
+    //     $this->db->limit($limit, $start);
+    //     return $this->db->get()->result();
+    //     // $this->db->select('*');
+    //     // $this->db->from('mapelku');
+    //     // $this->db->join('kelasku', 'mapelku.id_kelas = kelasku.id_kelas', 'left');
+    //     // $this->db->limit($limit, $start);
+    //     // return $this->db->get()->result();
+    // }
 
     public function count_mapel()
     {
@@ -45,6 +70,33 @@ class M_mapel extends CI_Model
         return $this->db->count_all_results();
         // $query = $this->db->get('mapelku');
         // return $query->num_rows();
+        // $this->db->select('COUNT(DISTINCT mapelku.nama_mapel) as count');
+        // $this->db->from('mapelku');
+        // $this->db->join('kelasku', 'mapelku.id_kelas = kelasku.id_kelas', 'left');
+        // return $this->db->get()->row()->count;
+    }
+
+    // public function count_mapel()
+    // {
+    //     $this->db->select('COUNT(DISTINCT mapelku.nama_mapel) as count');
+    //     $this->db->from('mapelku');
+    //     return $this->db->get()->row()->count;
+    // }
+
+    // public function get_mapel($limit, $start)
+    // {
+    //     $this->db->select('mapelku.kode_mapel, mapelku.id_mapel, mapelku.nama_mapel, mapelku.beban_jam, GROUP_CONCAT(DISTINCT kelasku.id_kelas SEPARATOR ", ") as kelas');
+    //     $this->db->from('mapelku');
+    //     $this->db->join('kelasku', 'mapelku.id_kelas = kelasku.id_kelas', 'left');
+    //     $this->db->group_by('mapelku.id_mapel'); // Mengelompokkan berdasarkan ID mapel
+    //     $this->db->limit($limit, $start);
+    //     $this->db->order_by('mapelku.nama_mapel'); // Opsional, untuk pengurutan
+    //     return $this->db->get()->result();
+    // }
+
+    public function get_all_classes()
+    {
+        return $this->db->get('kelasku')->result();
     }
 
 
@@ -132,7 +184,50 @@ class M_mapel extends CI_Model
     // {
     //     $this->db->where('id_mapel', $id_mapel);
     //     return $this->db->update('nama_tabel_mapel', $data);
-    // }
+    // }'
+
+
+    public function update_mapelku($kode_mapel, $data)
+    {
+        $this->db->where('kode_mapel', $kode_mapel);
+        $this->db->update('mapelku', $data);
+    }
+
+    public function sync_classes($kode_mapel, $nama_mapel, $kelompok_mapel, $beban_jam, $kelas_ids)
+    {
+        // Ambil kelas lama yang terkait dengan kode_mapel
+        $this->db->where('kode_mapel', $kode_mapel);
+        $existing_classes = $this->db->get('mapelku')->result_array();
+        $existing_ids = array_column($existing_classes, 'id_kelas');
+
+        // Kelas yang baru
+        $new_ids = $kelas_ids;
+
+        // Kelas yang harus dihapus
+        $to_delete = array_diff($existing_ids, $new_ids);
+
+        // Kelas yang harus ditambahkan
+        $to_add = array_diff($new_ids, $existing_ids);
+
+        // Hapus kelas yang tidak ada di list baru
+        if (!empty($to_delete)) {
+            $this->db->where('kode_mapel', $kode_mapel);
+            $this->db->where_in('id_kelas', $to_delete);
+            $this->db->delete('mapelku');
+        }
+
+        // Tambah kelas yang baru
+        foreach ($to_add as $kelas_id) {
+            $data = [
+                'kode_mapel' => $kode_mapel,
+                'nama_mapel' => $nama_mapel,
+                'beban_jam' => $beban_jam,
+                'kelompok_mapel' => $kelompok_mapel,
+                'id_kelas' => $kelas_id
+            ];
+            $this->db->insert('mapelku', $data);
+        }
+    }
 }
 
 /* End of file M_mapel.php */

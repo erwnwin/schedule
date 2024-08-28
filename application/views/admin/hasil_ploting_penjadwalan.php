@@ -30,7 +30,7 @@
                          <br>
                          <ul>
                              <li>Jika data penjadwalan berikut telah dinyatakan "<b>TELAH SESUAI</b>" maka BAGIAN KURIKULUM wajib melakukan Share Penjadwalan.</li>
-                             <li>Silahkan klik Button <button type="button" class="btn btn-sm btn-xs btn-primaryku"> SHARE FIX JADWAL</button> </li>
+                             <li>Silahkan klik Button <button type="button" class="btn btn-sm btn-xs btn-primaryku"> SHARE FIX JADWAL</button> ketika semua data telah final</li>
                              <li>Silahkan klik Button <a href="<?= base_url('penjadwalan') ?>" class="btn btn-sm btn-xs btn-dangerku"> Back to Penjadwalan</a> untuk kembali ke halaman PENJADWALAN</li>
                          </ul>
                      </div>
@@ -49,6 +49,10 @@
                              <div class="row">
                                  <!-- data jadwal -->
                                  <?php if (!empty($rumusan) && !empty($penjadwalan)) : ?>
+
+                                     <div class="col-sm-12 mb-3">
+                                         <button class="btn btn-primaryku btn-block" type="button" data-toggle="modal" data-target="#modal-share">Share Fix Jadwal</button>
+                                     </div>
 
                                      <?php
                                         $hari = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum`at', 'Sabtu'];
@@ -70,7 +74,11 @@
 
                                             $collapseId = sanitizeId($valueHari);
                                         ?>
+
+
                                          <div class="col-sm-12">
+
+
                                              <div id="accordion">
                                                  <div class="card card-info">
                                                      <div class="card-header">
@@ -228,6 +236,46 @@
                                  </div>
                              </form>
                          </div>
+                         <!-- /.modal-content -->
+                     </div>
+                 </div>
+                 <!-- /.modal-dialog -->
+             </div>
+
+
+
+             <div class="modal fade" id="modal-share" tabindex="-1" role="dialog" aria-labelledby="modal-tambah-label" aria-hidden="true">
+                 <div class="modal-dialog" role="document">
+                     <div class="modal-content">
+                         <div class="modal-header">
+                             <div id="overlayFinalShare" class="overlay hidden">
+                                 <i class="fas fa-2x fa-sync fa-spin"></i>
+                             </div>
+                             <h5 class="modal-title" id="modal-share-label">Finalisasi Jadwal Mata Pelajaran</h5>
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                             </button>
+                         </div>
+                         <div class="modal-body">
+                             <form id="formFinalShare" action=" <?= base_url('penjadwalan/finalisasi-data') ?>" method="post" class="form-horizontal">
+                                 <div class="box-body">
+                                     <div class="form-group row mb-3">
+                                         <label class="col-sm-5 col-form-label">Tahun Akademik Aktif</label>
+                                         <div class="col-sm-7">
+                                             <?php foreach ($ta as $t) { ?>
+                                                 <input type="hidden" class="form-control" value="<?= $t->id_ta ?>" required="required" name="id_ta" readonly />
+                                                 <input type="text" class="form-control" value="<?= $t->tahun_akademik ?>" required="required" name="tahun_akademik" readonly />
+                                             <?php } ?>
+                                         </div>
+                                     </div>
+                                 </div>
+                         </div>
+                         <div class="modal-footer justify-content-between">
+                             <button type="submit" class="btn btn-sm btn-successku float-left" value="SimpanPerguruanTinggiAsalMahasiswa"> Finalisasi Data Jadwal</button>
+                             <button type="button" class="btn btn-sm btn-dangerku float-right" data-dismiss="modal"> Batal</button>
+                         </div>
+                         </form>
+
                          <!-- /.modal-content -->
                      </div>
                  </div>

@@ -37,7 +37,7 @@
                                                      <th class="text-center">Nama Lengkap Guru (Beserta Gelar)</th>
                                                      <th class="text-center">Alamat</th>
                                                      <th class="text-center">WA Aktif</th>
-                                                     <th style="width: 100px" class="text-center">Action</th>
+                                                     <th style="width: 150px" class="text-center">Action</th>
                                                  </tr>
                                              </thead>
                                              <tbody>
@@ -59,8 +59,8 @@
                                                              <td><?= $g->alamat ?></td>
                                                              <td>+<?= $g->telp_wa ?> <span class="badge badge-danger">aktif</span></td>
                                                              <td class="text-center">
-                                                                 <a type="button" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#modal-edit<?= $g->id_guru ?>"> Edit</a>
-                                                                 <a type="button" class="btn btn-sm btn-dangerku" data-toggle="modal" data-target="#modal-hapus<?= $g->id_guru ?>"> <i class="fas fa-trash"></i></a>
+                                                                 <a type="button" class="btn btn-sm btn-warningku" data-toggle="modal" data-target="#modal-edit<?= $g->id_guru ?>"> Edit</a>
+                                                                 <a type="button" class="btn btn-sm btn-dangerku" data-toggle="modal" data-target="#modal-hapus<?= $g->id_guru ?>"> Delete</a>
                                                              </td>
                                                          </tr>
                                                      <?php } ?>
@@ -253,13 +253,13 @@
                                      <div class="form-group row mb-3">
                                          <label for="inputPassword3" class="col-3 col-form-label">No WhatsApp <span class="text-danger">*aktif</span></label>
                                          <div class="col-9">
-                                             <div class="input-group">
-                                                 <div class="input-group-prepend">
+                                             <!-- <div class="input-group"> -->
+                                             <!-- <div class="input-group-prepend">
                                                      <span class="input-group-text">+62</span>
-                                                 </div>
-                                                 <input type="text" name="telp_wa" class="form-control" value="<?= $g->telp_wa ?>" placeholder="82xxxxxxx" value="" maxlength="13" required>
-
-                                             </div>
+                                                 </div> -->
+                                             <input type="text" name="telp_wa" class="form-control" value="<?= $g->telp_wa ?>" placeholder="82xxxxxxx" value="" maxlength="13" required>
+                                             <small class="text-danger">*Format penulisan No.WA <b>62821xxxxxxx</b></small>
+                                             <!-- </div> -->
                                          </div>
                                      </div>
                                      <div class="form-group row mb-3">

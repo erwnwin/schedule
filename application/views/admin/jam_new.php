@@ -70,7 +70,7 @@
                                                      <td class="text-center"><?= $r->lama_sesi ?> Menit</td>
                                                      <td class="text-center"><?= $r->jam_mulai ?></td>
                                                      <td class="text-center">
-                                                         <a href="" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#modal-edit<?= $r->id_jadwal ?>"> Edit</a>
+                                                         <a type="button" class="btn btn-sm btn-warningku" data-toggle="modal" data-target="#modal-edit<?= $r->id_jadwal ?>"> Edit</a>
                                                          <!-- <form action="<?= base_url('jam/delete/' . $r->id_jadwal) ?>" method="post">
                                                       <button type="submit" class="btn btn-xs btn-sm btn-danger" id="btn-hapus-ku"> <i class="mdi mdi-delete"></i></button>
                                                   </form> -->
@@ -86,6 +86,75 @@
                      </div>
                  </div>
              </section>
+
+             <?php foreach ($range_jam as $r) { ?>
+                 <div class="modal fade" id="modal-edit<?= $r->id_jadwal ?>">
+                     <div class="modal-dialog">
+                         <div class="modal-content">
+                             <div id="overlayAturanSesi" class="overlay hidden">
+                                 <i class="fas fa-2x fa-sync fa-spin"></i>
+                             </div>
+                             <div class="modal-header">
+                                 <h4 class="modal-title">Form Update Aturan Sesi dan Durasi per Sesi</h4>
+                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                     <span aria-hidden="true">&times;</span>
+                                 </button>
+                             </div>
+                             <div class="modal-body">
+
+                                 <form id="formUpdateAturan" action="<?= base_url() ?>jam/act-update" method="post" class="form-horizontal">
+                                     <input type="hidden" name="id_jadwal" class="form-control" value="<?= $r->id_jadwal ?>">
+                                     <div class="form-group row mb-3">
+                                         <label class="col-3 col-form-label">Hari</label>
+                                         <div class="col-9">
+                                             <?php
+                                                $hari = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum`at', 'Sabtu'];
+                                                foreach ($hari as $value) {
+                                                    $checked = '';
+                                                    if (in_array($value, array_column($range_jam, 'hari'))) {
+                                                        $checked = 'disabled checked';
+                                                    }
+                                                ?>
+                                                 <div class="custom-control custom-checkbox">
+                                                     <input class="custom-control-input" name="chkJadwalHari[]" type="checkbox" id="<?= $value ?>" value="<?= $value ?>" <?= $checked ?>>
+                                                     <label class="custom-control-label" for="<?= $value ?>"><?= $value ?></label>
+                                                 </div>
+                                             <?php } ?>
+                                         </div>
+                                     </div>
+
+
+                                     <div class="form-group row mb-3">
+                                         <label class="col-sm-3 col-form-label">Sesi Per Hari</label>
+                                         <div class="col-sm-9">
+                                             <input type="number" class="form-control" value="<?= $r->jumlah_sesi ?>" required="required" name="jumlah_sesi" id="sesi" min="5" max="20" placeholder="Minimal input 5" autocomplete="off" />
+                                         </div>
+                                     </div>
+                                     <div class="form-group row mb-3">
+                                         <label class="col-sm-3 col-form-label">Waktu Per Sesi</label>
+                                         <div class="col-sm-9">
+                                             <input type="number" name="lama_sesi" id="durasi" min="10" max="60" class="form-control" required="required" value="<?= $r->lama_sesi ?>" placeholder="Minimal input 10" autocomplete="off" />
+                                             <small class="text-danger">*Dalam menit, contoh : 30 (masukkan angka saja)</small>
+                                         </div>
+                                     </div>
+
+                                     <div class="form-group row mb-2">
+                                         <label class="col-sm-3 col-form-label">Sesi Dimulai</label>
+                                         <div class="col-sm-9">
+                                             <input type="time" name="jam_mulai" id="waktuMulai" class="form-control" required="required" value="<?= $r->jam_mulai ?>" placeholder="Minimal input 10" autocomplete="off" />
+                                         </div>
+                                     </div>
+
+                             </div>
+                             <div class="modal-footer justify-content-between">
+                                 <button type="button" class="btn btn-dangerku btn-sm" data-dismiss="modal">Close</button>
+                                 <button type="submit" class="btn btn-primaryku btn-sm">Update</button>
+                             </div>
+                             </form>
+                         </div>
+                     </div>
+                 </div>
+             <?php } ?>
 
              <div>
                  <br>

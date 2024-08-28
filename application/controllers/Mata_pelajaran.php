@@ -31,7 +31,7 @@ class Mata_pelajaran extends CI_Controller
         $config = array(
             'base_url' => base_url('mata-pelajaran'),
             'total_rows' => $jumlah,
-            'per_page' => 7,
+            'per_page' => 13,
             'uri_segment' => 2, // Posisi nomor halaman dalam URL
             'full_tag_open' => '<ul class="pagination pagination-sm m-0">',
             'full_tag_close' => '</ul>',
@@ -65,6 +65,7 @@ class Mata_pelajaran extends CI_Controller
 
         // Membuat link pagination
         $data['pagination'] = $this->pagination->create_links();
+        $data['all_classes'] = $this->m_mapel->get_all_classes();
         $data['title'] = "Mata Pelajaran : e-Schedule";
 
         $this->load->view('layouts/head', $data);
@@ -80,6 +81,56 @@ class Mata_pelajaran extends CI_Controller
         $this->session->set_flashdata('sukses', 'Berhasil ditambahkan');
         redirect(base_url('mata-pelajaran'));
     }
+
+
+    public function act_edit()
+    {
+        $kode_mapel = $this->input->post('kode_mapel');
+        $nama_mapel = $this->input->post('nama_mapel');
+        $beban_jam = $this->input->post('beban_jam');
+        $kelompok_mapel = 'A';
+        $kelas_ids = $this->input->post('chkKelas');
+
+        // Update mata pelajaran
+        $data_mapel = [
+            'kode_mapel' => $kode_mapel,
+            'nama_mapel' => $nama_mapel,
+            'kelompok_mapel' => $kelompok_mapel,
+            'beban_jam' => $beban_jam
+        ];
+
+        // Update data mapel (kode_mapel sebagai identifier utama)
+        $this->m_mapel->update_mapelku($kode_mapel, $data_mapel);
+
+        // Sync kelas yang terkait
+        $this->m_mapel->sync_classes($kode_mapel, $nama_mapel, $kelompok_mapel, $beban_jam, $kelas_ids);
+        $this->session->set_flashdata('sukses', 'Nice!!<br>Data Mapel Berhasil diupdate');
+        redirect(base_url('mata-pelajaran'));
+    }
+
+
+    public function delete_mapel($kode_mapel)
+    {
+        // Cek apakah kode_mapel digunakan oleh guru pengampu
+        $this->db->select('kode_mapel');
+        $this->db->from('guru_pengampu');
+        $this->db->where('kode_mapel', $kode_mapel);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            // Jika ada data di tabel guru_pengampu yang berelasi dengan id_kelas
+            $this->session->set_flashdata('error', 'Oppss!! Gagal Hapus.<br> Data tidak dapat dihapus karena mapel telah ada guru pengampunya. Silahkan lakukan edit saja.');
+            redirect(base_url('mata-pelajaran'));
+        } else {
+            // Hapus data dari tabel mapelku dan tabel terkait lainnya
+            $this->db->where('kode_mapel', $kode_mapel);
+            $this->db->delete('mapelku');
+            $this->session->set_flashdata('sukses', 'Nice!!<br>Data Mapel Berhasil dihapus. Silahkan input data baru');
+            redirect(base_url('mata-pelajaran'));
+        }
+    }
+
+
 
     // public function act_edit()
     // {
@@ -124,64 +175,64 @@ class Mata_pelajaran extends CI_Controller
     // }
 
 
-    public function act_edit()
-    {
-        // Validasi input
-        $this->form_validation->set_rules('kode_mapel', 'Kode Mata Pelajaran', 'required');
-        $this->form_validation->set_rules('nama_mapel', 'Nama Mata Pelajaran', 'required');
-        $this->form_validation->set_rules('kelompok_mapel', 'Semester', 'required');
-        $this->form_validation->set_rules('beban_jam', 'Beban Jam', 'required|numeric');
+    // public function act_edit()
+    // {
+    //     // Validasi input
+    //     $this->form_validation->set_rules('kode_mapel', 'Kode Mata Pelajaran', 'required');
+    //     $this->form_validation->set_rules('nama_mapel', 'Nama Mata Pelajaran', 'required');
+    //     // $this->form_validation->set_rules('kelompok_mapel', 'Semester', 'required');
+    //     $this->form_validation->set_rules('beban_jam', 'Beban Jam', 'required|numeric');
 
-        if ($this->form_validation->run() === FALSE) {
-            // Jika validasi gagal, redirect kembali ke halaman edit dengan pesan error
-            $this->session->set_flashdata('error', validation_errors());
-            redirect('mata-pelajaran');
-        } else {
-            // Ambil data dari form
-            $id_mapel = $this->input->post('id_mapel');
-            $kode_mapel = $this->input->post('kode_mapel');
-            $nama_mapel = $this->input->post('nama_mapel');
-            $kelompok_mapel = $this->input->post('kelompok_mapel');
-            $beban_jam = $this->input->post('beban_jam');
-            $chkKelas = $this->input->post('chkKelas') ? implode(',', $this->input->post('chkKelas')) : '';
+    //     if ($this->form_validation->run() === FALSE) {
+    //         // Jika validasi gagal, redirect kembali ke halaman edit dengan pesan error
+    //         $this->session->set_flashdata('error', validation_errors());
+    //         redirect('mata-pelajaran');
+    //     } else {
+    //         // Ambil data dari form
+    //         $id_mapel = $this->input->post('id_mapel');
+    //         $kode_mapel = $this->input->post('kode_mapel');
+    //         $nama_mapel = $this->input->post('nama_mapel');
+    //         // $kelompok_mapel = $this->input->post('kelompok_mapel');
+    //         $beban_jam = $this->input->post('beban_jam');
+    //         $chkKelas = $this->input->post('chkKelas') ? implode(',', $this->input->post('chkKelas')) : '';
 
-            // Ambil data record lama
-            $old_record = $this->m_mapel->get_mapel_by_id($id_mapel);
+    //         // Ambil data record lama
+    //         $old_record = $this->m_mapel->get_mapel_by_id($id_mapel);
 
-            // Siapkan data untuk update
-            $data = array(
-                'kode_mapel' => $kode_mapel,
-                'nama_mapel' => $nama_mapel,
-                'kelompok_mapel' => $kelompok_mapel,
-                'beban_jam' => $beban_jam,
-                'id_kelas' => $chkKelas
-            );
+    //         // Siapkan data untuk update
+    //         $data = array(
+    //             'kode_mapel' => $kode_mapel,
+    //             'nama_mapel' => $nama_mapel,
+    //             // 'kelompok_mapel' => $kelompok_mapel,
+    //             'beban_jam' => $beban_jam,
+    //             'id_kelas' => $chkKelas
+    //         );
 
-            // Update berdasarkan kode_mapel
-            if ($old_record->kode_mapel != $kode_mapel) {
-                $this->m_mapel->update_mapel_by_code($old_record->kode_mapel, $data);
-            }
+    //         // Update berdasarkan kode_mapel
+    //         if ($old_record->kode_mapel != $kode_mapel) {
+    //             $this->m_mapel->update_mapel_by_code($old_record->kode_mapel, $data);
+    //         }
 
-            // Update berdasarkan nama_mapel
-            if ($old_record->nama_mapel != $nama_mapel) {
-                $this->m_mapel->update_mapel_by_name($old_record->nama_mapel, $data);
-            }
+    //         // Update berdasarkan nama_mapel
+    //         if ($old_record->nama_mapel != $nama_mapel) {
+    //             $this->m_mapel->update_mapel_by_name($old_record->nama_mapel, $data);
+    //         }
 
-            if ($old_record->beban_jam != $beban_jam) {
-                $this->m_mapel->update_mapel_by_jam($old_record->beban_jam, $data);
-            }
+    //         if ($old_record->beban_jam != $beban_jam) {
+    //             $this->m_mapel->update_mapel_by_jam($old_record->beban_jam, $data);
+    //         }
 
-            // Update record utama
-            if ($this->m_mapel->update_mapel($id_mapel, $data)) {
-                $this->session->set_flashdata('sukses', 'Nice!!<br>Data mata pelajaran berhasil diperbarui.');
-            } else {
-                $this->session->set_flashdata('error', 'Opps!!<br>Terjadi kesalahan saat memperbarui data.');
-            }
+    //         // Update record utama
+    //         if ($this->m_mapel->update_mapel($id_mapel, $data)) {
+    //             $this->session->set_flashdata('sukses', 'Nice!!<br>Data mata pelajaran berhasil diperbarui.');
+    //         } else {
+    //             $this->session->set_flashdata('error', 'Opps!!<br>Terjadi kesalahan saat memperbarui data.');
+    //         }
 
-            // Redirect ke halaman mata pelajaran
-            redirect(base_url('mata-pelajaran'));
-        }
-    }
+    //         // Redirect ke halaman mata pelajaran
+    //         redirect(base_url('mata-pelajaran'));
+    //     }
+    // }
 
 
 

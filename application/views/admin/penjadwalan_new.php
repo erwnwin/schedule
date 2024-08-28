@@ -128,7 +128,7 @@
                                                  <a class="btn btn-primaryku btn-block" href="<?= base_url('penjadwalan/rumusan') ?>"><i class="fa fa-edit"></i> Masukkan Rumusan</a>
                                              <?php } ?>
                                          <?php } else { ?>
-                                             <a class="btn btn-dangerku btn-block" href="<?= base_url('penjadwalan/reset-rumusan') ?>"><i class="fa fa-undo"></i> Reset Rumusan</a>
+                                             <a type="button" data-toggle="modal" data-target="#modalResetRumusan" class="btn btn-dangerku btn-block"><i class="fa fa-undo"></i> Reset Rumusan</a>
                                          <?php } ?>
                                      </div>
 
@@ -142,7 +142,7 @@
                                                 }
                                             } else {
                                                 ?>
-                                             <a class="btn btn-warningku btn-block" href="<?= base_url('penjadwalan/reset-jadwal') ?>"><i class="fa fa-undo"></i> Reset Jadwal</a>
+                                             <a type="button" data-toggle="modal" data-target="#modalResetJadwalKu" class="btn btn-warningku btn-block"><i class="fa fa-undo"></i> Reset Jadwal</a>
                                          <?php
                                             }
                                             ?>
@@ -151,7 +151,7 @@
                                      <?php if (!empty($rumusan) && !empty($penjadwalan)) : ?>
                                          <hr>
                                          <div class="d-flex justify-content-between">
-                                             <a class="btn btn-primaryku" type="button" data-toggle="modal" data-target="#modalExportJadwal"><i class="fa fa-file-excel-o"></i> Export Penjadwalan</a>
+                                             <!-- <a class="btn btn-primaryku" type="button" data-toggle="modal" data-target="#modalExportJadwal"><i class="fa fa-file-excel-o"></i> Export Penjadwalan</a> -->
                                              <a class="btn btn-dangerku" type="button" data-toggle="modal" data-target="#modalResetPenjadwalan"><i class="fa fa-undo"></i> Reset Penjadwalan</a>
                                              <a type="button" class="btn btn-successku" data-toggle="modal" data-target="#modalPlotingJadwal"><i class="fa fa-check-square-o"></i> Ploting Jadwal</a>
                                          </div>
@@ -286,135 +286,234 @@
              </section>
 
 
-             <div class="modal fade" id="modal-addBuat" tabindex="-1" role="dialog" aria-labelledby="modal-tambah-label" aria-hidden="true">
-                 <div class="modal-dialog" role="document">
-                     <div class="modal-content">
-                         <div class="modal-header">
-                             <div id="overlayBuatJadwalku" class="overlay hidden">
-                                 <i class="fas fa-2x fa-sync fa-spin"></i>
-                             </div>
-                             <h5 class="modal-title" id="modal-addBuat-label">Ploting Jadwal Mata Pelajaran</h5>
-                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                 <span aria-hidden="true">&times;</span>
-                             </button>
-                         </div>
-                         <div class="modal-body">
-
-                             <form id="formBuatJadwalku" action="<?= base_url('penjadwalan/create-jadwal') ?>" method="post" class="form-horizontal">
-                                 <div class="box-body">
-
-                                 </div>
-                                 <div class="box-footer">
-                                     <button type="submit" class="btn btn-sm btn-primaryku float-left" value="SimpanPerguruanTinggiAsalMahasiswa"> Buat Jadwal</button>
-                                     <button type="button" class="btn btn-sm btn-outline-danger float-right" data-dismiss="modal"> Batal</button>
-                                 </div>
-                             </form>
-                         </div>
-                         <!-- /.modal-content -->
-                     </div>
-                 </div>
-                 <!-- /.modal-dialog -->
-             </div>
-
-
-
-             <!-- modal ploting -->
-
-             <div class="modal fade" id="modalPlotingJadwal" tabindex="-1" role="dialog" aria-labelledby="modal-tambah-label" aria-hidden="true">
-                 <div class="modal-dialog" role="document">
-                     <div class="modal-content">
-                         <div class="modal-header">
-                             <div id="overlayPlotingJadwal" class="overlay hidden">
-                                 <i class="fas fa-2x fa-sync fa-spin"></i>
-                             </div>
-                             <h5 class="modal-title" id="modalPlotingJadwal-label">Buat Jadwal Mata Pelajaran</h5>
-                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                 <span aria-hidden="true">&times;</span>
-                             </button>
-                         </div>
-                         <div class="modal-body">
-                             <form id="formPlotingJadwal" action=" <?= base_url('penjadwalan/ploting-jadwal') ?>" method="post" class="form-horizontal">
-                                 <div class="box-body">
-
-                                 </div>
-                                 <div class="box-footer">
-                                     <button type="submit" class="btn btn-sm btn-successku float-left" value="SimpanPerguruanTinggiAsalMahasiswa"> Ploting Jadwal</button>
-                                     <button type="button" class="btn btn-sm btn-dangerku float-right" data-dismiss="modal"> Batal</button>
-                                 </div>
-                             </form>
-                         </div>
-                         <!-- /.modal-content -->
-                     </div>
-                 </div>
-                 <!-- /.modal-dialog -->
-             </div>
-
-
-             <div class="modal fade" id="modalExportJadwal" tabindex="-1" role="dialog" aria-labelledby="modal-tambah-label" aria-hidden="true">
-                 <div class="modal-dialog" role="document">
-                     <div class="modal-content">
-                         <div class="modal-header">
-                             <div id="overlayExportJadwal" class="overlay hidden">
-                                 <i class="fas fa-2x fa-sync fa-spin"></i>
-                             </div>
-                             <h5 class="modal-title" id="modalExportJadwal-label">Export Penjadwalan</h5>
-                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                 <span aria-hidden="true">&times;</span>
-                             </button>
-                         </div>
-                         <div class="modal-body">
-                             <form id="formExportJadwal" action="<?= base_url('penjadwalan/export') ?>" method="post" class="form-horizontal">
-                                 <div class="box-body">
-
-                                 </div>
-                                 <div class="box-footer">
-                                     <button type="submit" class="btn btn-sm btn-successku float-left" value="SimpanPerguruanTinggiAsalMahasiswa"> Export Jadwal</button>
-                                     <button type="button" class="btn btn-sm btn-dangerku float-right" data-dismiss="modal"> Batal</button>
-                                 </div>
-                             </form>
-                         </div>
-                         <!-- /.modal-content -->
-                     </div>
-                 </div>
-                 <!-- /.modal-dialog -->
-             </div>
-
-
-             <div class="modal fade" id="modalResetPenjadwalan" tabindex="-1" role="dialog" aria-labelledby="modal-tambah-label" aria-hidden="true">
-                 <div class="modal-dialog" role="document">
-                     <div class="modal-content">
-                         <div class="modal-header">
-                             <div id="overlayResetJadwal" class="overlay hidden">
-                                 <i class="fas fa-2x fa-sync fa-spin"></i>
-                             </div>
-                             <h5 class="modal-title" id="modalResetPenjadwalan-label">Export Penjadwalan</h5>
-                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                 <span aria-hidden="true">&times;</span>
-                             </button>
-                         </div>
-                         <div class="modal-body">
-                             <form id="formResetJadwal" action="<?= base_url('penjadwalan/reset-penjadwalan') ?>" method="post" class="form-horizontal">
-                                 <div class="box-body">
-
-                                 </div>
-                                 <div class="box-footer">
-                                     <button type="submit" class="btn btn-sm btn-successku float-left" value="SimpanPerguruanTinggiAsalMahasiswa"> Reset Penjadwalan</button>
-                                     <button type="button" class="btn btn-sm btn-dangerku float-right" data-dismiss="modal"> Batal</button>
-                                 </div>
-                             </form>
-                         </div>
-                         <!-- /.modal-content -->
-                     </div>
-                 </div>
-                 <!-- /.modal-dialog -->
-             </div>
-
-
-
-
-
-
              <div>
                  <br>
              </div>
+
+
+         </div>
+
+
+         <div class="modal fade" id="modal-addBuat" tabindex="-1" role="dialog" aria-labelledby="modal-tambah-label" aria-hidden="true">
+             <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <div id="overlayBuatJadwalku" class="overlay hidden">
+                             <i class="fas fa-2x fa-sync fa-spin"></i>
+                         </div>
+                         <h5 class="modal-title" id="modal-addBuat-label">Ploting Jadwal Mata Pelajaran</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">&times;</span>
+                         </button>
+                     </div>
+                     <div class="modal-body">
+
+                         <form id="formBuatJadwalku" action="<?= base_url('penjadwalan/create-jadwal') ?>" method="post" class="form-horizontal">
+                             <div class="box-body">
+
+                             </div>
+                             <div class="box-footer">
+                                 <button type="submit" class="btn btn-sm btn-primaryku float-left" value="SimpanPerguruanTinggiAsalMahasiswa"> Buat Jadwal</button>
+                                 <button type="button" class="btn btn-sm btn-outline-danger float-right" data-dismiss="modal"> Batal</button>
+                             </div>
+                         </form>
+                     </div>
+                     <!-- /.modal-content -->
+                 </div>
+             </div>
+             <!-- /.modal-dialog -->
+         </div>
+
+
+
+
+         <!-- modal ploting -->
+
+         <div class="modal fade" id="modalPlotingJadwal" tabindex="-1" role="dialog" aria-labelledby="modal-tambah-label" aria-hidden="true">
+             <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <div id="overlayPlotingJadwal" class="overlay hidden">
+                             <i class="fas fa-2x fa-sync fa-spin"></i>
+                         </div>
+                         <h5 class="modal-title" id="modalPlotingJadwal-label">Buat Jadwal Mata Pelajaran</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">&times;</span>
+                         </button>
+                     </div>
+                     <div class="modal-body">
+                         <form id="formPlotingJadwal" action=" <?= base_url('penjadwalan/ploting-jadwal') ?>" method="post" class="form-horizontal">
+                             <div class="box-body">
+
+                             </div>
+                             <div class="box-footer">
+                                 <button type="submit" class="btn btn-sm btn-successku float-left" value="SimpanPerguruanTinggiAsalMahasiswa"> Ploting Jadwal</button>
+                                 <button type="button" class="btn btn-sm btn-dangerku float-right" data-dismiss="modal"> Batal</button>
+                             </div>
+                         </form>
+                     </div>
+                     <!-- /.modal-content -->
+                 </div>
+             </div>
+             <!-- /.modal-dialog -->
+         </div>
+
+
+         <div class="modal fade" id="modalExportJadwal" tabindex="-1" role="dialog" aria-labelledby="modal-tambah-label" aria-hidden="true">
+             <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <!-- <div id="overlayExportJadwal" class="overlay hidden">
+                             <i class="fas fa-2x fa-sync fa-spin"></i>
+                         </div> -->
+                         <h5 class="modal-title" id="modalExportJadwal-label">Export Penjadwalan</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">&times;</span>
+                         </button>
+                     </div>
+                     <div class="modal-body">
+                         <form id="formExportJadwalKu" action="<?= base_url('penjadwalan/export-excel') ?>" target="_blank" method="post" class="form-horizontal">
+                             <div class="box-body">
+
+                             </div>
+                             <div class="box-footer">
+                                 <button type="submit" class="btn btn-sm btn-warningku float-left" value="SimpanPerguruanTinggiAsalMahasiswa"> Export Excel</button>
+                                 <!-- <button type="button" class="btn btn-sm btn-dangerku float-right" data-dismiss="modal"> Batal</button> -->
+                             </div>
+                         </form>
+                         <form id="formExportJadwalKu" action="<?= base_url('penjadwalan/export') ?>" target="_blank" method="post" class="form-horizontal">
+                             <div class="box-body">
+
+                             </div>
+                             <div class="box-footer">
+                                 <button type="submit" class="btn btn-sm btn-successku float-left" value="SimpanPerguruanTinggiAsalMahasiswa"> Export PDF</button>
+                                 <button type="button" class="btn btn-sm btn-dangerku float-right" data-dismiss="modal"> Batal</button>
+                             </div>
+                         </form>
+                     </div>
+                     <!-- /.modal-content -->
+                 </div>
+             </div>
+             <!-- /.modal-dialog -->
+         </div>
+
+
+         <div class="modal fade" id="modalResetPenjadwalan" tabindex="-1" role="dialog" aria-labelledby="modal-tambah-label" aria-hidden="true">
+             <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <div id="overlayResetJadwal" class="overlay hidden">
+                             <i class="fas fa-2x fa-sync fa-spin"></i>
+                         </div>
+                         <h5 class="modal-title" id="modalResetPenjadwalan-label">Reset Penjadwalan</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">&times;</span>
+                         </button>
+                     </div>
+                     <div class="modal-body">
+                         <form id="formResetJadwal" action="<?= base_url('penjadwalan/reset-penjadwalan') ?>" method="post" class="form-horizontal">
+                             <div class="box-body">
+
+                             </div>
+                             <div class="box-footer">
+                                 <button type="submit" class="btn btn-sm btn-successku float-left" value="SimpanPerguruanTinggiAsalMahasiswa"> Reset Penjadwalan</button>
+                                 <button type="button" class="btn btn-sm btn-dangerku float-right" data-dismiss="modal"> Batal</button>
+                             </div>
+                         </form>
+                     </div>
+                     <!-- /.modal-content -->
+                 </div>
+             </div>
+             <!-- /.modal-dialog -->
+         </div>
+
+
+
+
+         <div class="modal fade" id="modalResetJadwalKu" tabindex="-1" role="dialog" aria-labelledby="modal-tambah-label" aria-hidden="true">
+             <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <div id="overlayResetJadwalKu" class="overlay hidden">
+                             <i class="fas fa-2x fa-sync fa-spin"></i>
+                         </div>
+                         <h5 class="modal-title" id="modalResetJadwalKu-label">Reset Jadwal</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">&times;</span>
+                         </button>
+                     </div>
+                     <div class="modal-body">
+                         <form id="formResetJadwalKu" action="<?= base_url('penjadwalan/reset-jadwal') ?>" method="post" class="form-horizontal">
+                             <div class="box-body">
+
+                             </div>
+                             <div class="box-footer">
+                                 <button type="submit" class="btn btn-sm btn-successku float-left" value="SimpanPerguruanTinggiAsalMahasiswa"> Reset Jadwalku</button>
+                                 <button type="button" class="btn btn-sm btn-dangerku float-right" data-dismiss="modal"> Batal</button>
+                             </div>
+                         </form>
+                     </div>
+                     <!-- /.modal-content -->
+                 </div>
+             </div>
+             <!-- /.modal-dialog -->
+         </div>
+
+
+         <div class="modal fade" id="modalResetRumusan" tabindex="-1" role="dialog" aria-labelledby="modal-tambah-label" aria-hidden="true">
+             <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <div id="overlayResetRumusan" class="overlay hidden">
+                             <i class="fas fa-2x fa-sync fa-spin"></i>
+                         </div>
+                         <h5 class="modal-title" id="modalResetRumusan-label">Reset Rumusan</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">&times;</span>
+                         </button>
+                     </div>
+                     <div class="modal-body">
+                         <form id="formResetRumusan" action="<?= base_url('penjadwalan/reset-rumusan') ?>" method="post" class="form-horizontal">
+                             <div class="box-body">
+
+                             </div>
+                             <div class="box-footer">
+                                 <button type="submit" class="btn btn-sm btn-successku float-left" value="SimpanPerguruanTinggiAsalMahasiswa"> Reset Rumusan</button>
+                                 <button type="button" class="btn btn-sm btn-dangerku float-right" data-dismiss="modal"> Batal</button>
+                             </div>
+                         </form>
+                     </div>
+                     <!-- /.modal-content -->
+                 </div>
+             </div>
+             <!-- /.modal-dialog -->
+         </div>
+
+         <div class="modal fade" id="modalAddRumusan" tabindex="-1" role="dialog" aria-labelledby="modal-tambah-label" aria-hidden="true">
+             <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <div id="overlayAddRumusan" class="overlay hidden">
+                             <i class="fas fa-2x fa-sync fa-spin"></i>
+                         </div>
+                         <h5 class="modal-title" id="modalAddRumusan-label">Reset Jadwal</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">&times;</span>
+                         </button>
+                     </div>
+                     <div class="modal-body">
+                         <form id="formAddRumusan" action="<?= base_url('penjadwalan/reset-jadwal') ?>" method="post" class="form-horizontal">
+                             <div class="box-body">
+
+                             </div>
+                             <div class="box-footer">
+                                 <button type="submit" class="btn btn-sm btn-successku float-left" value="SimpanPerguruanTinggiAsalMahasiswa"> Reset Rumusan</button>
+                                 <button type="button" class="btn btn-sm btn-dangerku float-right" data-dismiss="modal"> Batal</button>
+                             </div>
+                         </form>
+                     </div>
+                     <!-- /.modal-content -->
+                 </div>
+             </div>
+             <!-- /.modal-dialog -->
          </div>

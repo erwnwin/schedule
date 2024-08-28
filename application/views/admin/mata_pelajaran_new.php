@@ -29,65 +29,65 @@
                          <!-- /.card-header -->
                          <div class="card-body">
 
-                             <div class="form-row mb-3">
+                             <!-- <div class="form-row mb-3">
                                  <div class="form-group col-md-6">
                                      <select id="filter-mapel" class="form-control select2">
                                          <option value="">Pilih Mata Pelajaran</option>
-                                         <!-- Options akan diisi menggunakan jQuery -->
                                      </select>
                                  </div>
                                  <div class="form-group col-md-6">
                                      <select id="filter-kelas" class="form-control select2">
                                          <option value="">Pilih Kelas</option>
-                                         <!-- Options akan diisi menggunakan jQuery -->
                                      </select>
                                  </div>
-                             </div>
+                             </div> -->
+
 
 
                              <div class="table-responsive">
-                                 <div class="table-responsive">
-                                     <table class="table table-hover table-sm table-striped">
-                                         <thead>
+                                 <table class="table table-hover table-sm table-striped">
+                                     <thead>
+                                         <tr>
+                                             <th style="width: 10px" class="text-center">#</th>
+                                             <th class="text-center">Kode Mata Pelajaran</th>
+                                             <th class="text-center">Nama Mata Pelajaran</th>
+                                             <th class="text-center">Kelas</th>
+                                             <th class="text-center">Beban Jam / MAPEL</th>
+                                             <th class="text-center">Action</th>
+                                         </tr>
+                                     </thead>
+                                     <tbody id="mapel-tbody">
+                                         <?php if ($mapel == null) { ?>
                                              <tr>
-                                                 <th style="width: 10px" class="text-center">#</th>
-                                                 <th class="text-center">Kode Mata Pelajaran</th>
-                                                 <th class="text-center">Nama Mata Pelajaran</th>
-                                                 <th class="text-center">Kelas</th>
-                                                 <th class="text-center">Beban Jam / MAPEL</th>
-                                                 <th class="text-center">Action</th>
-                                             </tr>
-                                         </thead>
-                                         <tbody id="mapel-tbody">
-                                             <?php if ($mapel == null) { ?>
                                                  <td colspan="6">
-                                                     <center>
+                                                     <center>Tidak ada data</center>
+                                                     <!-- <center>
                                                          <img src="<?= base_url() ?>assets/img/no-data.svg" alt="" width="30%">
                                                          <p class="mt-3">Tidak ada data</p>
-                                                     </center>
+                                                     </center> -->
                                                  </td>
-                                             <?php } else { ?>
-                                                 <?php $no = 1;
-                                                    foreach ($mapel as $r) { ?>
-                                                     <tr>
-                                                         <td><?= $no++ ?></td>
-                                                         <td class="text-center"><?= $r->kode_mapel ?></td>
-                                                         <td><?= $r->nama_mapel ?></td>
-                                                         <td class="text-center"><?= $r->id_kelas ?></td>
-                                                         <td class="text-center"><?= $r->beban_jam ?> Jam</td>
-                                                         <td class="text-center">
-                                                             <button type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modal-edit<?= $r->id_mapel ?>" data-id="<?= $r->id_mapel ?>">Edit</button>
-                                                         </td>
-                                                     </tr>
-                                                 <?php } ?>
+                                             </tr>
+                                         <?php } else { ?>
+                                             <?php $no = 1;
+                                                foreach ($mapel as $r) { ?>
+                                                 <tr>
+                                                     <td class="text-center"><?= $no++ ?></td>
+                                                     <td class="text-center"><?= $r->kode_mapel ?></td>
+                                                     <td><?= $r->nama_mapel ?></td>
+                                                     <td class="text-center"><?= $r->kelas ?></td>
+                                                     <td class="text-center"><?= $r->beban_jam ?> Jam</td>
+                                                     <td class="text-center">
+                                                         <button type="button" class="btn btn-warningku btn-sm" data-toggle="modal" data-target="#modal-edit<?= $r->kode_mapel ?>" data-id="<?= $r->kode_mapel ?>">Edit</button>
+                                                         <button type="button" class="btn btn-dangerku btn-sm" data-toggle="modal" data-target="#modal-hapus<?= $r->kode_mapel ?>" data-id="<?= $r->kode_mapel ?>">Delete</button>
+                                                     </td>
+                                                 </tr>
                                              <?php } ?>
-                                         </tbody>
-                                     </table>
-
-
-                                 </div>
-
+                                         <?php } ?>
+                                     </tbody>
+                                 </table>
                              </div>
+
+
                          </div>
                          <div class="card-footer clearfix">
                              <div id="pagination">
@@ -99,28 +99,51 @@
              </section>
 
 
-             <!-- Modal untuk Edit Data -->
+             <!-- modal Hapus -->
              <?php foreach ($mapel as $r) { ?>
-                 <!-- Modal Edit -->
-                 <div class="modal fade" id="modal-edit<?= $r->id_mapel ?>" tabindex="-1" role="dialog" aria-labelledby="modal-edit-label<?= $r->id_mapel ?>" aria-hidden="true">
-                     <div class="modal-dialog modal-lg" role="document">
+                 <div class="modal fade" id="modal-hapus<?= $r->kode_mapel ?>" tabindex="-1" role="dialog" aria-labelledby="modal-edit-label<?= $r->kode_mapel ?>" aria-hidden="true">
+                     <div class="modal-dialog" role="document">
                          <div class="modal-content">
                              <div class="modal-header">
-                                 <div id="overlayEditMapel" class="overlay hidden">
-                                     <i class="fas fa-2x fa-sync fa-spin"></i>
-                                 </div>
-                                 <h5 class="modal-title" id="modal-edit-label<?= $r->id_mapel ?>">Update Data</h5>
+                                 <h5 class="modal-title" id="modal-edit-label<?= $r->kode_mapel ?>">Konfirmasi Delete</h5>
                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                      <span aria-hidden="true">&times;</span>
                                  </button>
                              </div>
                              <div class="modal-body">
-                                 <form id="formEditMapel<?= $r->id_mapel ?>" class="form-horizontal" method="post" action="<?= base_url('mata-pelajaran/act-edit') ?>">
-                                     <input type="hidden" name="id_mapel" value="<?= $r->id_mapel ?>">
+                                 <div class="modal-body">
+                                     <p>Apakah Anda yakin ingin menghapus mapel <strong><?= $r->nama_mapel ?></strong> (Kode: <?= $r->kode_mapel ?>)?</p>
+                                 </div>
+                             </div>
+                             <form method="post" action="<?= base_url('mata-pelajaran/delete/' . $r->kode_mapel) ?>">
+                                 <div class="modal-footer justify-content-between">
+                                     <button type="button" class="btn btn-warningku btn-sm" data-dismiss="modal">Close</button>
+                                     <button type="submit" class="btn btn-dangerku btn-sm">Hapus</button>
+                                 </div>
+                             </form>
+                         </div>
+                     </div>
+                 </div>
+             <?php } ?>
+
+             <!-- Modal untuk Edit Data -->
+             <?php foreach ($mapel as $r) { ?>
+                 <div class="modal fade" id="modal-edit<?= $r->kode_mapel ?>" tabindex="-1" role="dialog" aria-labelledby="modal-edit-label<?= $r->kode_mapel ?>" aria-hidden="true">
+                     <div class="modal-dialog modal-lg" role="document">
+                         <div class="modal-content">
+                             <div class="modal-header">
+                                 <h5 class="modal-title" id="modal-edit-label<?= $r->kode_mapel ?>">Update Data</h5>
+                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                     <span aria-hidden="true">&times;</span>
+                                 </button>
+                             </div>
+                             <div class="modal-body">
+                                 <form id="formEditMapel" class="form-horizontal" method="post" action="<?= base_url('mata-pelajaran/act-edit') ?>">
+                                     <input type="hidden" name="kode_mapel" value="<?= $r->kode_mapel ?>">
                                      <div class="form-group row mb-3">
                                          <label class="col-3 col-form-label">Kode Mata Pelajaran</label>
                                          <div class="col-9">
-                                             <input type="text" name="kode_mapel" class="form-control" required="required" value="<?= $r->kode_mapel ?>" placeholder="Kode Mata Pelajaran" autocomplete="off" />
+                                             <input type="text" name="kode_mapel" class="form-control" required="required" value="<?= $r->kode_mapel ?>" placeholder="Kode Mata Pelajaran" autocomplete="off" readonly />
                                          </div>
                                      </div>
                                      <div class="form-group row mb-3">
@@ -133,34 +156,24 @@
                                          <label class="col-3 col-form-label">Kelas</label>
                                          <div class="col-9">
                                              <?php
-                                                // Ambil data kelas
-                                                $kls = $this->db->query("SELECT * FROM kelasku")->result();
-                                                $selectedKelas = explode(',', $r->id_kelas);
-                                                foreach ($kls as $k) {
+                                                $classes_by_mapel = $this->m_mapel->get_classes_by_mapel($r->kode_mapel);
+                                                $selectedKelas = array_column($classes_by_mapel, 'id_kelas');
+                                                foreach ($all_classes as $k) {
                                                     // Periksa apakah kelas ini terpilih
                                                     $checked = in_array($k->id_kelas, $selectedKelas) ? 'checked' : '';
                                                 ?>
                                                  <div class="custom-control custom-checkbox">
-                                                     <input class="custom-control-input" name="chkKelas[]" type="checkbox" id="kelas-<?= $k->id_kelas ?>-<?= $r->id_mapel ?>" value="<?= $k->id_kelas ?>" <?= $checked ?>>
-                                                     <label class="custom-control-label" for="kelas-<?= $k->id_kelas ?>-<?= $r->id_mapel ?>"> Kelas <?= $k->kelas ?> <?= $k->urutan_kelas ?></label>
+                                                     <input class="custom-control-input" name="chkKelas[]" type="checkbox" id="kelas-<?= $k->id_kelas ?>-<?= $r->kode_mapel ?>" value="<?= $k->id_kelas ?>" <?= $checked ?>>
+                                                     <label class="custom-control-label" for="kelas-<?= $k->id_kelas ?>-<?= $r->kode_mapel ?>"> Kelas <?= $k->kelas ?> <?= $k->urutan_kelas ?></label>
                                                  </div>
                                              <?php } ?>
                                          </div>
                                      </div>
                                      <div class="form-group row mb-3">
-                                         <label class="col-3 col-form-label">Semester</label>
-                                         <div class="col-9">
-                                             <select name="kelompok_mapel" class="form-control" required>
-                                                 <option value="A" <?= $r->kelompok_mapel == 'A' ? 'selected' : '' ?>>Ganjil</option>
-                                                 <option value="B" <?= $r->kelompok_mapel == 'B' ? 'selected' : '' ?>>Genap</option>
-                                             </select>
-                                         </div>
-                                     </div>
-                                     <div class="form-group row mb-3">
                                          <label class="col-3 col-form-label">Beban Jam</label>
                                          <div class="col-9">
-                                             <input type="text" name="beban_jam" class="form-control" maxlength="2" required="required" value="<?= $r->beban_jam ?>" placeholder="Beban Jam" autocomplete="off" />
-                                             <span class="text-danger text-small" style="font-size: 10px;">Input angka 1-10 (sesuaikan berapa beban jam bukan menit)</span>
+                                             <input type="text" inputmode="numeric" name="beban_jam" class="form-control" maxlength="2" required="required" value="<?= $r->beban_jam ?>" placeholder="Beban Jam" autocomplete="off" />
+                                             <span class="text-danger text-small" style="font-size: 10px;">Input angka 1-10 (sesuaikan beban jam bukan menit)</span>
                                          </div>
                                      </div>
                              </div>
@@ -169,11 +182,11 @@
                                  <button type="submit" class="btn btn-primaryku btn-sm">Update</button>
                              </div>
                              </form>
-
                          </div>
                      </div>
                  </div>
              <?php } ?>
+
 
 
 

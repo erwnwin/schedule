@@ -13,7 +13,7 @@ $(document).ready(function () {
 	 * Menampilkan box loading state pada saat proses submit form berlangsung
 	 */
 	$("#formJadwalku").submit(function () {
-		$("#divOverlayformJadwalku").removeClass("hide");
+		$("#divOverlayformJadwalku").removeClass("hidden");
 	});
 
 });

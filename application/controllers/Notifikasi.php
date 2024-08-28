@@ -4,46 +4,45 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Notifikasi extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('notifikasi_model');
+        date_default_timezone_set('Asia/Makassar');
+    }
 
     public function index()
     {
-        date_default_timezone_set('Asia/Makassar');
+        // Panggil fungsi untuk menghapus pengaturan yang sudah lewat
+        $this->notifikasi_model->hapus_pengaturan_yang_lewat();
 
+        $waktu_sekarang = date('H:i');
         $tgl = date('Y-m-d');
-        $hari = nama_hariku($tgl);
+        $hari = $this->nama_hariku($tgl);
 
-        echo "$hari";
-        // echo date('Y-m-d H:i:s');
+        // Ambil pengaturan notifikasi yang aktif sesuai waktu sekarang
+        $pengaturan = $this->notifikasi_model->get_pengaturan_notifikasi($waktu_sekarang);
 
-        $servername = "localhost";
-        $database = "id21971949_jadwal";
-        $username = "id21971949_root";
-        $password = "Erwin2024#";
+        if (!empty($pengaturan)) {
+            $notifikasi = $this->notifikasi_model->get_guru_untuk_hari($hari);
 
-        $conn = new mysqli($servername, $username, $password, $database);
+            $token = "jFT1fNY+#xWhZiN443zm"; // Ganti dengan token API yang sebenarnya
+            foreach ($notifikasi as $row) {
+                $target = $row['telp_wa'];
 
-        $sql1 = "SELECT * FROM penjadwalan JOIN mapelku ON penjadwalan.id_mapel=mapelku.id_mapel JOIN guru ON penjadwalan.id_guru=guru.id_guru JOIN kelasku ON penjadwalan.id_kelas=kelasku.id_kelas WHERE hari='$hari' ";
-        $result1 = $conn->query($sql1);
-        //display data on web page 
-        $token = "uZJGJXEvvqf@7_SrQkMW";
-        while ($row = mysqli_fetch_array($result1)) {
-            $target = "62" . $row['telp_wa'];
-
-            $curl = curl_init();
-
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://api.fonnte.com/send',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => array(
-                    'target' => $target,
-
-                    'message' => '*Notifikasi Jadwal yang akan datang*
+                $curl = curl_init();
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://api.fonnte.com/send',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => array(
+                        'target' => $target,
+                        'message' => '*Notifikasi Jadwal yang akan datang*
 *Hai, ' . $row['nama'] . '*
 
 *Jadwal Hari : ' . $row['hari'] . '*
@@ -53,21 +52,34 @@ class Notifikasi extends CI_Controller
 *Jam Mulai / Selesai : ' . $row['jam_mulai'] . ' s/d ' . $row['jam_selesai'] . '*
 
 Pesan ini dikirim secara otomatis oleh sistem',
-                    // 'schedule' =>'',
+                    ),
+                    CURLOPT_HTTPHEADER => array(
+                        "Authorization: $token"
+                    ),
+                ));
 
-                ),
-                CURLOPT_HTTPHEADER => array(
-                    "Authorization: $token" //change TOKEN to your actual token
-                ),
-            ));
-
-            $response = curl_exec($curl);
-
-            curl_close($curl);
-            echo $response;
+                $response = curl_exec($curl);
+                curl_close($curl);
+                echo $response;
+            }
+        } else {
+            echo 'Tidak ada pengaturan notifikasi aktif untuk waktu ini.';
         }
     }
 
+    // Menyimpan pengaturan notifikasi
+    public function set_pengaturan()
+    {
+        $waktu = $this->input->post('waktu');
+        $aktif = $this->input->post('aktif');
+        $jenis_notifikasi = $this->input->post('jenis_notifikasi');
+
+        $this->notifikasi_model->set_pengaturan($waktu, $aktif, $jenis_notifikasi);
+        $this->session->set_flashdata('sukses', 'Nicee!!<br>Data setting waktu berhasil disimpan!');
+        redirect(base_url('set-notifikasi'));
+    }
+
+    // Menentukan nama hari dari tanggal
     function nama_hariku($tgl = '')
     {
         $hari = date('D', strtotime($tgl));
@@ -78,15 +90,10 @@ Pesan ini dikirim secara otomatis oleh sistem',
             'Tue' => "Selasa",
             'Wed' => "Rabu",
             'Thu' => "Kamis",
-            'Fri' => "Jum`at",
+            'Fri' => "Jumat",
             'Sat' => "Sabtu",
         );
 
-        if (empty($nama_hari[$hari])) {
-            return 'Nama hari tidak valid';
-        }
-        return $nama_hari[$hari];
+        return $nama_hari[$hari] ?? 'Nama hari tidak valid';
     }
 }
-
-/* End of file Notifikasi.php */

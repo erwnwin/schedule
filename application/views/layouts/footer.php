@@ -14,13 +14,16 @@
 <script src="<?= base_url() ?>public/assets/plugins/sweetalert2/sweetalert2.min.js"></script>
 <script src="<?= base_url() ?>public/assets/plugins/toastr/toastr.min.js"></script>
 <script src="<?= base_url() ?>public/assets/dist/js/adminlte.min.js"></script>
-<!-- <script src="<?= base_url() ?>public/assets/js/drag.js"></script> -->
+<script src="<?= base_url() ?>public/assets/js/add-notif.js"></script>
+<script src="<?= base_url() ?>public/assets/js/notifikasi.js"></script>
 <script src="<?= base_url() ?>public/assets/js/upload.js"></script>
 <script src="<?= base_url() ?>public/assets/js/jadwalku.js"></script>
 <script src="<?= base_url() ?>public/assets/js/edit-guru.js"></script>
 <script src="<?= base_url() ?>public/assets/js/add-guru.js"></script>
 <script src="<?= base_url() ?>public/assets/js/filter-mapel.js"></script>
 <script src="<?= base_url() ?>public/assets/plugins/select2/js/select2.full.min.js"></script>
+<!-- <script src="<?= base_url() ?>public/assets/js/edit-kelas.js"></script> -->
+<!-- <script src="<?= base_url() ?>public/assets/js/drag.js"></script> -->
 <!-- <script src="<?= base_url() ?>public/assets/js/update-kategori.js"></script> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
@@ -161,15 +164,15 @@
         <?php endif; ?>
 
 
-
         // Cek jika ada flashdata untuk 'error'
         <?php if ($this->session->flashdata('error')): ?>
             var errorMessage = <?php echo json_encode($this->session->flashdata('error')); ?>;
             showToast(errorMessage, 'error');
         <?php endif; ?>
+
+
     });
 </script>
-
 
 <script>
     function showToastKu(message, icon = 'error') {
@@ -191,6 +194,31 @@
         <?php if ($this->session->flashdata('valid')): ?>
             var successMessage = <?php echo json_encode($this->session->flashdata('valid')); ?>;
             showToastKu(successMessage);
+        <?php endif; ?>
+
+    });
+
+
+
+    function showToastInfo(message, icon = 'info') {
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000,
+        });
+
+        Toast.fire({
+            icon: icon,
+            title: message
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+        <?php if ($this->session->flashdata('info')): ?>
+            var successMessage = <?php echo json_encode($this->session->flashdata('info')); ?>;
+            showToastInfo(successMessage);
         <?php endif; ?>
 
     });
@@ -269,6 +297,50 @@
         });
     </script>
 <?php endif; ?>
+
+<script>
+    $(document).ready(function() {
+        $('#modal-edit').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var hari = button.data('hari');
+            var keterangan = button.data('keterangan');
+
+            // Mengisi field hidden
+            var modal = $(this);
+            modal.find('#modal-edit-hari').val(hari);
+            modal.find('#modal-edit-keterangan').val(keterangan);
+
+            // Reset semua checkbox
+            modal.find('input[name="kelas[]"]').prop('checked', false);
+
+            // Ambil data dari server
+            $.ajax({
+                url: '<?= base_url('jadwal-khusus/get-kelas-by-hari-and-keterangan') ?>',
+                method: 'GET',
+                data: {
+                    hari: hari,
+                    keterangan: keterangan
+                },
+                success: function(response) {
+                    try {
+                        var data = JSON.parse(response);
+                        var selectedClasses = data.selected_classes || [];
+                        $.each(selectedClasses, function(index, value) {
+                            modal.find('input[name="kelas[]"][value="' + value + '"]').prop('checked', true);
+                        });
+                    } catch (e) {
+                        console.error("Failed to parse response:", e);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX error:", status, error);
+                }
+            });
+        });
+    });
+</script>
+
+
 
 
 

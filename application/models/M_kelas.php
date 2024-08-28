@@ -33,6 +33,20 @@ class M_kelas extends CI_Model
         $this->db->order_by('kelasku.urutan_kelas', 'ASC');
         return $this->db->get()->result();
     }
+
+
+    public function update_data($id_kelas, $data)
+    {
+        $this->db->where('id_kelas', $id_kelas);
+        return $this->db->update('kelasku', $data);
+    }
+
+    public function get_data_by_id($id_kelas)
+    {
+        $this->db->where('id_kelas', $id_kelas);
+        $query = $this->db->get('kelasku');
+        return $query->row_array();
+    }
 }
 
 /* End of file M_kelas.php */

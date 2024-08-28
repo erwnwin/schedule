@@ -69,4 +69,43 @@ $(document).ready(function () {
 
 	});
 
+	$("#formResetJadwalKu").submit(function () {
+
+		// Tampilkan overlay
+		$("#overlayResetJadwalKu").removeClass("hidden");
+
+	});
+
+
+	$("#formUpdateKelas").submit(function () {
+
+		// Tampilkan overlay
+		$("#overlayKelasEdit").removeClass("hidden");
+
+	});
+
+
+	$("#formUpdateAturan").submit(function () {
+
+		// Tampilkan overlay
+		$("#overlayAturanSesi").removeClass("hidden");
+
+	});
+
+
+	$("#formFinalShare").submit(function () {
+
+		// Tampilkan overlay
+		$("#overlayFinalShare").removeClass("hidden");
+
+	});
+
+
+	$("#formAddTahunAkademik").submit(function () {
+
+		// Tampilkan overlay
+		$("#overlayTahunAkademik").removeClass("hidden");
+
+	});
+
 });

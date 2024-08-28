@@ -21,60 +21,62 @@ class Jadwal_khusus extends CI_Controller
 
     public function index()
     {
+        $jumlah = $this->m_khusus->countAllData();
 
-        // // Menghitung total rows
-        // $jumlah = $this->m_khusus->countAllData();
+        // Konfigurasi pagination
+        $config = array(
+            'base_url' => base_url('jadwal-khusus'),
+            'total_rows' => $jumlah,
+            'per_page' => 10,
+            'uri_segment' => 2, // Posisi nomor halaman dalam URL
+            'full_tag_open' => '<ul class="pagination pagination-sm m-0">',
+            'full_tag_close' => '</ul>',
+            'num_tag_open' => '<li class="page-item">',
+            'num_tag_close' => '</li>',
+            'next_tag_open' => '<li class="page-item">',
+            'next_tag_close' => '</li>',
+            'prev_tag_open' => '<li class="page-item">',
+            'prev_tag_close' => '</li>',
+            'first_tag_open' => '<li class="page-item">',
+            'first_tag_close' => '</li>',
+            'last_tag_open' => '<li class="page-item">',
+            'last_tag_close' => '</li>',
+            'cur_tag_open' => '<li class="page-item ">',
+            'cur_tag_close' => '</li>',
+            'next_link' => '&raquo;',
+            'prev_link' => '&laquo;',
+            'first_link' => 'First',
+            'last_link' => 'Last',
+            'num_links' => 1 // Jumlah link halaman yang ditampilkan di sekitar halaman aktif
+        );
 
-        // // Konfigurasi Pagination
-        // $config = array();
-        // $config['base_url'] = base_url('jadwal-khusus'); // Ganti 'jadwal-khusus' dengan nama route Anda
-        // $config['total_rows'] = $jumlah;
-        // $config['per_page'] = 10; // Jumlah data per halaman
-        // $config['uri_segment'] = 2; // Segment URL yang berisi nomor halaman
+        // Inisialisasi pagination
+        $this->pagination->initialize($config);
 
-        // // CSS dan HTML untuk pagination
-        // $config['full_tag_open'] = '<ul class="pagination pagination-sm m-0">';
-        // $config['full_tag_close'] = '</ul>';
-        // $config['num_tag_open'] = '<li class="page-item">';
-        // $config['num_tag_close'] = '</li>';
-        // $config['next_tag_open'] = '<li class="page-item">';
-        // $config['next_tag_close'] = '</li>';
-        // $config['prev_tag_open'] = '<li class="page-item">';
-        // $config['prev_tag_close'] = '</li>';
-        // $config['first_tag_open'] = '<li class="page-item">';
-        // $config['first_tag_close'] = '</li>';
-        // $config['last_tag_open'] = '<li class="page-item">';
-        // $config['last_tag_close'] = '</li>';
-        // $config['cur_tag_open'] = '<li class="page-item active">';
-        // $config['cur_tag_close'] = '</li>';
-        // $config['next_link'] = '&raquo;';
-        // $config['prev_link'] = '&laquo;';
-        // $config['first_link'] = 'First';
-        // $config['last_link'] = 'Last';
-        // $config['num_links'] = 2;
+        // Mendapatkan nomor halaman saat ini
+        $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
 
-        // $this->pagination->initialize($config);
+        // Ambil data dengan limit dan offset
+        $data['jadwal_khusus'] = $this->m_khusus->get_data_jk($config['per_page'], $page);
 
-        // // Ambil data berdasarkan halaman
-        // $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
-        // $offset = $page;
-        // $limit = $config['per_page'];
+        // Membuat link pagination
+        $data['pagination'] = $this->pagination->create_links();
 
-        // $data = array(
+        $data['dataKelas'] =  $this->m_kelas->getAllData();
+        $data['jadwal_khususku'] =  $this->m_khusus->getAllDataNew();
+        $data['jadwal'] =  $this->m_jadwal->getAllData();
+
+
+
+
+        $data['title'] = "Jadwal Khusus : e-Schedule";
+
+        // $data = [
         //     'title' => "Jadwal Khusus : e-Schedule",
-        //     'jadwal_khusus' => $this->m_khusus->getAllData($limit, $offset),
+        //     // 'jadwal_khusus' => $this->m_khusus->getAllData(),
         //     'dataKelas' => $this->m_kelas->getAllData(),
         //     'jadwal' => $this->m_jadwal->getAllData(),
-        //     // 'pagination_links' => $this->pagination->create_links()
-        // );
-
-
-        $data = [
-            'title' => "Jadwal Khusus : SiJadwalTa",
-            'jadwal_khusus' => $this->m_khusus->getAllData(),
-            'dataKelas' => $this->m_kelas->getAllData(),
-            'jadwal' => $this->m_jadwal->getAllData(),
-        ];
+        // ];
 
         $this->load->view('layouts/head', $data);
         $this->load->view('layouts/header', $data);
@@ -89,6 +91,22 @@ class Jadwal_khusus extends CI_Controller
         $this->m_khusus->tambah_data();
         $this->session->set_flashdata('sukses', 'Nice!!<br>Berhasil ditambahkan');
         redirect(base_url('jadwal-khusus'));
+    }
+
+
+    // Controller
+    public function get_kelas_by_hari_and_keterangan()
+    {
+        $hari = $this->input->get('hari');
+        $keterangan = $this->input->get('keterangan');
+
+        if (!$hari || !$keterangan) {
+            echo json_encode(['selected_classes' => []]);
+            return;
+        }
+
+        $kelas = $this->m_khusus->get_kelas_by_hari_and_keterangan($hari, $keterangan);
+        echo json_encode(['selected_classes' => $kelas]);
     }
 }
 

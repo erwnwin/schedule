@@ -22,6 +22,7 @@ class Penjadwalan extends CI_Controller
         $this->load->model('m_pengampu');
         $this->load->model('m_khusus');
         $this->load->model('m_drag');
+        $this->load->model('m_transfer');
         $this->load->helper('jadwal_helper');
 
         if ($this->session->userdata('masuk') != TRUE) {
@@ -57,7 +58,7 @@ class Penjadwalan extends CI_Controller
     {
         $data = [
             'title' => "Hasil Ploting Penjadwalan : e-Schedule",
-            'ta' => $this->m_ta->tampil_ta(),
+            'ta' => $this->m_ta->aktif(),
             'rumusan' => $this->m_rumusan->getDataRumusan(),
             'belumterplot' => $this->m_pengampu->tugasGuruBelumterplot(),
             'kelas' => $this->m_kelas->getAllData(),
@@ -174,7 +175,7 @@ class Penjadwalan extends CI_Controller
         // Ambil data yang diperlukan
         $jadwal = $this->m_jadwal->getAllData();
         $kelas = $this->m_kelas->getAllData();
-        $jadwalKhusus = $this->m_khusus->getAllData();
+        $jadwalKhusus = $this->m_khusus->getAllDataNew();
 
         foreach ($kelas as $rowKelas) {
             $kosong = 0;
@@ -813,7 +814,7 @@ class Penjadwalan extends CI_Controller
     }
 
 
-    public function export($id_guru = null)
+    public function export_excel()
     {
         $data = [
             'belumterplot' => $this->m_pengampu->tugasGuruBelumterplot(),
@@ -822,18 +823,67 @@ class Penjadwalan extends CI_Controller
             'jadwal' => $this->m_jadwal->getAllData(),
             'kelas' => $this->m_kelas->getAllData(),
             'mapel' => $this->m_mapel->getAllData(),
-            'guru' => $id_guru
+            // 'guru' => $id_guru
 
         ];
-        if ($id_guru != null) {
-            $data['guru'] = $this->m_guru->detail_data($id_guru);
-        }
+        // if ($id_guru != null) {
+        //     $data['guru'] = $this->m_guru->detail_data($id_guru);
+        // }
         // export pdf
         // $this->load->library('pdfgenerator');
         // $html = $this->load->view('jadwal/exportPDF', $data, true);
         // $this->pdfgenerator->generate($html, 'tes');
         $this->load->view('file/export_excel', $data);
     }
+
+    public function export_toexcel()
+    {
+        $this->load->library('spout_lib');
+
+
+
+        // Export to Excel
+        $filePath = $this->spout_lib->export_excel();
+
+        // Optionally, serve the file for download
+        $this->load->helper('download');
+        force_download($filePath, NULL);
+    }
+
+
+
+    public function export_pdf()
+    {
+        $this->load->library('dompdf_gen');
+        $data = [
+            'title' => "Export : e-Schedule",
+            'ta' => $this->m_ta->tampil_ta(),
+            'logo' => base_url() . "assets/img/logo.png",
+            'rumusan' => $this->m_rumusan->getDataRumusan(),
+            'belumterplot' => $this->m_pengampu->tugasGuruBelumterplot(),
+            'kelas' => $this->m_kelas->getAllData(),
+            'penjadwalan' => $this->m_jadwal->getAllDataPenjadwalan(),
+            'jadwal' => $this->m_jadwal->getAllData(),
+            'kelas' => $this->m_kelas->getAllData(),
+            'mapel' => $this->m_mapel->getAllData(),
+            'rangeJam' => $this->m_jam->getAllData()
+        ];
+
+        $html = $this->load->view('print/export_pdf', $data, TRUE);
+
+        // Initialize dompdf
+        $this->dompdf_gen->load_html($html);
+        $this->dompdf_gen->set_paper('A4', 'landscape'); // Set paper size and orientation
+        $this->dompdf_gen->render(); // Render the HTML as PDF
+
+        // Stream the PDF file to the browser
+        $this->dompdf_gen->stream("Penjadwalan_Sekolah.pdf", array('Attachment' => 0));
+    }
+
+
+
+
+
 
 
     public function pindahJadwal($status = null)
@@ -896,6 +946,23 @@ class Penjadwalan extends CI_Controller
     }
 
 
+    public function proses_final()
+    {
+        $id_ta = $this->input->post('id_ta'); // Ambil tahun ajaran jika diperlukan
+
+        // Panggil fungsi model untuk mentransfer data
+        $result = $this->m_transfer->transfer_data($id_ta);
+
+        if ($result) {
+            // Data berhasil diperbarui
+            $this->session->set_flashdata('sukses', 'Good!!<br>Data finalisasi data berhasil dilakukan.');
+        } else {
+            // Tidak ada data yang berubah
+            $this->session->set_flashdata('info', 'Info!!<br> Tidak ada data yang berubah.');
+        }
+
+        redirect(base_url('penjadwalan/results'));
+    }
 
 
 

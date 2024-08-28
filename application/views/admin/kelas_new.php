@@ -29,10 +29,10 @@
                                  <table class="table  table-hover">
                                      <thead>
                                          <tr>
-                                             <th style="width: 10px" class="text-center">#</th>
+                                             <th style="width: 5px" class="text-center">#</th>
                                              <th class="text-center">Nama Kelas</th>
                                              <!-- <th class="text-center">Urutan Kelas</th> -->
-                                             <th style="width: 90px" class="text-center">Action</th>
+                                             <th style="width: 130px" class="text-center">Action</th>
                                          </tr>
                                      </thead>
                                      <tbody>
@@ -51,7 +51,8 @@
                                                      <td class="text-center">Kelas <?= $r->kelas ?> <?= $r->urutan_kelas ?></td>
                                                      <!-- <td class="text-center"><?= $r->nama_ruangan ?></td> -->
                                                      <td class="text-center">
-                                                         <a href="" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modal-edit<?= $r->id_kelas ?>"> Edit</a>
+                                                         <a type="button" class="btn btn-warningku btn-sm" data-toggle="modal" data-target="#modal-update<?= $r->id_kelas ?>"> Edit</a>
+                                                         <a type="button" class="btn btn-dangerku btn-sm" data-toggle="modal" data-target="#modal-delete<?= $r->id_kelas ?>"> Delete</a>
                                                          <!-- <a href="<?= base_url('kelas/delete/' . $r->id_kelas) ?>" class="btn btn-dangerku btn-sm btn-xs" id="btn-hapus"> <i class="fas fa-trash-alt"></i></a> -->
                                                      </td>
                                                  </tr>
@@ -64,6 +65,84 @@
                      </div>
                  </div>
              </section>
+
+
+             <!-- Modal Delete -->
+             <?php foreach ($kelas as $r) { ?>
+                 <div class="modal fade" id="modal-delete<?= $r->id_kelas ?>" tabindex="-1" role="dialog" aria-labelledby="modal-edit-label<?= $r->id_kelas ?>" aria-hidden="true">
+                     <div class="modal-dialog" role="document">
+                         <div class="modal-content">
+                             <div class="modal-header">
+                                 <h5 class="modal-title" id="modal-edit-label<?= $r->id_kelas ?>">Konfirmasi Delete</h5>
+                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                     <span aria-hidden="true">&times;</span>
+                                 </button>
+                             </div>
+                             <div class="modal-body">
+                                 <div class="modal-body">
+                                     <p>Apakah Anda yakin ingin menghapus mapel <strong>kelas <?= $r->kelas ?> <?= $r->urutan_kelas ?></strong> (Kode/ID: <?= $r->id_kelas ?>)?</p>
+                                 </div>
+                             </div>
+                             <form method="post" action="<?= base_url('kelas/delete/' . $r->id_kelas) ?>">
+                                 <div class="modal-footer justify-content-between">
+                                     <button type="button" class="btn btn-warningku btn-sm" data-dismiss="modal">Close</button>
+                                     <button type="submit" class="btn btn-dangerku btn-sm">Hapus</button>
+                                 </div>
+                             </form>
+                         </div>
+                     </div>
+                 </div>
+             <?php } ?>
+
+             <!-- Modal Form Update-->
+             <?php foreach ($kelas as $r) { ?>
+                 <div class="modal fade" id="modal-update<?= $r->id_kelas ?>">
+                     <div class="modal-dialog">
+                         <div class="modal-content">
+                             <div id="overlayKelasEdit" class="overlay hidden">
+                                 <i class="fas fa-2x fa-sync fa-spin"></i>
+                             </div>
+                             <div class="modal-header">
+                                 <h4 class="modal-title">Form Update Data Kelas</h4>
+                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                     <span aria-hidden="true">&times;</span>
+                                 </button>
+                             </div>
+                             <div class="modal-body">
+                                 <form id="formUpdateKelas" method="post" action="<?= base_url('kelas/act-update') ?>">
+                                     <input type="hidden" name="id_kelas" class="form-control" value="<?= $r->id_kelas ?>">
+                                     <div class="form-group row mb-3">
+                                         <label class="col-3 col-form-label">Kelas</label>
+                                         <div class="col-9">
+                                             <select name="kelas" class="form-control select2" data-toggle="select2" style="width: 100%;" required>
+                                                 <option value="">Pilih Kelas</option>
+                                                 <?php foreach ($all_kelas as $kelas_option): ?>
+                                                     <option value="<?= $kelas_option ?>" <?= ($kelas_option == $r->kelas) ? 'selected' : '' ?>><?= $kelas_option ?></option>
+                                                 <?php endforeach; ?>
+                                             </select>
+                                         </div>
+                                     </div>
+                                     <div class="form-group row mb-3">
+                                         <label class="col-3 col-form-label">Urutan Kelas</label>
+                                         <div class="col-9">
+                                             <select name="urutan_kelas" class="form-control select2" data-toggle="select2" style="width: 100%;" required>
+                                                 <option value="">Pilih Urutan</option>
+                                                 <?php foreach ($all_urutan as $urutan_option): ?>
+                                                     <option value="<?= $urutan_option ?>" <?= ($urutan_option == $r->urutan_kelas) ? 'selected' : '' ?>><?= $urutan_option ?></option>
+                                                 <?php endforeach; ?>
+                                             </select>
+                                         </div>
+                                     </div>
+                             </div>
+                             <div class="modal-footer justify-content-between">
+                                 <button type="button" class="btn btn-dangerku btn-sm" data-dismiss="modal">Close</button>
+                                 <button type="submit" class="btn btn-primaryku btn-sm">Update</button>
+                             </div>
+                             </form>
+                         </div>
+                     </div>
+                 </div>
+             <?php } ?>
 
 
 
@@ -83,8 +162,6 @@
                          <div class="modal-body">
 
                              <form id="formAddKelas" class="form-horizontal" method="post" action="<?= base_url('kelas/act-add') ?>">
-
-
                                  <div class="form-group row mb-3">
                                      <label class="col-3 col-form-label">Kelas</label>
                                      <div class="col-9">

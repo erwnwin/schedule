@@ -15,12 +15,34 @@ class M_khusus extends CI_Model
     }
 
 
+    public function getAllDataNew()
+    {
+        $this->db->select('id_jadwal_khusus, kelas, hari, keterangan, sesi, durasi');
+        $this->db->from('jadwal_khusus');
+        return $this->db->get()->result_array();
+    }
+
+
     public function getAllData()
     {
         $this->db->select('id_jadwal_khusus, kelas, hari, keterangan, sesi, durasi');
         $this->db->from('jadwal_khusus');
         return $this->db->get()->result_array();
     }
+
+    public function get_data_jk($limit, $start)
+    {
+        $this->db->select('keterangan, GROUP_CONCAT(DISTINCT kelas) as kelas, hari, sesi, durasi');
+        $this->db->from('jadwal_khusus');
+        $this->db->group_by('keterangan, hari, sesi, durasi');
+        $this->db->order_by('sesi', 'ACS');
+        $this->db->order_by("FIELD(hari, 'Minggu', 'Sabtu', 'Jum`at', 'Kamis', 'Rabu', 'Selasa', 'Senin') DESC",);
+
+        $this->db->limit($limit, $start); // Menambahkan limit dan offset
+        return $this->db->get()->result_array();
+    }
+
+
 
     // public function getAllData($limit, $offset)
     // {
@@ -38,7 +60,8 @@ class M_khusus extends CI_Model
 
     public function countAllData()
     {
-        return $this->db->count_all('jadwal_khusus');
+        $this->db->from('jadwal_khusus');
+        return $this->db->count_all_results();
     }
 
     public function get_projects($limit, $start)
@@ -85,6 +108,31 @@ class M_khusus extends CI_Model
     {
         return $this->db->query("SELECT * FROM `jadwal_khusus` WHERE hari = '" . $hari . "' AND kelas LIKE '%" . $kelas . "' GROUP by sesi ")->result();
     }
+
+    public function get_kelas_by_hari_and_keterangan($hari, $keterangan)
+    {
+        if (!$hari || !$keterangan) {
+            return [];
+        }
+
+        $this->db->select('kelas');
+        $this->db->where('hari', $hari);
+        $this->db->where('keterangan', $keterangan);
+        $query = $this->db->get('jadwal_khusus');
+
+        $result = $query->result_array();
+        $selected_classes = [];
+
+        foreach ($result as $row) {
+            if (isset($row['kelas'])) {
+                $selected_classes[] = $row['kelas'];
+            }
+        }
+        return $selected_classes;
+    }
+
+
+
 
 
     // function get_mahasiswa_all($limit, $offset)

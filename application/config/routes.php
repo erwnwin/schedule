@@ -65,6 +65,7 @@ $route['mata-pelajaran/act-add2'] = 'Mata_pelajaran/validation_form';
 $route['mata-pelajaran/act-edit'] = 'Mata_pelajaran/act_edit';
 $route['mata-pelajaran/get-filter'] = 'Mata_pelajaran/get_filter';
 $route['mata-pelajaran/get-filter2'] = 'Mata_pelajaran/filter_data';
+$route['mata-pelajaran/delete/(:any)'] = 'mata_pelajaran/delete_mapel/$1';
 
 // ruangan
 $route['ruangan/act'] = 'Ruangan/add_act';
@@ -77,15 +78,23 @@ $route['guru-pengampu/create-pengampu/(:any)'] = 'Guru_pengampu/create_pengampu/
 
 // Jadwal Khusus
 
+$route['jadwal-khusus'] = 'Jadwal_khusus/index';
+$route['jadwal-khusus/(:num)'] = 'Jadwal_khusus/index/$1';
 $route['jadwal-khusus/(:num)'] = 'Jadwal_khusus';
 $route['jadwal-khusus'] = 'Jadwal_khusus';
 $route['jadwal-khusus/act-add'] = 'Jadwal_khusus/act_add';
+$route['jadwal-khusus/get-kelas-by-hari-and-keterangan'] = 'Jadwal_khusus//get_kelas_by_hari_and_keterangan';
+// jadwal-khusus/get-kelas-by-hari-and-keterangan
 
 // kelas
 $route['kelas/act-add'] = 'Kelas/add_act';
+$route['kelas/act-update'] = 'Kelas/update';
+$route['kelas/get-by-id/(:any)'] = 'Kelas/get_by_id/$1';
+$route['kelas/delete/(:any)'] = 'Kelas/delete_kelas/$1';
 
 // jam
 $route['jam/act-add'] = 'Jam/act_add';
+$route['jam/act-update'] = 'Jam/edit_act';
 
 
 // login
@@ -115,10 +124,19 @@ $route['penjadwalan/reset-rumusan'] = 'Penjadwalan/reset_rumusan';
 $route['penjadwalan/ploting-jadwal'] = 'Penjadwalan/ploting_jadwal';
 $route['penjadwalan/results'] = 'Penjadwalan/results';
 $route['penjadwalan/update'] = 'Penjadwalan/update';
+$route['penjadwalan/export'] = 'Penjadwalan/export_pdf';
+$route['penjadwalan/export-excel'] = 'Penjadwalan/export_toexcel';
+$route['penjadwalan/finalisasi-data'] = 'Penjadwalan/proses_final';
 
-$route['webhook'] = 'TelegramBot/webhook';
+// $route['webhook'] = 'TelegramBot/webhook';
 
 $route['jadwal-fix'] = 'Jadwal_fix';
+$route['jadwal-fix/tahun-akademik/(:num)'] = 'Jadwal_fix/tampil_jadwal_by_ta/$1';
+
+$route['set-notifikasi'] = 'Set_notifikasi';
+$route['notifikasi'] = 'Notifikasi';
+$route['notifikasi/set-pengaturan'] = 'Notifikasi/set_pengaturan';
+// $route['set-pengaturan'] = 'Set_pengaturan';
 
 $route['404_override'] = 'Error_page';
 $route['translate_uri_dashes'] = FALSE;
