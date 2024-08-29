@@ -339,7 +339,7 @@
         });
     });
 </script>
-<script>
+<!-- <script>
     // var baseUrl = "<?= base_url('notifikasi') ?>";
 
     function checkForNotifications() {
@@ -360,7 +360,7 @@
 
     // Polling setiap 60 detik
     setInterval(checkForNotifications, 60000);
-</script>
+</script> -->
 
 
 
