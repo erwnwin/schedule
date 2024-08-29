@@ -134,8 +134,8 @@ $route['jadwal-fix'] = 'Jadwal_fix';
 $route['jadwal-fix/tahun-akademik/(:num)'] = 'Jadwal_fix/tampil_jadwal_by_ta/$1';
 
 $route['set-notifikasi'] = 'Set_notifikasi';
-$route['notifikasi'] = 'Notifikasi';
-$route['notifikasi/set-pengaturan'] = 'Notifikasi/set_pengaturan';
+$route['notifikasi'] = 'Notifikasi_new/index';
+$route['notifikasi/set-pengaturan'] = 'Notifikasi_new/set_pengaturan';
 // $route['set-pengaturan'] = 'Set_pengaturan';
 
 $route['404_override'] = 'Error_page';

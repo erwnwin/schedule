@@ -44,11 +44,18 @@ class Notifikasi_model extends CI_Model
         $waktu_sekarang = date('H:i');
 
         // Menghitung batas waktu penghapusan, yaitu satu menit setelah waktu sekarang
-        $batas_waktu = date('H:i', strtotime($waktu_sekarang . ' -1 minute'));
+        $batas_waktu = date('H:i', strtotime($waktu_sekarang . ' -2 minute'));
 
         // Hapus entri yang waktu-nya sudah melewati batas waktu
         // Hanya hapus entri dengan waktu yang sudah lewat dibandingkan batas waktu
         $this->db->where('waktu <', $batas_waktu);
         $this->db->delete('pengaturan_notifikasi');
+    }
+
+
+    public function update_status_pengaturan($id, $status)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('pengaturan_notifikasi', array('aktif' => $status));
     }
 }

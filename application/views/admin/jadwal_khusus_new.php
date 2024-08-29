@@ -328,7 +328,8 @@
                                  <div class="form-group row mb-3">
                                      <label class="col-3 col-form-label">Durasi</label>
                                      <div class="col-9">
-                                         <input type="number" name="durasi" id="durasi" class="form-control" required="required" value="" placeholder="Input number untuk durasi" autocomplete="off" />
+
+                                         <input type="number" name="durasi" id="durasi" class="form-control" required="required" value="<?= $range_jam->lama_sesi ?>" placeholder="Input number untuk durasi" autocomplete="off" readonly />
                                      </div>
                                  </div>
 

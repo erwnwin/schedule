@@ -27,7 +27,7 @@ class Notifikasi extends CI_Controller
         //display data on web page 
         $token = "R1bqBzS9scy-5+uYzRHq";
         while ($row = mysqli_fetch_array($result1)) {
-            $target = "62" . $row['telp_wa'];
+            $target = $row['telp_wa'];
 
             $curl = curl_init();
 

@@ -12,6 +12,15 @@ class M_jam extends CI_Model
         return $this->db->get()->result();
     }
 
+    public function getSingleData()
+    {
+        $this->db->select('id_jadwal, hari, jumlah_sesi, lama_sesi, jam_mulai');
+        $this->db->from('jadwal');
+        // Ambil satu baris data (bisa juga tambahkan limit untuk keamanan)
+        $query = $this->db->get();
+        return $query->row(); // Mengembalikan satu baris sebagai objek
+    }
+
     public function tampil_jam()
     {
         $this->db->select('*');

@@ -15,7 +15,7 @@
 <script src="<?= base_url() ?>public/assets/plugins/toastr/toastr.min.js"></script>
 <script src="<?= base_url() ?>public/assets/dist/js/adminlte.min.js"></script>
 <script src="<?= base_url() ?>public/assets/js/add-notif.js"></script>
-<script src="<?= base_url() ?>public/assets/js/notifikasi.js"></script>
+<!-- <script src="<?= base_url() ?>public/assets/js/notifikasi.js"></script> -->
 <script src="<?= base_url() ?>public/assets/js/upload.js"></script>
 <script src="<?= base_url() ?>public/assets/js/jadwalku.js"></script>
 <script src="<?= base_url() ?>public/assets/js/edit-guru.js"></script>
@@ -343,7 +343,7 @@
     // var baseUrl = "<?= base_url('notifikasi') ?>";
 
     function checkForNotifications() {
-        fetch('https://schedule.winartcode.my.id/notifikasi')
+        fetch('http://localhost:8080/e-schedule.co.id/notifikasi')
             .then(response => response.json())
             .then(data => {
                 console.log('Notifikasi:', data);

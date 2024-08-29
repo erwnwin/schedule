@@ -20,6 +20,7 @@ class Dashboard extends CI_Controller
             $this->session->userdata('hak_akses') == '3'
         ) {
 
+
             $tgl = date('Y-m-d');
             $tgl_bsk = date("Y-m-d", strtotime("+1 day"));
             $hari = nama_hariku($tgl);
@@ -64,6 +65,7 @@ class Dashboard extends CI_Controller
             $data['online'] = $pengunjungonline;
             $data['onlinetot'] = $pengunjungonlinetot;
 
+
             $data['title'] = "Dashboard : e-Schedule";
 
             $data['mapelbsk'] = $this->db->query("SELECT * FROM penjadwalan 
@@ -89,6 +91,7 @@ class Dashboard extends CI_Controller
             $this->session->userdata('hak_akses') == '1' ||  $this->session->userdata('hak_akses') == '2'
         ) {
 
+            $waktu_sekarang = date('H:i');
             $bataswaktu = time() - 300;
 
             $pengunjungonline  = $this->db->query("SELECT * FROM pengguna_aktif JOIN guru ON pengguna_aktif.id_aktif=guru.id_guru WHERE online > '" . $bataswaktu . "'")->result(); // hitung pengunjung online
@@ -96,7 +99,7 @@ class Dashboard extends CI_Controller
 
             $data['online'] = $pengunjungonline;
             $data['onlinetot'] = $pengunjungonlinetot;
-
+            $data['jam'] = $waktu_sekarang;
 
             $data['title'] = "Dashboard : e-Schedule";
 

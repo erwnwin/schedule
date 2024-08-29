@@ -15,6 +15,7 @@ class Jadwal_khusus extends CI_Controller
         $this->load->model('m_kelas');
         $this->load->model('m_jadwal');
         $this->load->model('m_khusus');
+        $this->load->model('m_jam');
         $this->load->library("pagination");
     }
 
@@ -65,9 +66,7 @@ class Jadwal_khusus extends CI_Controller
         $data['dataKelas'] =  $this->m_kelas->getAllData();
         $data['jadwal_khususku'] =  $this->m_khusus->getAllDataNew();
         $data['jadwal'] =  $this->m_jadwal->getAllData();
-
-
-
+        $data['range_jam'] = $this->m_jam->getSingleData();
 
         $data['title'] = "Jadwal Khusus : e-Schedule";
 

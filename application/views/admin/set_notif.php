@@ -55,7 +55,10 @@
                                                  <td class="text-center"><?= $m->waktu ?></td>
                                                  <td class="text-center">
                                                      <?php if ($m->aktif == 1) { ?>
-                                                         <span class="badge bg-danger">Aktif</span>
+                                                         <span class="badge bg-success">Aktif</span>
+                                                     <?php } ?>
+                                                     <?php if ($m->aktif == 0) { ?>
+                                                         <span class="badge bg-danger">Tidak Aktif</span>
                                                      <?php } ?>
                                                  </td>
                                                  <td class="text-center"><?= $m->jenis_notifikasi ?></td>
