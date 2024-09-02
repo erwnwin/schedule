@@ -33,6 +33,12 @@
     color: #ffffff !important; /* Warna teks baru untuk item menu aktif */
 }
 
+
+.nav-sidebar .nav-treeview .nav-item .nav-link.active {
+    background-color: #60b9d1 !important; /* Warna latar belakang baru untuk item menu aktif */
+    color: #ffffff !important; /* Warna teks baru untuk item menu aktif */
+}
+
 /* 5. Mengubah warna latar belakang saat hover pada item menu aktif */
 .nav-sidebar .nav-item .nav-link.active:hover {
     background-color: #0988aa !important; /* Warna latar belakang saat hover pada item menu aktif */

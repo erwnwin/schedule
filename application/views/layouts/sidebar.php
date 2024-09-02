@@ -260,6 +260,14 @@
                              </p>
                          </a>
                      </li>
+                     <li class="nav-item">
+                         <a href="<?= base_url('bantuan') ?>" class="nav-link <?= $this->uri->segment(1) == 'bantuan' ? 'active' : '' ?>">
+                             <i class="nav-icon fas fa-info-circle"></i>
+                             <p>
+                                 Bantuan
+                             </p>
+                         </a>
+                     </li>
                  <?php } ?>
                  <li class="nav-item">
                      <a href="<?= base_url('logout') ?>" class="nav-link">

@@ -20,11 +20,11 @@ class Bantuan extends CI_Controller
     {
         $data['title'] = "Bantuan : e-Schedule";
 
-        $this->load->view('template/admin/head', $data);
-        $this->load->view('template/admin/sidebar', $data);
-        $this->load->view('template/admin/header', $data);
-        $this->load->view('admin/bantuan', $data);
-        $this->load->view('template/admin/footer', $data);
+        $this->load->view('layouts/head', $data);
+        $this->load->view('layouts/header', $data);
+        $this->load->view('layouts/sidebar', $data);
+        $this->load->view('admin/bantuan_new', $data);
+        $this->load->view('layouts/footer', $data);
     }
 }
 
