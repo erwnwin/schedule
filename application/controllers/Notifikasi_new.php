@@ -23,7 +23,7 @@ class Notifikasi_new extends CI_Controller
 
         if (!empty($pengaturan)) {
             $notifikasi = $this->notifikasi_model->get_guru_untuk_hari($hari);
-            $token = "jFT1fNY+#xWhZiN443zm"; // Ganti dengan token API yang sebenarnya
+            $token = "R1bqBzS9scy-5+uYzRHq"; // Ganti dengan token API yang sebenarnya
 
             foreach ($pengaturan as $setting) {
                 // Update status aktif menjadi 0

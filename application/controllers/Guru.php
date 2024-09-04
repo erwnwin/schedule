@@ -111,6 +111,7 @@ class Guru extends CI_Controller
 
         $this->db->insert('guru', $data);
 
+        // $token = "R1bqBzS9scy-5+uYzRHq";
         $token = "R1bqBzS9scy-5+uYzRHq";
         $target = '62' . $telp_wa;
 
